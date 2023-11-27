@@ -1,15 +1,23 @@
 // Home.tsx
-import Button from "@mui/material/Button";
 import "../Css/Home.css";
+import HeadBandCryptoPrice from "../Components/HeadBandCryptoPrice";
+import TopBar from "../Components/TopBar";
+import CarousselFlux from "../Components/CarousselFlux";
+import CryptoList from "../Components/CryptoList";
+import { Box, Container } from "@mui/material";
+import TopCryptoInfos from "../Components/TopCryptoInfos";
 
 const Home: React.FC = () => {
   return (
-    <div className="containerHome">
-      <h1 style={{ color: "#FEDA84" }}>Liste des Cryptomonnaies</h1>
-      <Button variant="contained" color="primary">
-        Salut
-      </Button>
-    </div>
+    <Container className="containerHome" maxWidth="xl">
+      <HeadBandCryptoPrice />
+      <TopBar />
+      <CarousselFlux />
+      <Box className="containerCrypto">
+        <CryptoList />
+        <TopCryptoInfos />
+      </Box>
+    </Container>
   );
 };
 
