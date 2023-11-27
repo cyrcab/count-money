@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./packages/frontend
+        working-directory: packages/frontend
 
     steps:
       - name: Checkout
