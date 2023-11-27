@@ -1,4 +1,26 @@
-.containerHeadBand{
+.containerHeadBand {
     background-color: aqua;
     height: 6%;
-}
+    overflow: hidden;
+  }
+  
+  @keyframes infiniteScroll {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-300%);
+    }
+  }
+  
+  .horizontal-scrolling-items {
+    display: flex;
+    font-size: 20px;
+    white-space: nowrap;
+    animation: infiniteScroll 20s linear infinite; 
+  }
+  
+  .horizontal-scrolling-items__item {
+    margin-right: 20px;  
+  }
+  
