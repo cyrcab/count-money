@@ -2,4 +2,22 @@
     background-color: #10124F;
     height: 100vh;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.css-19r6kue-MuiContainer-root {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.css-1oqqzyl-MuiContainer-root{
+    max-width: 100vw !important;
+}
+
+
+.containerCrypto{
+    display: flex;
+    flex-direction: row;
+    height: 56%;
 }
