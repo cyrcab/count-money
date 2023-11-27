@@ -1,26 +1,33 @@
 .containerHeadBand {
-    background-color: aqua;
-    height: 6%;
-    overflow: hidden;
+  background-color: aqua;
+  height: 6%;
+  overflow: hidden;
+}
+
+.slider {
+  margin: auto;
+  width: 90%;
+  height: 100%;
+}
+
+.slide-track {
+  display: flex;
+  width: calc(170px * 18);
+  animation: scroll 20s linear infinite;
+  height: 100%;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  width: 170px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
   }
-  
-  @keyframes infiniteScroll {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-300%);
-    }
+  100% {
+    transform: translateX(calc(-170px * 9));
   }
-  
-  .horizontal-scrolling-items {
-    display: flex;
-    font-size: 20px;
-    white-space: nowrap;
-    animation: infiniteScroll 20s linear infinite; 
-  }
-  
-  .horizontal-scrolling-items__item {
-    margin-right: 20px;  
-  }
-  
+}
