@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Avatar, Button } from "@mui/material";
 import "../Css/TopBar.css";
 import logo from "../assets/logo.jpg";
-import { Button } from "@mui/material";
 
 interface TopBarProps {
   onTabChange: (tab: string) => void;
@@ -10,10 +10,23 @@ interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>("Crypto");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
     onTabChange(item);
+  };
+
+  const handleLogin = () => {
+    // Your authentication logic here
+    // If authentication is successful, update the isLoggedIn state
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Your logout logic here
+    // If logout is successful, update the isLoggedIn state
+    setIsLoggedIn(false);
   };
 
   return (
@@ -23,29 +36,39 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
           <img src={logo} alt="Logo" className="logo" />
         </div>
         <Link to="/">
-          <Button
-            variant="text"
-            color="inherit"
-            className={`onglet ${selectedItem === "Crypto" ? "selected" : ""}`}
+          <div 
+            className={`onglet ${
+              selectedItem === "Crypto" ? "selected" : ""}`}
             onClick={() => handleItemClick("Crypto")}
           >
             Crypto
-          </Button>
+          </div>
         </Link>
         <Link to="/">
-          <Button
-            variant="text"
-            color="inherit"
-            className={`onglet ${selectedItem === "Actualité" ? "selected" : ""}`}
+        <div
+            className={`onglet ${
+              selectedItem === "Actualité" ? "selected" : ""
+            }`}
             onClick={() => handleItemClick("Actualité")}
           >
-            Actualité
-          </Button>
+            Actualités
+          </div>
         </Link>
       </div>
       <div className="rightSection">
-        <div className="login">Login</div>
-        <Button variant="contained">Sign up</Button>
+        {isLoggedIn ? (
+          <>
+            <div className="watchlist">Watchlist</div>
+            <Avatar alt="Alex" src="/static/images/avatar/1.jpg" onClick={handleLogout} />
+          </>
+        ) : (
+          <>
+            <div className="login">Login</div>
+            <Button variant="contained" onClick={handleLogin}>
+              Sign up
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
