@@ -1,0 +1,23 @@
+name: Frontend docker image
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: packages/front-end
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build and push the image
+        run: |
+          docker login --username cyrcab --password ${{ secrets.TOKEN }} ghcr.io
+          docker build . -t ghcr.io/cyrcab/monorepo-frontend:develop
+          docker push ghcr.io/cyrcab/monorepo-frontend:develop
