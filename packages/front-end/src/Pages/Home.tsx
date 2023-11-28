@@ -2,7 +2,7 @@
 import "../Css/Home.css";
 import HeadBandCryptoPrice from "../Components/HeadBandCryptoPrice";
 import TopBar from "../Components/TopBar";
-import CarousselFlux from "../Components/CarousselFlux";
+import CarousselFlux from "../Components/Rss/CarousselFlux";
 import CryptoList from "../Components/CryptoList";
 import { Box, Container } from "@mui/material";
 import TopCryptoInfos from "../Components/TopCryptoInfos";
