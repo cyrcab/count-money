@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import store from "../Context/store";
 import NewsList from "../Components/NewsList";
 import TopNewsInfos from "../Components/TopNewsInfos";
-import SpecificCrypto from "../Components/SpecificCrypto";
+// import SpecificCrypto from "../Components/SpecificCrypto";
 
 const Home: React.FC = () => {
 
