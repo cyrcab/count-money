@@ -1,7 +1,7 @@
 .containerHeadBand {
-  background-color: aqua;
   height: 6%;
   overflow: hidden;
+  color: white;
 }
 
 .slider {
@@ -30,4 +30,9 @@
   100% {
     transform: translateX(calc(-170px * 9));
   }
+}
+
+.iconCrypto{
+  height: 30px;
+  margin-right: 10px;
 }
