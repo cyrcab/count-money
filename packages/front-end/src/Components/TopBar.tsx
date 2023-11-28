@@ -58,9 +58,19 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
       <div className="rightSection">
         {isLoggedIn ? (
           <>
-            <div className="watchlist">Watchlist</div>
-            <Avatar alt="Alex" src="/static/images/avatar/1.jpg" onClick={handleLogout} />
+            <Link to="/">
+              <Avatar alt="Alex" src="/static/images/avatar/1.jpg"
+                className={`onglet ${
+                  selectedItem === "Profile" ? "" : ""
+                }`}
+                onClick={() => handleItemClick("Profile")}
+              />
+            </Link>
+            <Button variant="contained" onClick={handleLogout}>
+              Logout
+            </Button>
           </>
+          
         ) : (
           <>
             <div className="login">Login</div>
