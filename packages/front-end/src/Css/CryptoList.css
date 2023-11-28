@@ -3,3 +3,11 @@
     height: 100%;
     width: 14% !important;
 }
+
+.css-1oqqzyl-MuiContainer-root {
+    padding: 0 !important;
+}
+
+.css-heg063-MuiTabs-flexContainer {
+    justify-content: space-evenly !important;
+}
