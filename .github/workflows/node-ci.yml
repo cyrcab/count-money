@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   backend:
+    if: github.repository == 'cyrcab/count-money'
     runs-on: ubuntu-latest
 
     services:
@@ -48,10 +49,8 @@ jobs:
 
 
   frontend:
+    if: github.repository == 'cyrcab/count-money'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/front-end
 
     strategy:
       matrix:
