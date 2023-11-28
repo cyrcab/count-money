@@ -8,7 +8,8 @@
     "start:back": "npx lerna run dev --scope=back-end",
     "commit": "git add . && npx git-cz",
     "lint:front": "npx lerna run lint --scope=front-end",
-    "lint:back": "npx lerna run lint --scope=back-end"
+    "lint:back": "npx lerna run lint --scope=back-end",
+    "build:front": "npx lerna run build --scope=front-end"
   },
   "workspaces": [
     "packages/*"
