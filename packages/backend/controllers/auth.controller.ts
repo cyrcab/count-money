@@ -9,6 +9,7 @@ const prismaUser = new PrismaClient().user;
 const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
 // function to generate token
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateToken(user: any) {
   return jwt.sign({id: user.id}, process.env.JWT_SECRET, {
     expiresIn: 86400,
