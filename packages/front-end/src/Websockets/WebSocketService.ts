@@ -19,7 +19,7 @@ const WebSocketService = () => {
   };
 
   socket.onopen = () => {
-    console.log("WebSocket connection opened");
+    // console.log("WebSocket connection opened");
   };
 
   socket.onclose = (event) => {
