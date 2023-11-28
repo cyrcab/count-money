@@ -6,7 +6,7 @@ import "../Css/NewsList.css";
 const NewsList: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("topNews");
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
   };
 

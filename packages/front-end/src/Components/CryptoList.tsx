@@ -6,7 +6,7 @@ import "../Css/CryptoList.css";
 const CryptoList: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("topCrypto");
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
   };
 
