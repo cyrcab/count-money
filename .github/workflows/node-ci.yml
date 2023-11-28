@@ -43,10 +43,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: /package-lock.json
 
       - run: npm ci
-      - run: npm run lint:back
+      - run: npm run lint
       - run: npm run test
 
 
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /packages/front-end
+        working-directory: packages/front-end
 
     strategy:
       matrix:
@@ -67,8 +67,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: /package-lock.json
 
       - run: npm ci
-      - run: npm run lint:front
+      - run: npm run lint
       - run: npm run build
