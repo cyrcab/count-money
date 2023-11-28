@@ -9,7 +9,8 @@
     "commit": "git add . && npx git-cz",
     "lint:front": "npx lerna run lint --scope=front-end",
     "lint:back": "npx lerna run lint --scope=backend",
-    "build:front": "npx lerna run build --scope=front-end"
+    "build:front": "npx lerna run build --scope=front-end",
+    "test": "npx lerna run test --scope=backend"
   },
   "workspaces": [
     "packages/*"
