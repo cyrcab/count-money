@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - '*'
-
+# ${GITHUB_REPOSITORY#*/}
 jobs:
   build:
+    if: github.repository == 'cyrcab/count-money'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
