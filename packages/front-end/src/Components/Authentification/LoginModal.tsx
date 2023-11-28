@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
+import Divider from "@mui/material/Divider";
 
 const style = {
   position: "absolute" as "absolute",
@@ -15,6 +16,7 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  textAlign: "center", // Ajout de la propriété textAlign pour l'alignement central
 };
 
 interface LoginModalProps {
@@ -67,8 +69,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
           fullWidth
           margin="normal"
         />
-        <Button variant="contained" color="primary" onClick={handleLogin}>
+        <Button style={{width:'80%', margin:10}} variant="contained" color="primary" onClick={handleLogin}>
           Login
+        </Button>
+        <Divider >ou</Divider>
+        <Button style={{width:'80%', margin:10}} variant="contained" color="primary" onClick={handleLogin}>
+         <img src="" alt="" />
+          Google
         </Button>
       </Box>
     </Modal>
