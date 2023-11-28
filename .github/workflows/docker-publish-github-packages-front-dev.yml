@@ -22,8 +22,3 @@ jobs:
           docker login --username cyrcab --password ${{ secrets.TOKEN }} ghcr.io
           docker build . -t ghcr.io/cyrcab/monorepo-frontend:develop
           docker push ghcr.io/cyrcab/monorepo-frontend:develop
-      - name: Build and push the image backend
-        run: |
-          docker login --username cyrcab --password ${{ secrets.TOKEN }} ghcr.io
-          docker build . -t ghcr.io/cyrcab/monorepo-backend:develop
-          docker push ghcr.io/cyrcab/monorepo-backend:develop
