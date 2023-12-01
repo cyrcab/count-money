@@ -13,15 +13,15 @@ services:
     restart: always
     # networks:
     #   - backend
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #     - "8080:80"
-  #   environment:
-  #     - PMA_HOST=db
-  #     - PMA_PORT=3306
-  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-  #   restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    restart: always
   #   networks:
   #     - backend
 # networks:

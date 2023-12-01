@@ -1,11 +1,9 @@
-import request from 'supertest';
 import { PrismaClient } from '@prisma/client';
-import app from '../index';
+import { registerUser } from '../controllers/auth/register';
 
 const prisma = new PrismaClient();
 // const app = express();
 
-jest.setTimeout(6000); 
 beforeAll(async () => {
 
     await prisma.$executeRaw`SET foreign_key_checks = 0;`;
@@ -32,9 +30,7 @@ describe('User Registration API', () => {
             password: 'test',
         };
 
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send(userData);
+        const res = await registerUser(userData);
 
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty('token');
@@ -53,9 +49,8 @@ describe('User Registration API', () => {
             password: 'test',
         };
 
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send(userData);
+        const res = await registerUser(userData);
+
 
         expect(res.status).toBe(400);
         expect(res.body).toHaveProperty('msg');
@@ -70,9 +65,8 @@ describe('User Registration API', () => {
             password: 'test',
         };
 
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send(userData);
+        const res = await registerUser(userData);
+
 
         expect(res.status).toBe(400);
         expect(res.body).toHaveProperty('msg');
@@ -85,9 +79,8 @@ describe('User Registration API', () => {
             password: 'test',
         };
 
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send(userData);
+        const res = await registerUser(userData);
+
 
         expect(res.status).toBe(400);
         expect(res.body).toHaveProperty('msg');
@@ -95,9 +88,8 @@ describe('User Registration API', () => {
     });
 
     it('should not register a new user if all fields are empty', async () => {
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({});
+        const res = await registerUser({});
+
 
         expect(res.status).toBe(400);
         expect(res.body).toHaveProperty('msg');
