@@ -11,6 +11,8 @@
     "lint:back": "npx lerna run lint --scope=backend",
     "build:front": "npx lerna run build --scope=front-end",
     "prisma:generate": "cd packages/backend && npx prisma generate",
+    "bdd:start": "cd docker && docker-compose up -d",
+    "bdd:stop": "cd docker && docker-compose down",
     "test": "npx lerna run test --scope=backend"
   },
   "workspaces": [

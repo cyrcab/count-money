@@ -6,7 +6,7 @@
         "dev": "nodemon --watch src -e js,ts,json --exec \"ts-node ./index.ts\"",
         "start": "ts-node ./index.ts",
         "lint": "eslint . --ext .ts",
-        "test": "dotenv -e .env.test -- jest --config ./jest.config.json --detectOpenHandles"
+        "test": "jest --config ./jest.config.json --detectOpenHandles"
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.23.3",
