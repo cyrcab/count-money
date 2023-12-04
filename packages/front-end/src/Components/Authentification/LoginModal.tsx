@@ -7,7 +7,7 @@ import React from "react";
 import Divider from "@mui/material/Divider";
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -23,7 +23,7 @@ interface LoginModalProps {
   onClose: () => void;
   actionType: "Login" | "Sign Up";
   onLoginSuccess: () => void;
-  onSwitchAction: () => void; // Ajout de la nouvelle prop pour basculer entre Login et Sign Up
+  onSwitchAction: () => void;
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({
