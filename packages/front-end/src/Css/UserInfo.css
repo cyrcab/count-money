@@ -8,3 +8,9 @@
     padding-left: 20px;
     text-align: center;
 }
+
+.dialogProfilEdit{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

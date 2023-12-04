@@ -36,8 +36,8 @@ const Profile: React.FC<ProfileProps> = ({ onTabChange }) => {
         {selectedTab === "RSSWatchlist" && <UserRssManagement />}
         {selectedTab === "Preferences" && <UserPreference />}
         {selectedTab === "Logout" && (
-          <Container className="centered-container">
-            <Button variant="contained" onClick={() => console.log("Logout")}>
+          <Container className="LogoutTab">
+            <Button variant="contained" onClick={() => console.log("Logout")} sx={{ width: "250px", height: "100px", fontSize:"40px"}} >
               Logout
             </Button>
           </Container>
