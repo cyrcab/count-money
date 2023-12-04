@@ -6,11 +6,6 @@ import {comparePwd} from './utils/Pwd';
 const prismaUser = new PrismaClient().user;
 
 export async function loginUser(data: Partial<UserInterface>) {
-    const result = {} as {
-        status: number;
-        body: { token: string; user: Partial<UserInterface> };
-    };
-
     const { email, password } = data;
 
     if (!email || !password) {

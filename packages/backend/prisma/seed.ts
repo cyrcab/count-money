@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { generatePwd } from '../controllers/auth/utils/Pwd'
 const prisma = new PrismaClient()
 async function main() {
-  const user = await prisma.user.create({
+  await prisma.user.create({
         data: {
             email: 'ribcoco@gmail.com',
             firstname: 'Ricardo',
