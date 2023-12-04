@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button } from "@mui/material";
-import LoginModal from "./Authentification/LoginModal"; // Importez le composant LoginModal
+import LoginModal from "./Authentification/LoginModal";
 import "../Css/TopBar.css";
 import logo from "../assets/logo.jpg";
 
@@ -13,7 +13,7 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>("Crypto");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
@@ -21,15 +21,25 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   };
 
   const handleLogin = () => {
-    // Ouvrir la modal en mettant le state isLoginModalOpen à true
+    setIsSignUp(false);
     setLoginModalOpen(true);
-    console.log(isLoginModalOpen);
+  };
+
+  const handleSignUp = () => {
+    setIsSignUp(true);
+    setLoginModalOpen(true);
   };
 
   const handleLogout = () => {
-    // Votre logique de déconnexion ici
-    // Si la déconnexion réussit, mettez à jour le state isLoggedIn
     setIsLoggedIn(false);
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleSwitchAction = () => {
+    setIsSignUp(!isSignUp); // Inverser la valeur de isSignUp
   };
 
   return (
@@ -40,9 +50,7 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
         </div>
         <Link to="/">
           <div
-            className={`onglet ${
-              selectedItem === "Crypto" ? "selected" : ""
-            }`}
+            className={`onglet ${selectedItem === "Crypto" ? "selected" : ""}`}
             onClick={() => handleItemClick("Crypto")}
           >
             Crypto
@@ -63,22 +71,32 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
         {isLoggedIn ? (
           <>
             <div className="watchlist">Watchlist</div>
-            <Avatar alt="Alex" src="/static/images/avatar/1.jpg" onClick={handleLogout} />
+            <Avatar
+              alt="Alex"
+              src="/static/images/avatar/1.jpg"
+              onClick={handleLogout}
+            />
           </>
         ) : (
           <>
-            {/* Ouvrir la modal en cliquant sur le bouton Login */}
             <div className="login" onClick={handleLogin}>
               Login
             </div>
-            <Button variant="contained" onClick={handleLogin}>
+            <Button variant="contained" onClick={handleSignUp}>
               Sign up
             </Button>
           </>
         )}
       </div>
 
-      {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
+      {isLoginModalOpen && (
+        <LoginModal
+          onClose={() => setLoginModalOpen(false)}
+          actionType={isSignUp ? "Sign Up" : "Login"}
+          onLoginSuccess={handleLoginSuccess}
+          onSwitchAction={handleSwitchAction}
+        />
+      )}
     </div>
   );
 };
