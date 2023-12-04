@@ -9,6 +9,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import LoginModal from "./Authentification/LoginModal";
 import "../Css/TopBar.css";
 import logo from "../assets/logo.jpg";
 
@@ -20,6 +21,8 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>("Crypto");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
@@ -28,20 +31,29 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   };
 
   const handleLogin = () => {
+
     // Your authentication logic here
     // If authentication is successful, update the isLoggedIn state
     setIsLoggedIn(true);
     // Optionally, switch to the "Profile" tab after login
     handleItemClick("Profile");
+
+    setIsSignUp(false);
+    setLoginModalOpen(true);
+  };
+
+  const handleSignUp = () => {
+    setIsSignUp(true);
+    setLoginModalOpen(true);
+
   };
 
   const handleLogout = () => {
-    // Your logout logic here
-    // If logout is successful, update the isLoggedIn state
     setIsLoggedIn(false);
     // Switch to the default tab (e.g., "Crypto") after logout
     handleItemClick("Crypto");
   };
+
 
   const handleClickAvatar = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +66,16 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   const open = Boolean(anchorEl);
   const id = open ? "avatar-popover" : undefined;
 
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleSwitchAction = () => {
+    setIsSignUp(!isSignUp); // Inverser la valeur de isSignUp
+  };
+
+
   return (
     <div className="containerTopBar">
       <div className="leftSection">
@@ -62,6 +84,7 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
         </div>
         <Link to="/">
           <div
+
             className={`onglet ${
               selectedItem === "Crypto" ? "selected" : ""
             }`}
@@ -120,13 +143,24 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
           </>
         ) : (
           <>
-            <div className="login">Login</div>
-            <Button variant="contained" onClick={handleLogin}>
+            <div className="login" onClick={handleLogin}>
+              Login
+            </div>
+            <Button variant="contained" onClick={handleSignUp}>
               Sign up
             </Button>
           </>
         )}
       </div>
+
+      {isLoginModalOpen && (
+        <LoginModal
+          onClose={() => setLoginModalOpen(false)}
+          actionType={isSignUp ? "Sign Up" : "Login"}
+          onLoginSuccess={handleLoginSuccess}
+          onSwitchAction={handleSwitchAction}
+        />
+      )}
     </div>
   );
 };
