@@ -57,6 +57,11 @@ export async function registerUser(data: Partial<UserInterface>) {
         firstname: firstname,
         lastname: lastname,
         password: hashPwd,
+        role: {
+          connect: {
+            name: 'user',
+          },
+        },
       },
     })
     const token = generateToken(newUser)
@@ -69,6 +74,7 @@ export async function registerUser(data: Partial<UserInterface>) {
           email: newUser.email,
           firstname: newUser.firstname,
           lastname: newUser.lastname,
+          role: 'user',
         },
       },
     }

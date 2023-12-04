@@ -1,6 +1,7 @@
 import { registerUser } from '../controllers/auth/register'
 import { loginUser } from '../controllers/auth/login'
 import { prisma } from '../libs/prisma'
+import { exec } from 'child_process'
 
 beforeAll(async () => {
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
@@ -18,6 +19,9 @@ afterAll(async () => {
   await prisma.$executeRaw`TRUNCATE TABLE User;`
 
   await prisma.$executeRaw`SET foreign_key_checks = 1;`
+
+  exec('ts-node prisma/seed.ts')
+  
 
   // Disconnect from the database after all tests
   await prisma.$disconnect()
@@ -43,6 +47,9 @@ describe('User Registration API', () => {
     expect(res.body.user.email).toBe(userData.email)
     expect(res.body.user.firstname).toBe(userData.firstname)
     expect(res.body.user.lastname).toBe(userData.lastname)
+    expect(res.body.user).toHaveProperty('role')
+    expect(res.body.user.role).toBe('user')
+
   })
 
   it('should not register a new user if email already exists', async () => {
