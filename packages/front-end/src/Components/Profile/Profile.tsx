@@ -1,6 +1,6 @@
 // Profile.tsx
 import React, { useState } from "react";
-import { Container, Tabs, Tab, Button } from "@mui/material";
+import { Container, Tabs, Tab } from "@mui/material";
 import "../../Css/Profile.css";
 import UserInfo from "./UserInfo";
 import UserRssManagement from "./UserRssManagement";
@@ -29,19 +29,11 @@ const Profile: React.FC<ProfileProps> = ({ onTabChange }) => {
         <Tab label="Profile" value="Profile" />
         <Tab label="RSS Watchlist" value="RSSWatchlist" />
         <Tab label="Preferences" value="Preferences" />
-        <Tab label="Logout" value="Logout" />
       </Tabs>
       <Container>
         {selectedTab === "Profile" && <UserInfo />}
         {selectedTab === "RSSWatchlist" && <UserRssManagement />}
         {selectedTab === "Preferences" && <UserPreference />}
-        {selectedTab === "Logout" && (
-          <Container className="LogoutTab">
-            <Button variant="contained" onClick={() => console.log("Logout")} sx={{ width: "250px", height: "100px", fontSize:"40px"}} >
-              Logout
-            </Button>
-          </Container>
-        )}
       </Container>
     </Container>
   );

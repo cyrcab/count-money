@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Typography, Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import "../../Css/UserInfo.css";
 
 const UserInfo: React.FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
