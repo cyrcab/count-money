@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {PrismaClient} from '@prisma/client';
+// eslint-disable-next-line
 import {User as UserInterface} from '@prisma/client';
 const prismaUser = new PrismaClient().user;
 
