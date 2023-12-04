@@ -6,16 +6,11 @@ import UserInfo from "./UserInfo";
 import UserRssManagement from "./UserRssManagement";
 import UserPreference from "./UserPreference";
 
-interface ProfileProps {
-  onTabChange: (tab: string) => void;
-}
-
-const Profile: React.FC<ProfileProps> = ({ onTabChange }) => {
+const Profile: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("Profile");
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
-    onTabChange(newValue);
   };
 
   return (
