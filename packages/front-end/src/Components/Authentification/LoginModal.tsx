@@ -5,6 +5,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
 import Divider from "@mui/material/Divider";
+import api from "../../axios.config.js";
+import { AxiosResponse } from 'axios';
+
 
 const style = {
   position: "absolute",
@@ -34,8 +37,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
 }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [firstname, setFirstname] = React.useState("");
+  const [lastname, setLastname] = React.useState("");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -48,22 +51,22 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setFirstName(event.target.value);
+    setFirstname(event.target.value);
   };
 
   const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(event.target.value);
+    setLastname(event.target.value);
   };
 
   const handleLogin = () => {
-    console.log("Action Type:", actionType);
-    console.log("Email:", email);
-    console.log("Password:", password);
-
-    if (actionType === "Sign Up") {
-      console.log("First Name:", firstName);
-      console.log("Last Name:", lastName);
-    }
+    api
+      .post("/auth/login", { email, password })
+      .then((response : AxiosResponse) => {
+        console.log(response);
+      })
+      .catch((error : AxiosResponse) => {
+        console.log(error);
+      });
 
     const loginSuccessful = true;
 
@@ -73,6 +76,25 @@ const LoginModal: React.FC<LoginModalProps> = ({
 
     onClose();
   };
+
+  const handleSignUp = () => {
+    api
+      .post("/auth/register", { email, password, firstname, lastname })
+      .then((response  : AxiosResponse) => {
+        console.log(response);
+      })
+      .catch((error : AxiosResponse) => {
+        console.log(error);
+      });
+
+    const loginSuccessful = true;
+
+    if (loginSuccessful) {
+      onLoginSuccess();
+    }
+
+    onClose();
+  }
 
   return (
     <Modal
@@ -90,7 +112,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
             <TextField
               label="First Name"
               type="text"
-              value={firstName}
+              value={firstname}
               onChange={handleFirstNameChange}
               fullWidth
               margin="normal"
@@ -98,7 +120,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
             <TextField
               label="Last Name"
               type="text"
-              value={lastName}
+              value={lastname}
               onChange={handleLastNameChange}
               fullWidth
               margin="normal"
@@ -125,7 +147,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
           style={{ width: "80%", margin: 10 }}
           variant="contained"
           color="primary"
-          onClick={handleLogin}
+          onClick={actionType === "Login" ? handleLogin : handleSignUp }
         >
           {actionType}
         </Button>
@@ -134,7 +156,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
           style={{ width: "80%", margin: 10 }}
           variant="contained"
           color="primary"
-          onClick={handleLogin}
+          onClick={actionType === "Login" ? handleLogin : handleSignUp }
         >
           <img src="" alt="" />
           Google
