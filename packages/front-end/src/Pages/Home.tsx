@@ -51,7 +51,7 @@ const Home: React.FC = () => {
         {selectedTab === "Profile" && (
           <>
             <CryptoList />
-            <Profile onTabChange={handleTabChange} />     
+            <Profile />     
           </>
         )}
       </Box>
