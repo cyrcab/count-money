@@ -14,6 +14,11 @@ interface ImageData {
   imgSrc: string;
 }
 
+interface ImageData {
+  image: string;
+  description: string;
+}
+
 const CarousselFlux: React.FC = () => {
   const [groupedImages, setGroupedImages] = useState<ImageData[][]>([]);
 
