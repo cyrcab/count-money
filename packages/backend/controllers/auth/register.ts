@@ -26,7 +26,6 @@ async function generatePwd(pwd: string) {
 }
 
 export async function registerUser(data:  Partial<UserInterface>) {
-    const result = {} as { status: number; body: { token: string; user:Partial<UserInterface> ; };  };
 
     const {
         email,
