@@ -1,35 +1,42 @@
-# Makefile
-
-# Spécifie le fichier de composition principal
-COMPOSE_FILE = ./docker/docker-compose.yml
-
-# Spécifie le fichier d'environnement spécifique pour les tests
-ENV_FILE_DOCKER = ./docker/.env.test
-
+COMPOSE_FILE = ./docker/docker-compose-test.yml
+ENV_FILE_DOCKER = ./docker/.env
 ENV_FILE = ./packages/backend/.env
+CONTAINER_ADDRESS = http://localhost:3306
+include $(ENV_FILE_DOCKER)
+export
 
 
 # Cible par défaut
-all: run
+test: run
 
 # # Lance le conteneur avec l'environnement spécifique
 up:
-	docker-compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE_DOCKER) up -d
+	docker-compose -f $(COMPOSE_FILE) up -d
+	@$(MAKE) wait_for_container
 
-set-env:
-#@echo "Value of TEST_DATABASE_URL: $$(grep '^TEST_DATABASE_URL=' $(ENV_FILE) | cut -d '=' -f 2) in $(ENV_FILE)"
-	NODE_ENV=test
-	DATABASE_URL="$$(grep '^TEST_DATABASE_URL=' $(ENV_FILE) | cut -d '=' -f 2)" npm run prisma:push
+wait_for_container:
+	@echo "Waiting for the container to be ready..."
+	@container_ready=false; \
+	while [ $$container_ready != true ]; do \
+		if docker exec docker-db-1 mysql -u root -p$${MYSQL_ROOT_PASSWORD} -e 'SELECT 1;' > /dev/null 2>&1; then \
+			container_ready=true; \
+		fi; \
+		sleep 2; \
+	done
+	@echo "Container is ready!"
 
-run: set-env up
+setup_prisma: up
+	npm run prisma:push
+
+run: setup_prisma up
 	npx lerna run test --scope=backend
-	docker-compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE_DOCKER) down
+	docker-compose -f $(COMPOSE_FILE) down
 
-# # Règle spéciale pour arrêter le conteneur même en cas d'échec du Makefile
-# .PHONY: always
-# always:
-# 	@:
+# Règle spéciale pour arrêter le conteneur même en cas d'échec du Makefile
+.PHONY: always
+always:
+	@:
 
-# # Utilise la règle 'always' comme dépendance pour s'assurer que la cible 'down' est toujours exécutée
-# down: always
-# 	docker-compose -f $(COMPOSE_FILE) -f $(ENV_FILE_DOCKER) down
+# Utilise la règle 'always' comme dépendance pour s'assurer que la cible 'down' est toujours exécutée
+down: always
+	docker-compose -f $(COMPOSE_FILE) -f $(ENV_FILE_DOCKER) down
