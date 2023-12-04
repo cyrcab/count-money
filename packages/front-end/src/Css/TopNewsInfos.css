@@ -3,3 +3,8 @@
     height: 100%;
     background-color: burlywood;
 }
+
+.newsContainer {
+    padding-left: 20px;
+    padding-top: 20px;
+}

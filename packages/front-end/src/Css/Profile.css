@@ -1,0 +1,26 @@
+.containerProfile{
+    width: 86% !important;
+    height: 100%;
+    background-color: burlywood;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LogoutTab {
+text-align: center;
+padding-top: 5% !important;
+}
+
+.css-1oqqzyl-MuiContainer-root {
+    width: 100%;
+    margin-left: auto;
+    box-sizing: border-box;
+    margin-right: auto;
+    display: block;
+    padding-left: 16px;
+    padding-right: 16px;
+}

@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import store from "../Context/store";
 import NewsList from "../Components/NewsList";
 import TopNewsInfos from "../Components/TopNewsInfos";
+import Profile from "../Components/Profile/Profile";
 // import SpecificCrypto from "../Components/SpecificCrypto";
 
 const Home: React.FC = () => {
@@ -45,6 +46,12 @@ const Home: React.FC = () => {
           <>
             <NewsList />
             <TopNewsInfos />
+          </>
+        )}
+        {selectedTab === "Profile" && (
+          <>
+            <CryptoList />
+            <Profile onTabChange={handleTabChange}/>     
           </>
         )}
       </Box>

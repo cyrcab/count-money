@@ -1,10 +1,12 @@
 import "../Css/TopNewsInfos.css";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 const TopNewsInfos: React.FC = () => {
   return (
     <Container className="containerTopNewsInfos">
-      <h1 style={{ color: "#FEDA84" }}>RSS FEED</h1>
+      <div className="newsContainer">
+        <Typography variant="h1">Actualités</Typography>
+      </div>
     </Container>
   );
 };
