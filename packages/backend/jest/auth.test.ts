@@ -162,27 +162,6 @@ describe('User login', () => {
 
 })
 
-
-const prisma = new PrismaClient();
-// const app = express();
-
-beforeAll(async () => {
-
-    await prisma.$executeRaw`SET foreign_key_checks = 0;`;
-    
-    // Clear database before tests
-    await prisma.$executeRaw`TRUNCATE TABLE User;`;
-
-    await prisma.$executeRaw`SET foreign_key_checks = 1;`;
-});
-
-afterAll(async () => {
-    // Disconnect from the database after all tests
-    await prisma.$disconnect();
-
-    // Close the server after all tests
-});
-
 describe('User Registration API', () => {
     it('should register a new user', async () => {
         const userData = {
