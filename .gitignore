@@ -1,1 +1,4 @@
 node_modules/
+docker/.env
+docker/mysql/*
+output.log
