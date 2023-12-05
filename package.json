@@ -14,7 +14,7 @@
     "prisma:push": "cd packages/backend && npx prisma db push",
     "bdd:start": "cd docker && docker-compose up -d",
     "bdd:stop": "cd docker && docker-compose down",
-    "test": "make test"
+    "test": "npx lerna run test --scope=backend"
   },
   "workspaces": [
     "packages/*"
