@@ -5,8 +5,10 @@ import React, { useEffect } from "react";
 import img1 from "../../assets/s1222i7.jpg";
 import raccoon from "../../assets/raccoon.jpg";
 import axios from "axios";
+import Parser from "rss-parser";
 
 const CarousselFlux: React.FC = () => {
+
   useEffect(() => {
     const RssArticle = axios.get("http://localhost:3000/api/rss").then((response) => {
       console.log(response.data);
