@@ -19,7 +19,15 @@
   "workspaces": [
     "packages/*"
   ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@digitalroute/cz-conventional-changelog-for-jira",
+      "jiraLocation": "pre-type"
+    }
+  },
   "dependencies": {
+    "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
+    "commitizen": "^4.3.0",
     "dotenv-cli": "^7.3.0",
     "express": "^4.18.2",
     "tsup": "^8.0.1",
