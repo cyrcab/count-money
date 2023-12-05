@@ -2,8 +2,10 @@ import { registerUser } from '../controllers/auth/register'
 import { loginUser } from '../controllers/auth/login'
 import { prisma } from '../libs/prisma'
 import { exec } from 'child_process'
+import { seedRoles } from '../prisma/seedRole'
 
 beforeAll(async () => {
+  await seedRoles()
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
 
   // Clear database before tests
@@ -21,7 +23,6 @@ afterAll(async () => {
   await prisma.$executeRaw`SET foreign_key_checks = 1;`
 
   exec('ts-node prisma/seed.ts')
-  
 
   // Disconnect from the database after all tests
   await prisma.$disconnect()
@@ -49,7 +50,6 @@ describe('User Registration API', () => {
     expect(res.body.user.lastname).toBe(userData.lastname)
     expect(res.body.user).toHaveProperty('role')
     expect(res.body.user.role).toBe('user')
-
   })
 
   it('should not register a new user if email already exists', async () => {
