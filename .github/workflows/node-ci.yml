@@ -13,7 +13,7 @@ jobs:
     if: github.repository == 'cyrcab/count-money'
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: "mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@localhost:3306/${{ secrets.MYSQL_DATABASE }}"
+      DATABASE_URL: 'mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@localhost:3306/${{ secrets.MYSQL_DATABASE }}'
 
     services:
       db:
@@ -41,6 +41,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: ./package-lock.json
+      - name: Init database
+        run: sudo /etc/init.d/mysql start
 
       - run: npm ci
       - run: npm run lint:back
