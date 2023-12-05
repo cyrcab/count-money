@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - 'develop'
+      - "develop"
 
 permissions:
   contents: read
@@ -13,21 +13,21 @@ jobs:
     if: github.repository == 'cyrcab/count-money'
     runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: mysql:5.7
-        ports: ['3306:3306']
+    # services:
+    #   db:
+    #     image: mysql:5.7
+    #     ports: ['3306:3306']
 
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+    #       MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+    #       MYSQL_USER: ${{ secrets.MYSQL_USER }}
+    #       MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
 
     strategy:
       matrix:
@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: ./package-lock.json
 
       - run: npm ci
@@ -62,7 +62,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: ./package-lock.json
 
       - run: npm ci
