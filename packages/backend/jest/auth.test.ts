@@ -5,12 +5,13 @@ import { exec } from 'child_process'
 import { seedRoles } from '../prisma/seedRole'
 
 beforeAll(async () => {
-  await seedRoles()
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
 
   // Clear database before tests
   await prisma.$executeRaw`TRUNCATE TABLE User;`
+  await prisma.$executeRaw`TRUNCATE TABLE Role;`
 
+  await seedRoles()
   await prisma.$executeRaw`SET foreign_key_checks = 1;`
 })
 
