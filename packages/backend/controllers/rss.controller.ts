@@ -34,22 +34,27 @@ export const rssreader = async (req: Request, res: Response) => {
       res.json(rssData);
     } else {
       const rssData = [];
-      const rssUrl = `https://coinacademy.fr/actu/gn`;
+      const rssUrl = `https://cointelegraph.com/rss/tag/bitcoin`;
       const feed = await parser.parseURL(rssUrl);
 
       feed.items.forEach((item) => {
-        const contentHtml = item["content:encoded"];
+        // Accessing the HTML content
+        const contentHtml = item['content:encoded'];
 
+        // Using cheerio to parse HTML content
         const $ = cheerio.load(contentHtml);
 
-        const imgSrc = $("figure img").attr("src");
+        // Find the image element and get its source (src) attribute using the media namespace
+        const imgSrc = $('media\\:content').attr('url');
 
+        // Log the image source
         console.log(imgSrc);
 
+        // Pushing title and image URL to rssData array
         rssData.push({
           title: item.title,
           link: item.link,
-          imgSrc: imgSrc || "No image",
+          imgSrc: imgSrc || 'No image',
         });
       });
 
@@ -57,8 +62,6 @@ export const rssreader = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ error: "Erreur lors de la récupération des flux RSS" });
+    res.status(500).json({ error: "Erreur lors de la récupération des flux RSS" });
   }
 };
