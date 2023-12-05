@@ -3,6 +3,6 @@ const rssrouter = require('express').Router();
 
 import { rssreader} from '../controllers/rss.controller'
 
-rssrouter.get('/rss', rssreader)
+rssrouter.get('/', rssreader)
 
 export default rssrouter
