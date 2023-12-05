@@ -22,7 +22,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use('/api/auth', authRouter);
 
 // Faire une requête pour obtenir le flux RSS
-app.get('/api/rss', rssRouter);
+app.use('/api/rss', rssRouter);
 
 
 // Route Hello World
