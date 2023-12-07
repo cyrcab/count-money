@@ -13,7 +13,7 @@ jobs:
     if: github.repository == 'cyrcab/count-money'
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: 'mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@localhost:3306/${{ secrets.MYSQL_DATABASE }}'
+      DATABASE_URL: 'mysql://user:password@localhost:3306/test_database'
       JWT_SECRET: "fakejwt"
 
     services:
@@ -22,10 +22,10 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_ROOT_PASSWORD: "password"
+          MYSQL_PASSWORD: "password"
+          MYSQL_USER: "user"
+          MYSQL_DATABASE: "test_database"
         options: --health-cmd="mysqladmin ping" --health-interval=1s --health-timeout=5s
 
     strategy:
