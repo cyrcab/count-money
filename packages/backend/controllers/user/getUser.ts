@@ -38,3 +38,23 @@ export async function getUser(data: Partial<AuthenticatedRequest>) {
     }
     
 }
+
+export async function getUsers() {
+    const users = await prismaUser.findMany({
+        select: {
+            id: true,
+            email: true,
+            firstname: true,
+            lastname: true,
+            role: true,
+        }
+    })
+
+    return {
+        status: 200,
+        body: {
+            users: users,
+            msg: 'Users found'
+        }
+    }
+}

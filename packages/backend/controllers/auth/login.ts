@@ -47,6 +47,7 @@ export async function loginUser(data: Partial<UserInterface>) {
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+          role: user.roleId,
         },
       },
     }

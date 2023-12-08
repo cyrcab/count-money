@@ -1,4 +1,4 @@
-import {getUser} from '../controllers/user/getUser'
+import {getUser, getUsers} from '../controllers/user/getUser'
 import {prisma} from '../libs/prisma'
 import { exec } from 'child_process'
 import { promisify } from 'util'
@@ -29,7 +29,7 @@ await prisma.$disconnect()
 // Close the server after all tests
 })
 
-describe('CRUD User API', () => {
+describe('Get one User API', () => {
     it('should get a user', async () => {
         const data = {
             userId: 1,
@@ -86,3 +86,16 @@ describe('CRUD User API', () => {
 
 
 })
+
+describe('Get all Users API', () => {
+    it('should get all users', async () => {
+        const res = await getUsers()
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('users')
+        expect(res.body.users).toHaveLength(2)
+
+    })
+
+})
+
