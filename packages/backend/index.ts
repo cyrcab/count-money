@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { Request, Response, NextFunction } from 'express'
 import authRouter from './routes/auth.route'
+import userRouter from './routes/user.route'
 
 const app = express()
 const port = 3000
@@ -19,6 +20,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Routes
 app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
 
 // fais moi un get hello world
 app.get('/', (req: Request, res: Response) => {

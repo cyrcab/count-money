@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { generatePwd } from '../controllers/auth/utils/Pwd'
+import { generatePwd } from '../controllers/utils/Pwd'
 const prisma = new PrismaClient()
 async function main() {
     await prisma.$executeRaw`SET foreign_key_checks = 0;`
