@@ -16,3 +16,58 @@ export async function createCrypto(req: Request, res: Response) {
     return res.status(500).json({ message: 'Internal server error' })
   }
 }
+
+export async function getAllCrypto(req: Request, res: Response) {
+  try {
+    const result: Crypto[] = await prisma.crypto.findMany()
+    return res.status(200).json(result)
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+export async function getOneCrypto(req: Request, res: Response) {
+  try {
+    const result: Crypto | undefined = await prisma.crypto.findUnique({
+      where: { id: Number(req.params.id) },
+    })
+    if (!result) {
+      return res.status(404).json({ message: 'Not found' })
+    }
+    return res.status(200).json(result)
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+export async function updateCrypto(req: Request, res: Response) {
+  try {
+    const result: Crypto | undefined = await prisma.crypto.update({
+      where: { id: Number(req.params.id) },
+      data: req.body,
+    })
+    if (!result) {
+      return res.status(404).json({ message: 'Not found' })
+    }
+    return res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof PrismaClientValidationError) {
+      return res.status(400).json({ message: 'Bad request' })
+    }
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+export async function deleteCrypto(req: Request, res: Response) {
+  try {
+    const result: Crypto | undefined = await prisma.crypto.delete({
+      where: { id: Number(req.params.id) },
+    })
+    if (!result) {
+      return res.status(404).json({ message: 'Not found' })
+    }
+    return res.status(204).json(result)
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+}
