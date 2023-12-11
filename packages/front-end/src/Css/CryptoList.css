@@ -11,3 +11,8 @@
 .css-heg063-MuiTabs-flexContainer {
     justify-content: space-evenly !important;
 }
+
+.buttonGroup{
+    width: 100%;
+    height: 100%;
+}
