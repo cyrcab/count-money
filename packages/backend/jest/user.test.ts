@@ -3,6 +3,7 @@ import {getUser, getUsers} from '../controllers/user/getUser'
 import {prisma} from '../libs/prisma'
 import { exec } from 'child_process'
 import { promisify } from 'util'
+import { deleteUser } from '../controllers/user/deleteUser'
 const execAsync = promisify(exec)
 
 beforeAll(async () => {
@@ -234,6 +235,33 @@ describe('Update User API', () => {
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('msg')
         expect(res.body.msg).toBe('Email already taken')
+    })
+})
+
+describe('Delete User API', () => {
+
+    it('should delete a user', async () => {
+        const data = {
+            userId: 1,
+        }
+
+        const res = await deleteUser(data)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('User deleted')
+    })
+
+    it('should not delete a user if id is invalid', async () => {
+        const userData = {
+            userId: 0,
+        }
+
+        const res = await deleteUser(userData)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Invalid credentials')
     })
 })
 
