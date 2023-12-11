@@ -9,6 +9,8 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import ChartComponent from "./Chart.tsx";
+import InformationComponent from "./Informations.tsx";
 
 interface CryptoData {
   symbol: string;
@@ -83,28 +85,10 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
               <Tab label="Chart" />
               <Tab label="Informations" />
             </Tabs>
-            <div className="selectedOnglet">
-              {selectedTab === 0 && (
-                <div
-                  role="tabpanel"
-                  hidden={selectedTab !== 0}
-                  id="crypto-chart"
-                >
-                  {/* Contenu du graphique */}
-                  <p>Graphique ici</p>
-                </div>
-              )}
-              {selectedTab === 1 && (
-                <div
-                  role="tabpanel"
-                  hidden={selectedTab !== 1}
-                  id="crypto-info"
-                >
-                  {/* Informations sur la crypto ici */}
-                  <p>Informations ici</p>
-                </div>
-              )}
-            </div>
+          </div>
+          <div className="selectedOnglet">
+            {selectedTab === 0 && <ChartComponent />}
+            {selectedTab === 1 && <InformationComponent />}
           </div>
         </>
       )}
