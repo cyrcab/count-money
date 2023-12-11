@@ -2,7 +2,7 @@ import "../../Css/CarousselFlux.css";
 import { Container } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
-import api from "../../axios.config.js";
+import api from "../../axios.config.ts";
 import { AxiosResponse } from "axios";
 import defaultImage from "../../assets/defaultImage.png";
 
