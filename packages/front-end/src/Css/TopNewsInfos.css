@@ -6,5 +6,8 @@
 
 .newsContainer {
     padding-left: 20px;
-    padding-top: 20px;
+}
+
+.cryptoCard {
+    margin-right: 2vw;
 }

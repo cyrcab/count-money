@@ -5,7 +5,7 @@ const TopNewsInfos: React.FC = () => {
   return (
     <Container className="containerTopNewsInfos">
       <div className="newsContainer">
-        <Typography variant="h1">Actualités</Typography>
+        <Typography variant="h2">Actualités</Typography>
       </div>
     </Container>
   );
