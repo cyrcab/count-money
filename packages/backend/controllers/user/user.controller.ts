@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { getUser, getUsers } from "../user/getUser";
 import { updateUser } from "../user/updateUser";
 import AuthenticatedRequest from "interfaces/request.interface";
+import { deleteUser } from '../user/deleteUser';
 
 
 export async function getMe(req: AuthenticatedRequest, res: Response) {
@@ -20,4 +21,10 @@ export async function updateUserController(req: AuthenticatedRequest, res: Respo
     const user = await updateUser(req);
     if (!user) return res.status(404).json({ msg: 'User not found' });
     return res.status(200).json(user);
+}
+
+export async function deleteUserController(req: AuthenticatedRequest, res: Response) {
+    const result = await deleteUser(req);
+    if (!result) return res.status(404).json({ msg: 'Error' });
+    return res.status(200).json(result);
 }
