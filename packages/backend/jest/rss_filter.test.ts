@@ -1,3 +1,4 @@
+import { getRssFilter, getRssFilters } from '../controllers/rss_filter/getRssFilter'
 import {addNewRssFilter} from '../controllers/rss_filter/addRssFilter'
 import {prisma} from '../libs/prisma'
 import { exec } from 'child_process'
@@ -87,5 +88,96 @@ describe('Add new RSS filter API', () => {
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('msg')
         expect(res.body.msg).toBe('Please enter all fields')
+    })
+})
+
+describe('Get RSS filter API', () => {
+    it('should get a RSS filter', async () => {
+            const req = {
+            params: {
+                id: '1',
+            }
+        }
+
+        const res = await getRssFilter(req)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilter')
+        expect(res.body.rssFilter).toHaveProperty('id')
+        expect(res.body.rssFilter).toHaveProperty('name')
+        expect(res.body.rssFilter).toHaveProperty('url')
+        expect(res.body.rssFilter.id).toBe(1)
+        expect(res.body.rssFilter.name).toBe('Actualités Bitcoin')
+        expect(res.body.rssFilter.url).toBe('/tag/bitcoin/feed/')
+    })
+
+    it('should get new RSS filter', async () => {
+        const req = {
+            params: {
+                id: '10',
+            }
+        }
+
+        const res = await getRssFilter(req)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilter')
+        expect(res.body.rssFilter).toHaveProperty('id')
+        expect(res.body.rssFilter).toHaveProperty('name')
+        expect(res.body.rssFilter).toHaveProperty('url')
+        expect(res.body.rssFilter.id).toBe(10)
+        expect(res.body.rssFilter.name).toBe('test')
+        expect(res.body.rssFilter.url).toBe('test')
+    })
+
+    it('should not get a RSS filter', async () => {
+        const req = {
+            params: {
+                id: '',
+            }
+        }
+
+        const res = await getRssFilter(req)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Invalid credentials')
+    })
+
+    it('should not get a RSS filter', async () => {
+        const req = {
+            params: {
+                id: '0',
+            }
+        }
+
+        const res = await getRssFilter(req)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Invalid credentials')
+    })
+})
+
+describe('Get all RSS filters API', () => {
+    it('should get all RSS filters', async () => {
+        const res = await getRssFilters()
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilters')
+        expect(res.body.rssFilters).toHaveLength(10)
+    })
+
+    it('should get all RSS filters', async () => {
+
+        await prisma.$executeRaw`SET foreign_key_checks = 0;`
+        await prisma.$executeRaw`TRUNCATE TABLE RSS_filter;`
+        await prisma.$executeRaw`SET foreign_key_checks = 1;`
+
+        const res = await getRssFilters()
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No RSS filters found')
     })
 })

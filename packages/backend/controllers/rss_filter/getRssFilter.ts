@@ -10,7 +10,7 @@ export interface ParamRequest extends Request {
 
 
 
-export async function getRssFilter(req: ParamRequest) {
+export async function getRssFilter(req: Partial<ParamRequest>) {
 
     const rssFilterId = req.params.id
     if(!rssFilterId) return { status: 400, body: { msg: 'Invalid credentials' } }
@@ -33,6 +33,26 @@ export async function getRssFilter(req: ParamRequest) {
                 name: rssFilter.name,
                 url: rssFilter.url,
             },
+        }
+    }
+}
+
+export async function getRssFilters() {
+    const rssFilters = await prismaRssFilter.findMany({
+        select: {
+            id: true,
+            name: true,
+            url: true,
+        }
+    })
+
+    if(!rssFilters.length) { return { status: 400, body: { msg: 'No RSS filters found' } } }
+
+    return {
+        status: 200,
+        body: {
+            rssFilters: rssFilters,
+            msg: 'Rss Filters found'
         }
     }
 }

@@ -7,6 +7,7 @@ async function main() {
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
   await prisma.$executeRaw`TRUNCATE TABLE User;`
   await prisma.$executeRaw`TRUNCATE TABLE Role;`
+  await prisma.$executeRaw`TRUNCATE TABLE RSS_filter;`
   await prisma.$executeRaw`SET foreign_key_checks = 1;`
 
   await seedRoles()
