@@ -1,6 +1,6 @@
 import { User as UserInterface } from '@prisma/client'
-import { generateToken } from './utils/Token'
-import { comparePwd } from './utils/Pwd'
+import { generateToken } from '../utils/Token'
+import { comparePwd } from '../utils/Pwd'
 import { prisma } from '../../libs/prisma'
 
 const prismaUser = prisma.user
@@ -47,6 +47,7 @@ export async function loginUser(data: Partial<UserInterface>) {
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+          role: user.roleId,
         },
       },
     }

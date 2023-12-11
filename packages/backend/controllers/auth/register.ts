@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
 // eslint-disable-next-line
 import { User as UserInterface } from '@prisma/client'
+import { generateToken } from '../utils/Token'
+import { generatePwd } from '../utils/Pwd'
 
 import { prisma } from '../../libs/prisma'
 
@@ -9,21 +9,6 @@ const prismaUser = prisma.user
 
 // regex for email validation
 const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-
-// function to generate token
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function generateToken(user: any) {
-  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: 86400,
-  })
-}
-
-// function to generate password hash
-async function generatePwd(pwd: string) {
-  const salt = await bcrypt.genSalt(10)
-  const hash = await bcrypt.hash(pwd, salt)
-  return hash
-}
 
 export async function registerUser(data: Partial<UserInterface>) {
   const { email, firstname, lastname, password } = data
