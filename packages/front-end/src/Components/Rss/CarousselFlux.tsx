@@ -4,19 +4,23 @@ import React, { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import api from "../../axios.config.js";
 import { AxiosResponse } from "axios";
+import defaultImage from "../../assets/defaultImage.png";
 
 interface ImageData {
   image: string;
   description: string;
+  title: string;
+  link: string;
+  imgSrc: string;
 }
 
 const CarousselFlux: React.FC = () => {
   const [groupedImages, setGroupedImages] = useState<ImageData[][]>([]);
 
   useEffect(() => {
-    api.get("/rss")
+    api
+      .get("/rss")
       .then((response: AxiosResponse) => {
-        console.log(response.data);
         const newGroupedImages: ImageData[][] = [];
         while (response.data.length > 0) {
           newGroupedImages.push(response.data.splice(0, 5));
@@ -28,7 +32,6 @@ const CarousselFlux: React.FC = () => {
       });
   }, []);
 
-  console.log(groupedImages);
   return (
     <Container className="containerCarousselFlux" maxWidth="xl">
       <Carousel
@@ -44,18 +47,18 @@ const CarousselFlux: React.FC = () => {
         {groupedImages.map((imagesGroup, index) => (
           <div className="Showcase_div" key={index}>
             {imagesGroup.map(({ title, link, imgSrc }, subIndex) => (
-              <div key={index * 4 + subIndex}>
-                <img
-                  className="Showcase_img"
-                  src={imgSrc}
-                  alt={`img-${index * 4 + subIndex}`}
-                />
-                <div className="Showcase_description">
-                  <a href={link} target="_blank" rel="noopener noreferrer">
-                    {title}
-                  </a>
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                <div key={index * 4 + subIndex}>
+                  <img
+                    className="Showcase_img"
+                    src={imgSrc === "No image" ? defaultImage : imgSrc}
+                    alt={`img-${index * 4 + subIndex}`}
+                  />
+                  <div className="Showcase_description">
+                    <h2>{title}</h2>
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         ))}

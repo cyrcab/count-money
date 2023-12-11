@@ -34,7 +34,7 @@ export const rssreader = async (req: Request, res: Response) => {
       res.json(rssData);
     } else {
       const rssData = [];
-      const rssUrl = `https://cointelegraph.com/rss/tag/bitcoin`;
+      const rssUrl = `https://coinjournal.net/fr/actualites/feed/`;
       const feed = await parser.parseURL(rssUrl);
 
       feed.items.forEach((item) => {
@@ -45,7 +45,7 @@ export const rssreader = async (req: Request, res: Response) => {
         const $ = cheerio.load(contentHtml);
 
         // Find the image element and get its source (src) attribute using the media namespace
-        const imgSrc = $('media\\:content').attr('url');
+        const imgSrc = $('img').attr('src');
 
         // Log the image source
         console.log(imgSrc);
