@@ -1,7 +1,16 @@
 // CryptoList.tsx
 import React, { useState } from "react";
-import { Container, Tabs, Tab, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Container,
+  Tabs,
+  Tab,
+  List,
+  ListItem,
+  ListItemText,
+  } from "@mui/material";
 import "../Css/CryptoList.css";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 const CryptoList: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("topCrypto");
@@ -30,15 +39,21 @@ const CryptoList: React.FC = () => {
         <Tab label="Favorite" value="favorite" />
       </Tabs>
       {selectedTab === "topCrypto" && (
-      <Container>
-      <List>
-        {favoriteCryptos.map((crypto) => (
-          <ListItem key={crypto.id}>
-            <ListItemText primary={`${crypto.name} (${crypto.symbol})`} />
-          </ListItem>
-        ))}
-      </List>
-    </Container>)}
+        <Container>
+          {favoriteCryptos.map((crypto) => (
+            <ButtonGroup
+              className="buttonGroup"
+              orientation="vertical"
+              aria-label="vertical contained button group"
+              variant="text"
+            >
+              <Button key={crypto.id}>
+                {crypto.name} {crypto.symbol}
+              </Button>
+            </ButtonGroup>
+          ))}
+        </Container>
+      )}
       {selectedTab === "favorite" && (
         <Container>
           <List>
