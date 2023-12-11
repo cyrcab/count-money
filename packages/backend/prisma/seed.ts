@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { generatePwd } from '../controllers/utils/Pwd'
 import { seedRoles } from './seedRole'
+import { seedRssFilter } from './seedRssFilter'
 const prisma = new PrismaClient()
 async function main() {
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
@@ -37,7 +38,11 @@ async function main() {
       },
     },
   })
+
+  await seedRssFilter()
+
 }
+
 
 main()
   .then(async () => {
