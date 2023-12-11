@@ -1,4 +1,4 @@
-import {prisma} from '../../libs/prisma'
+import { prisma } from '../../libs/prisma'
 import AuthenticatedRequest from '../../interfaces/request.interface'
 import { User as UserInterface } from '@prisma/client'
 
@@ -17,28 +17,30 @@ export async function updateUser(request: Partial<AuthenticatedRequest>) {
 
     const user = await prismaUser.findUnique({
         where: {
-          id: request.userId,
+            id: request.userId,
         },
-      });
+    });
 
     if (!user) {
         return { status: 400, body: { msg: 'Invalid credentials' } }
     }
 
-    const data = request.body as Partial<UserInterface>
+    const data = request as Partial<UserInterface>
 
-    if (data.firstname) {
+
+    if (data && data.firstname) {
         user.firstname = data.firstname
     }
 
-    if (data.lastname) {
+    if (data && data.lastname) {
         user.lastname = data.lastname
     }
 
-    if (data.email) {
+    if (data && data.email) {
         user.email = data.email
     }
-    if (data.email) {
+
+    if (data && data.email) {
         const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
         if (!regexEmail.test(data.email)) {
             return { status: 400, body: { msg: 'Please enter a valid email' } }
@@ -75,6 +77,6 @@ export async function updateUser(request: Partial<AuthenticatedRequest>) {
                 role: user.roleId,
             },
         }
-    }   
-    
+    }
+
 }

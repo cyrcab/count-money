@@ -1,3 +1,4 @@
+import { updateUser } from '../controllers/user/updateUser'
 import {getUser, getUsers} from '../controllers/user/getUser'
 import {prisma} from '../libs/prisma'
 import { exec } from 'child_process'
@@ -97,5 +98,142 @@ describe('Get all Users API', () => {
 
     })
 
+})
+
+describe('Update User API', () => {
+    it('should update a user', async () => {
+        const data = {
+            userId: 1,
+            firstname: 'Ricardo2',
+            lastname: 'Coco2',
+            email: 'ribcoco3@gmail.com'
+        }
+
+        const res = await updateUser(data)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('user')
+        expect(res.body.user).toHaveProperty('id')
+        expect(res.body.user).toHaveProperty('email')
+        expect(res.body.user).toHaveProperty('firstname')
+        expect(res.body.user).toHaveProperty('lastname')
+        expect(res.body.user).toHaveProperty('role')
+        expect(res.body.user.id).toBe(1)
+        expect(res.body.user.email).toBe('ribcoco3@gmail.com')
+        expect(res.body.user.firstname).toBe('Ricardo2')
+        expect(res.body.user.lastname).toBe('Coco2')
+        expect(res.body.user.role).toBe(2)
+    })
+
+    it('should only update firstname', async () => {
+        const data = {
+            userId: 1,
+            firstname: 'Ricardo3',
+        }
+
+        const res = await updateUser(data)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('user')
+        expect(res.body.user).toHaveProperty('id')
+        expect(res.body.user).toHaveProperty('email')
+        expect(res.body.user).toHaveProperty('firstname')
+        expect(res.body.user).toHaveProperty('lastname')
+        expect(res.body.user).toHaveProperty('role')
+        expect(res.body.user.id).toBe(1)
+        expect(res.body.user.email).toBe('ribcoco3@gmail.com')
+        expect(res.body.user.firstname).toBe('Ricardo3')
+        expect(res.body.user.lastname).toBe('Coco2')
+        expect(res.body.user.role).toBe(2)
+    })
+
+    it('should only update lastname', async () => {
+        const data = {
+            userId: 1,
+            lastname: 'Coco3',
+        }
+
+        const res = await updateUser(data)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('user')
+        expect(res.body.user).toHaveProperty('id')
+        expect(res.body.user).toHaveProperty('email')
+        expect(res.body.user).toHaveProperty('firstname')
+        expect(res.body.user).toHaveProperty('lastname')
+        expect(res.body.user).toHaveProperty('role')
+        expect(res.body.user.id).toBe(1)
+        expect(res.body.user.email).toBe('ribcoco3@gmail.com')
+        expect(res.body.user.firstname).toBe('Ricardo3')
+        expect(res.body.user.lastname).toBe('Coco3')
+        expect(res.body.user.role).toBe(2)
+    })
+
+    it('should only update email', async () => {
+        const data = {
+            userId: 1,
+            email: 'ribcoco4@gmail.com',
+        }
+
+        const res = await updateUser(data)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('user')
+        expect(res.body.user).toHaveProperty('id')
+        expect(res.body.user).toHaveProperty('email')
+        expect(res.body.user).toHaveProperty('firstname')
+        expect(res.body.user).toHaveProperty('lastname')
+        expect(res.body.user).toHaveProperty('role')
+        expect(res.body.user.id).toBe(1)
+        expect(res.body.user.email).toBe('ribcoco4@gmail.com')
+        expect(res.body.user.firstname).toBe('Ricardo3')
+        expect(res.body.user.lastname).toBe('Coco3')
+        expect(res.body.user.role).toBe(2)
+    })
+
+    it('should not update a user if id is invalid', async () => {
+        const userData = {
+            userId: 0,
+            firstname: 'Ricardo3',
+            lastname: 'Coco3',
+            email: 'ribcoco5@gmail.com'
+        }
+
+        const res = await updateUser(userData)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Invalid credentials')
+    })
+
+    it('should not update a user if email is invalid', async () => {
+        const userData = {
+            userId: 1,
+            firstname: 'Ricardo3',
+            lastname: 'Coco3',
+            email: 'invalidEmail'
+        }
+
+        const res = await updateUser(userData)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Please enter a valid email')
+    })
+
+    it('should not update a user if email is already taken', async () => {
+        const userData = {
+            userId: 1,
+            firstname: 'Ricardo3',
+            lastname: 'Coco3',
+            email: 'ribcoco2@gmail.com'
+        }
+
+        const res = await updateUser(userData)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Email already taken')
+    })
 })
 
