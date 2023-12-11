@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { Request, Response, NextFunction } from 'express'
 import authRouter from './routes/auth.route'
+import userRouter from './routes/user.route'
 import rssRouter from './routes/rss.route'
 
 const app = express();
@@ -19,7 +20,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Routes
-app.use('/api/auth', authRouter);
+app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
+
 
 // Faire une requête pour obtenir le flux RSS
 app.use('/api/rss', rssRouter);
