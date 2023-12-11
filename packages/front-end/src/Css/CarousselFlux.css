@@ -11,11 +11,9 @@
 }
 
 .Showcase_div {
-  margin-left: 2vh;
-  margin-right: 2vh;
   display: flex;
   align-content: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .Showcase_img {
