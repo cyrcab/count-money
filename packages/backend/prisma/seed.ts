@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { generatePwd } from '../controllers/auth/utils/Pwd'
+import { generatePwd } from '../controllers/utils/Pwd'
 import { seedRoles } from './seedRole'
 const prisma = new PrismaClient()
 async function main() {
