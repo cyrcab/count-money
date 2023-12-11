@@ -12,7 +12,12 @@ import "../Css/CryptoList.css";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
-const CryptoList: React.FC = () => {
+interface CryptoListProps {
+  onSelectCrypto: (cryptoName: string) => void;
+}
+
+
+const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto })  => {
   const [selectedTab, setSelectedTab] = useState<string>("topCrypto");
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
@@ -46,6 +51,7 @@ const CryptoList: React.FC = () => {
               orientation="vertical"
               aria-label="vertical contained button group"
               variant="text"
+              onClick={() => onSelectCrypto(crypto.symbol)}
             >
               <Button key={crypto.id}>
                 {crypto.name} {crypto.symbol}
