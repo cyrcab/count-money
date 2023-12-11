@@ -60,6 +60,7 @@ model UserRSS_filter {
 model RSS_filter {
   id             Int              @id @default(autoincrement())
   name           String
+  url            String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   UserRSS_filter UserRSS_filter[]

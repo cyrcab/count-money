@@ -5,9 +5,9 @@ const prismaRssFilter = prisma.rSS_filter
 
 export async function addNewRssFilter(data: Partial<RssFilterInterface>) {
 
-    const { name } = data
+    const { name, url } = data
 
-    if (!name) {
+    if (!name || !url ) {
         return { status: 400, body: { msg: 'Please enter all fields' } }
     }
 
@@ -15,6 +15,7 @@ export async function addNewRssFilter(data: Partial<RssFilterInterface>) {
         const rssFilter = await prismaRssFilter.create({
             data: {
                 name: name,
+                url: url,
             },
         })
         return { status: 201, body: { rssFilter } }
