@@ -1,5 +1,6 @@
 import { getRssFilter, getRssFilters } from '../controllers/rss_filter/getRssFilter'
 import {addNewRssFilter} from '../controllers/rss_filter/addRssFilter'
+import { updateRss } from '../controllers/rss_filter/updateRssFilter'
 import {prisma} from '../libs/prisma'
 import { exec } from 'child_process'
 import { promisify } from 'util'
@@ -179,5 +180,78 @@ describe('Get all RSS filters API', () => {
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('msg')
         expect(res.body.msg).toBe('No RSS filters found')
+    })
+})
+
+describe('Update RSS filter API', () => {
+
+    it('should update a RSS filter', async () => {
+        await execAsync('ts-node prisma/seed.ts')
+
+
+        const data = {
+            name: 'test2',
+            url: 'test2',
+        }
+
+        const res = await updateRss(data, 1)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilter')
+        expect(res.body.rssFilter).toHaveProperty('id')
+        expect(res.body.rssFilter).toHaveProperty('name')
+        expect(res.body.rssFilter).toHaveProperty('url')
+        expect(res.body.rssFilter.id).toBe(1)
+        expect(res.body.rssFilter.name).toBe('test2')
+        expect(res.body.rssFilter.url).toBe('test2')
+    })
+
+    it('should update a RSS filter', async () => {
+        const data = {
+            name: 'test3',
+            url: '',
+        }
+
+        const res = await updateRss(data, 9)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilter')
+        expect(res.body.rssFilter).toHaveProperty('id')
+        expect(res.body.rssFilter).toHaveProperty('name')
+        expect(res.body.rssFilter).toHaveProperty('url')
+        expect(res.body.rssFilter.id).toBe(9)
+        expect(res.body.rssFilter.name).toBe('test3')
+        expect(res.body.rssFilter.url).toBe('/category/evenements/feed/')
+    })
+
+    it('should update a RSS filter', async () => {
+        const data = {
+            name: '',
+            url: 'test4',
+        }
+
+        const res = await updateRss(data, 9)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilter')
+        expect(res.body.rssFilter).toHaveProperty('id')
+        expect(res.body.rssFilter).toHaveProperty('name')
+        expect(res.body.rssFilter).toHaveProperty('url')
+        expect(res.body.rssFilter.id).toBe(9)
+        expect(res.body.rssFilter.name).toBe('test3')
+        expect(res.body.rssFilter.url).toBe('test4')
+    })
+
+    it('should not update a RSS filter', async () => {
+        const data = {
+            name: '',
+            url: '',
+        }
+
+        const res = await updateRss(data, 20)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No RSS filter found')
     })
 })
