@@ -1,7 +1,7 @@
 import { getRssFilter, getRssFilters, getRssFiltersByUser } from '../controllers/rss_filter/getRssFilter'
 import {addNewRssFilter, addRssToUser} from '../controllers/rss_filter/addRssFilter'
 import { updateRss } from '../controllers/rss_filter/updateRssFilter'
-import { deleteRss } from '../controllers/rss_filter/deleteRssFilter'
+import { deleteRss, deleteRssToUser } from '../controllers/rss_filter/deleteRssFilter'
 import {prisma} from '../libs/prisma'
 import { exec } from 'child_process'
 import { promisify } from 'util'
@@ -349,5 +349,41 @@ describe('Get RSS filters by user API', () => {
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('msg')
         expect(res.body.msg).toBe('Please enter id')
+    })
+})
+
+describe('Delete RSS filter to user API', () => {
+    it('should delete a RSS filter to user', async () => {
+        const res = await deleteRssToUser(1, 5)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('userRssFilter')
+        expect(res.body.userRssFilter).toHaveProperty('userId')
+        expect(res.body.userRssFilter.userId).toBe(1)
+        expect(res.body.userRssFilter.RSS_filterId).toBe(5)
+    })
+
+    it('should not delete a RSS filter to user', async () => {
+        const res = await deleteRssToUser(1, 5)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No RSS filter found')
+    })
+
+    it('should not delete a RSS filter to user', async () => {
+        const res = await deleteRssToUser(20, 1)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No user found')
+    })
+
+    it('should not delete a RSS filter to user', async () => {
+        const res = await deleteRssToUser(null, null)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Please enter all fields')
     })
 })
