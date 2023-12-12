@@ -10,7 +10,7 @@ const parser = new Parser();
 export const rssreader = async (req: Request, res: Response) => {
   try {
     const userId = req.body.userId;
-
+    
     if (userId) {
       const userRSSFilters = await prisma.userRSS_filter.findMany({
         where: {
