@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {addNewRssFilter, addRssToUser} from './addRssFilter'
 import {getRssFilter, ParamRequest, getRssFilters, getRssFiltersByUser} from './getRssFilter'
 import { updateRss } from "./updateRssFilter";
-import { deleteRss } from "./deleteRssFilter";
+import { deleteRss, deleteRssToUser } from "./deleteRssFilter";
 
 export async function addRssFilter(req: Request, res: Response) {
     const result = await addNewRssFilter(req.body)
@@ -45,5 +45,13 @@ export async function getRssFiltersByUserController(req: Request, res: Response)
     const idUser = req.params.id
 
     const result = await getRssFiltersByUser(parseInt(idUser,10))
+    return res.status(result.status).json(result.body);
+}
+
+export async function deleteRssToUserController(req: Request, res: Response) {
+    const idUser = req.params.id
+    const idRss = req.params.idRss
+
+    const result = await deleteRssToUser(parseInt(idUser,10), parseInt(idRss,10))
     return res.status(result.status).json(result.body);
 }
