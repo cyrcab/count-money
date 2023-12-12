@@ -47,7 +47,7 @@ describe('Crypto API', () => {
     })
     expect(response.status).toBe(400)
     expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Crypto already exists')
+    expect(response.body.message).toBe('This entity already exist.')
   })
 
   it('should not create a new crypto if name is missing', async () => {
@@ -105,7 +105,7 @@ describe('Crypto API', () => {
     })
     expect(response.status).toBe(404)
     expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Crypto does not exist')
+    expect(response.body.message).toBe('Not found')
   })
 
   it('should delete a crypto', async () => {
@@ -119,6 +119,6 @@ describe('Crypto API', () => {
     const response = await cryptoTest.delete('/api/crypto/2')
     expect(response.status).toBe(404)
     expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Crypto does not exist')
+    expect(response.body.message).toBe('Not found')
   })
 })
