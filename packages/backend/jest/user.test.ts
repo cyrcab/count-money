@@ -11,6 +11,8 @@ beforeAll(async () => {
   
     // Clear database before tests
     await prisma.$executeRaw`TRUNCATE TABLE User;`
+    await prisma.$executeRaw`TRUNCATE TABLE Article;`
+    await prisma.$executeRaw`TRUNCATE TABLE Crypto;`
   
     await prisma.$executeRaw`SET foreign_key_checks = 1;`
 
