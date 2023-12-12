@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string | null>("Crypto");
   const [selectedCrypto, setSelectedCrypto] = useState<{ name: string; symbol: string } | null>(null);
 
-  const handleCryptoSelection = (crypto: { name: string; symbol: string }) => {
+  const handleCryptoSelection = (crypto: { name: string; symbol: string } | null) => {
     setSelectedCrypto(crypto);
   };
 

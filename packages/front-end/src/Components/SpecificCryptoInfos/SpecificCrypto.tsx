@@ -28,7 +28,7 @@ interface CryptoDataList {
 
 interface SpecificCryptoProps {
   selectedCrypto: CryptoData;
-  onSelectCrypto: (cryptoName: string) => void;
+  onSelectCrypto: (crypto: { name: string; symbol: string } | null) => void;
 }
 
 const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
@@ -40,7 +40,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleBack = () => {
-    onSelectCrypto("");
+    onSelectCrypto(null);
   };
 
   // Ajoutez le "EUR" à la fin de selectedCrypto si ce n'est pas déjà le cas
@@ -80,7 +80,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
             >
               Add to Watchlist
             </Button>
-            <IconButton onClick={handleBack} color="primary">
+            <IconButton onClick={handleBack}  color="primary">
               <ArrowBackIcon />
             </IconButton>
           </div>
