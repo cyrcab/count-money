@@ -6,7 +6,7 @@
 
 .TopbarSpecificCrypto{
     display: flex;
-    height: 20%;
+    height: 16%;
     width: 100%;
     justify-content: space-around;
     align-items: center;
@@ -26,9 +26,13 @@
     align-items: center;
     width: 100%;
     height: 10%;
+    margin-bottom: 1%;
 }
 
 .selectedOnglet{
     height: 68%;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
