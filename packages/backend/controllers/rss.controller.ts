@@ -46,11 +46,6 @@ export const rssreader = async (req: Request, res: Response) => {
 
         // Find the image element and get its source (src) attribute using the media namespace
         const imgSrc = $('img').attr('src');
-
-        // Log the image source
-        console.log(imgSrc);
-
-        // Pushing title and image URL to rssData array
         rssData.push({
           title: item.title,
           link: item.link,

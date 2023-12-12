@@ -1,16 +1,39 @@
 // InformationComponent.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 interface InformationComponentProps {
-  // Ajoutez les propriétés nécessaires pour le composant d'informations
+  selectedCrypto: {
+    name: string;
+    symbol: string;
+    price?: string;
+    iconUrl?: string;
+  };
 }
 
-const InformationComponent: React.FC<InformationComponentProps> = () => {
-  // Implémentez ici la logique pour le composant d'informations
+const InformationComponent: React.FC<InformationComponentProps> = ({selectedCrypto }) => {
+  const [information, setInformation] = useState<string>("");
+
+  useEffect(() => {
+    axios
+      .get("https://api.coingecko.com/api/v3/coins/" + selectedCrypto.name.toLowerCase())
+      .then((response) => {
+        setInformation(response.data.description.en);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [selectedCrypto]);
+
+  // Fonction pour rendre les liens dans la chaîne de texte
+  const renderLinks = (html: string) => {
+    return { __html: html };
+  };
+
   return (
     <div>
-      <p>Informations ici</p>
-      {/* Ajoutez le code nécessaire pour afficher les informations */}
+      {/* Utilisation de dangerouslySetInnerHTML pour afficher les liens */}
+      <div dangerouslySetInnerHTML={renderLinks(information)} />
     </div>
   );
 };

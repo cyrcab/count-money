@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
 interface CryptoListProps {
-  onSelectCrypto: (cryptoName: string) => void;
+  onSelectCrypto: (crypto: { name: string; symbol: string }) => void;
 }
 
 
@@ -47,16 +47,16 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto })  => {
         <Container>
           {favoriteCryptos.map((crypto) => (
             <ButtonGroup
-              className="buttonGroup"
-              orientation="vertical"
-              aria-label="vertical contained button group"
-              variant="text"
-              onClick={() => onSelectCrypto(crypto.symbol)}
-            >
-              <Button key={crypto.id}>
-                {crypto.name} {crypto.symbol}
-              </Button>
-            </ButtonGroup>
+            className="buttonGroup"
+            orientation="vertical"
+            aria-label="vertical contained button group"
+            variant="text"
+            key={crypto.id}
+          >
+            <Button onClick={() => onSelectCrypto(crypto)}>
+              {crypto.name} {crypto.symbol}
+            </Button>
+          </ButtonGroup>
           ))}
         </Container>
       )}

@@ -16,10 +16,10 @@ import SpecificCrypto from "../Components/SpecificCryptoInfos/SpecificCrypto";
 
 const Home: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string | null>("Crypto");
-  const [selectedCrypto, setSelectedCrypto] = useState<string | null>(null);
+  const [selectedCrypto, setSelectedCrypto] = useState<{ name: string; symbol: string } | null>(null);
 
-  const handleCryptoSelection = (cryptoName: string) => {
-    setSelectedCrypto(cryptoName);
+  const handleCryptoSelection = (crypto: { name: string; symbol: string }) => {
+    setSelectedCrypto(crypto);
   };
 
   const handleTabChange = (tab: string) => {
@@ -43,9 +43,9 @@ const Home: React.FC = () => {
         <Box className="containerCrypto">
           {selectedTab === "Crypto" && (
             <>
-              <CryptoList onSelectCrypto={handleCryptoSelection} />
-              {selectedCrypto ? <SpecificCrypto selectedCrypto={selectedCrypto} onSelectCrypto={handleCryptoSelection} /> : <TopCryptoInfos />}
-            </>
+            <CryptoList onSelectCrypto={handleCryptoSelection} />
+            {selectedCrypto ? <SpecificCrypto selectedCrypto={selectedCrypto} onSelectCrypto={handleCryptoSelection}/> : <TopCryptoInfos />}
+          </>
           )}
 
           {selectedTab === "Actualité" && (

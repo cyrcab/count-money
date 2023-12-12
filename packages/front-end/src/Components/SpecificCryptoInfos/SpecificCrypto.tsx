@@ -13,14 +13,21 @@ import ChartComponent from "./Chart.tsx";
 import InformationComponent from "./Informations.tsx";
 
 interface CryptoData {
+  name: string;
   symbol: string;
-  price: string;
-  iconUrl?: string; // Ajoutez le "?" pour indiquer que c'est optionnel
-  // ... autres propriétés
+  price?: string;
+  iconUrl?: string;
 }
 
+interface CryptoDataList {
+  symbol: string;
+  price?: string;
+  iconUrl?: string;
+}
+
+
 interface SpecificCryptoProps {
-  selectedCrypto: string;
+  selectedCrypto: CryptoData;
   onSelectCrypto: (cryptoName: string) => void;
 }
 
@@ -37,11 +44,11 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   };
 
   // Ajoutez le "EUR" à la fin de selectedCrypto si ce n'est pas déjà le cas
-  const normalizedSelectedCrypto = selectedCrypto.toUpperCase().endsWith("EUR")
-    ? selectedCrypto.toUpperCase()
-    : `${selectedCrypto.toUpperCase()}EUR`;
+  const normalizedSelectedCrypto = selectedCrypto.symbol.toUpperCase().endsWith("EUR")
+    ? selectedCrypto.symbol.toUpperCase()
+    : `${selectedCrypto.symbol.toUpperCase()}EUR`;
 
-  const selectedCryptoInfo: CryptoData | null =
+  const selectedCryptoInfo: CryptoDataList | null =
     cryptoData[normalizedSelectedCrypto as keyof typeof cryptoData] || null;
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -55,8 +62,9 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
           <div className="TopbarSpecificCrypto">
             <div className="priceIcon">
               {selectedCryptoInfo.iconUrl && (
-                <img src={selectedCryptoInfo.iconUrl} alt={selectedCrypto} />
+                <img src={selectedCryptoInfo.iconUrl} />
               )}
+              <p>{selectedCrypto.name}</p>
               <p>{selectedCryptoInfo.price}€</p>
             </div>
             <Button
@@ -72,8 +80,8 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
             >
               Add to Watchlist
             </Button>
-            <IconButton color="primary">
-              <ArrowBackIcon onClick={handleBack} />
+            <IconButton onClick={handleBack} color="primary">
+              <ArrowBackIcon />
             </IconButton>
           </div>
           <div className="ongletSelection">
@@ -88,7 +96,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
           </div>
           <div className="selectedOnglet">
             {selectedTab === 0 && <ChartComponent />}
-            {selectedTab === 1 && <InformationComponent />}
+            {selectedTab === 1 && <InformationComponent selectedCrypto={selectedCrypto}/>}
           </div>
         </>
       )}
