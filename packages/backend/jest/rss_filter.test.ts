@@ -1,5 +1,5 @@
 import { getRssFilter, getRssFilters } from '../controllers/rss_filter/getRssFilter'
-import {addNewRssFilter} from '../controllers/rss_filter/addRssFilter'
+import {addNewRssFilter, addRssToUser} from '../controllers/rss_filter/addRssFilter'
 import { updateRss } from '../controllers/rss_filter/updateRssFilter'
 import { deleteRss } from '../controllers/rss_filter/deleteRssFilter'
 import {prisma} from '../libs/prisma'
@@ -13,7 +13,7 @@ beforeAll(async () => {
     // Clear database before tests
     await prisma.$executeRaw`TRUNCATE TABLE User;`
     await prisma.$executeRaw`TRUNCATE TABLE RSS_filter;`
-  
+    await prisma.$executeRaw`TRUNCATE TABLE UserRSS_filter;`
     await prisma.$executeRaw`SET foreign_key_checks = 1;`
 
     await execAsync('ts-node prisma/seed.ts')
@@ -24,7 +24,7 @@ afterAll(async () => {
     // Clear database before tests
     await prisma.$executeRaw`TRUNCATE TABLE User;`
     await prisma.$executeRaw`TRUNCATE TABLE RSS_filter;`
-
+    await prisma.$executeRaw`TRUNCATE TABLE UserRSS_filter;`
     await prisma.$executeRaw`SET foreign_key_checks = 1;`
 
 
@@ -278,5 +278,48 @@ describe('Delete RSS filter API', () => {
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('msg')
         expect(res.body.msg).toBe('No RSS filter found')
+    })
+})
+
+describe('Add RSS filter to user API', () => {
+    it('should add a RSS filter to user', async () => {
+        const res = await addRssToUser(1, 5)
+
+        expect(res.status).toBe(201)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('RSS filter added')
+
+    })
+
+    it('should not add a RSS filter to user', async () => {
+        const res = await addRssToUser(1, 5)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('RSS filter already added')
+    })
+
+    it('should not add a RSS filter to user', async () => {
+        const res = await addRssToUser(1, 20)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No RSS filter found')
+    })
+
+    it('should not add a RSS filter to user', async () => {
+        const res = await addRssToUser(20, 1)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No user found')
+    })
+
+    it('should not add a RSS filter to user', async () => {
+        const res = await addRssToUser(null, null)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Please enter all fields')
     })
 })
