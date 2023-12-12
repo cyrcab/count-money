@@ -6,7 +6,7 @@ import userRouter from './routes/user.route'
 import rssRouter from './routes/rss.route'
 import cryptoRouter from './routes/crypto.route'
 
-const app = express()
+export const app = express()
 const port = 3000
 
 app.use(bodyParser.json())

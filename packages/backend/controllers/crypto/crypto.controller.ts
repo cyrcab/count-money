@@ -13,6 +13,9 @@ export async function createCrypto(req: Request, res: Response) {
     if (error instanceof PrismaClientValidationError) {
       return res.status(400).json({ message: 'Bad request' })
     }
+    if (error.code === 'P2002') {
+      return res.status(400).json({ message: 'Crypto already exists' })
+    }
     return res.status(500).json({ message: 'Internal server error' })
   }
 }
@@ -54,6 +57,12 @@ export async function updateCrypto(req: Request, res: Response) {
     if (error instanceof PrismaClientValidationError) {
       return res.status(400).json({ message: 'Bad request' })
     }
+    if (error.code === 'P2002') {
+      return res.status(400).json({ message: 'Crypto already exists' })
+    }
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'Crypto does not exist' })
+    }
     return res.status(500).json({ message: 'Internal server error' })
   }
 }
@@ -63,11 +72,11 @@ export async function deleteCrypto(req: Request, res: Response) {
     const result: Crypto | undefined = await prisma.crypto.delete({
       where: { id: Number(req.params.id) },
     })
-    if (!result) {
-      return res.status(404).json({ message: 'Not found' })
-    }
-    return res.status(204).json(result)
+    return res.status(200).json(result)
   } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'Crypto does not exist' })
+    }
     return res.status(500).json({ message: 'Internal server error' })
   }
 }
