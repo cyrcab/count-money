@@ -47,9 +47,9 @@ model Article {
 }
 
 model UserRSS_filter {
-  user         User       @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
-  RSS_filter   RSS_filter @relation(fields: [RSS_filterId], references: [id])
+  RSS_filter   RSS_filter @relation(fields: [RSS_filterId], references: [id], onDelete: Cascade)
   RSS_filterId Int
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
