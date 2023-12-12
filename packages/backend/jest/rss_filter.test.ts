@@ -1,4 +1,4 @@
-import { getRssFilter, getRssFilters } from '../controllers/rss_filter/getRssFilter'
+import { getRssFilter, getRssFilters, getRssFiltersByUser } from '../controllers/rss_filter/getRssFilter'
 import {addNewRssFilter, addRssToUser} from '../controllers/rss_filter/addRssFilter'
 import { updateRss } from '../controllers/rss_filter/updateRssFilter'
 import { deleteRss } from '../controllers/rss_filter/deleteRssFilter'
@@ -321,5 +321,33 @@ describe('Add RSS filter to user API', () => {
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('msg')
         expect(res.body.msg).toBe('Please enter all fields')
+    })
+})
+
+describe('Get RSS filters by user API', () => {
+    it('should get RSS filters by user', async () => {
+        const res = await getRssFiltersByUser(1)
+
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveProperty('rssFilters')
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.rssFilters).toHaveLength(2)
+        expect(res.body.msg).toBe('Rss Filters found')
+    })
+
+    it('should not get RSS filters by user', async () => {
+        const res = await getRssFiltersByUser(20)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('No user found')
+    })
+
+    it('should not get RSS filters by user', async () => {
+        const res = await getRssFiltersByUser(null)
+
+        expect(res.status).toBe(400)
+        expect(res.body).toHaveProperty('msg')
+        expect(res.body.msg).toBe('Please enter id')
     })
 })
