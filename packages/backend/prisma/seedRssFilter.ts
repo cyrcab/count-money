@@ -44,4 +44,29 @@ export async function seedRssFilter() {
 
    
   })
+
+  await prisma.userRSS_filter.createMany({
+    data: [
+      {
+        userId: 1,
+        RSS_filterId: 1
+      },
+      {
+        userId: 1,
+        RSS_filterId: 2
+      },
+      {
+        userId: 2,
+        RSS_filterId: 5
+      },
+      {
+        userId: 2,
+        RSS_filterId: 6
+      },
+      {
+        userId: 2,
+        RSS_filterId: 7
+      },
+    ],
+  })
 }
