@@ -1,0 +1,29 @@
+.ContainerUserManagement {
+    background-color: #43457f;
+    padding: 20px;
+    line-height: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+}
+
+.UserTableContainer {
+    width: 80%;
+  }
+
+.AddButton {
+    height: 50px;
+}
+
+.custom-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+} 
+
+.DialogButton {
+    display: flex;
+    justify-content: row;
+    justify-content: space-between;
+}
