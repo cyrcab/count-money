@@ -31,13 +31,6 @@ interface SpecificCryptoProps {
   onSelectCrypto: (crypto: { name: string; symbol: string } | null) => void;
 }
 
-enum BinanceIntervals {
-  '1d' = '1d',
-  '1m' = '1m',
-  '1h' = '1h',
-}
-
-
 const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   selectedCrypto,
   onSelectCrypto,
