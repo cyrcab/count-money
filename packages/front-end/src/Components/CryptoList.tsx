@@ -12,7 +12,12 @@ import "../Css/CryptoList.css";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
-const CryptoList: React.FC = () => {
+interface CryptoListProps {
+  onSelectCrypto: (crypto: { name: string; symbol: string }) => void;
+}
+
+
+const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto })  => {
   const [selectedTab, setSelectedTab] = useState<string>("topCrypto");
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
@@ -42,15 +47,16 @@ const CryptoList: React.FC = () => {
         <Container>
           {favoriteCryptos.map((crypto) => (
             <ButtonGroup
-              className="buttonGroup"
-              orientation="vertical"
-              aria-label="vertical contained button group"
-              variant="text"
-            >
-              <Button key={crypto.id}>
-                {crypto.name} {crypto.symbol}
-              </Button>
-            </ButtonGroup>
+            className="buttonGroup"
+            orientation="vertical"
+            aria-label="vertical contained button group"
+            variant="text"
+            key={crypto.id}
+          >
+            <Button onClick={() => onSelectCrypto(crypto)}>
+              {crypto.name} {crypto.symbol}
+            </Button>
+          </ButtonGroup>
           ))}
         </Container>
       )}

@@ -27,8 +27,8 @@ const CarousselFlux: React.FC = () => {
       .get("/rss")
       .then((response: AxiosResponse) => {
         const newGroupedImages: ImageData[][] = [];
-        while (response.data.length > 0) {
-          newGroupedImages.push(response.data.splice(0, 5));
+        while (response.data.rssData.length > 0) {
+          newGroupedImages.push(response.data.rssData.splice(0, 5));
         }
         setGroupedImages(newGroupedImages);
       })
@@ -36,7 +36,7 @@ const CarousselFlux: React.FC = () => {
         console.log(error);
       });
   }, []);
-
+  
   return (
     <Container className="containerCarousselFlux" maxWidth="xl">
       <Carousel

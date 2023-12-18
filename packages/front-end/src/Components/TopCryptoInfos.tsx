@@ -21,7 +21,7 @@ const mockCryptoData: CryptoInfo[] = [
     price: 50000,
     hourlyChange: 2.5,
     dailyChange: -1.3,
-    weeklyChange: 5.8,
+    weeklyChange: 5.8,  
     marketCap: 900000000000,
     volume: 80000000000,
   },
