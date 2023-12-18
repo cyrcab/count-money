@@ -31,6 +31,13 @@ interface SpecificCryptoProps {
   onSelectCrypto: (crypto: { name: string; symbol: string } | null) => void;
 }
 
+enum BinanceIntervals {
+  '1d' = '1d',
+  '1m' = '1m',
+  '1h' = '1h',
+}
+
+
 const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   selectedCrypto,
   onSelectCrypto,
@@ -38,6 +45,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   const cryptoData = useSelector((state: RootState) => state.crypto);
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+
 
   const handleBack = () => {
     onSelectCrypto(null);
@@ -95,7 +103,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
             </Tabs>
           </div>
           <div className="selectedOnglet">
-            {selectedTab === 0 && <ChartComponent />}
+            {selectedTab === 0 && <ChartComponent symbol={selectedCrypto.symbol}/>}
             {selectedTab === 1 && <InformationComponent selectedCrypto={selectedCrypto}/>}
           </div>
         </>
