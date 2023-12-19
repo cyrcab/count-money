@@ -97,8 +97,8 @@ const UserManagement: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="ContainerUserManagement" >
+    <div className="containerUserManagement">
+      <div >
         <TableContainer component={Paper} className="UserTableContainer">
           <Table className="UserTable">
             <TableHead>

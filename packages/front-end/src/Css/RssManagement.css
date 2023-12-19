@@ -1,0 +1,13 @@
+.containerRssManagement {
+    background-color: #43457f;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    align-items: center;
+    max-width: 80vw;
+    margin: auto;
+    padding-top: 20px;
+    gap: 20px;  
+    padding-bottom: 20px;
+
+}

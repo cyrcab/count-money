@@ -6,11 +6,11 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+
 }
 
 .AdminTheme {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -19,3 +19,8 @@
     flex-grow: 1; /* Utilisation de flex-grow pour prendre tout l'espace restant */
     overflow-y: auto; /* Ajout d'un défilement vertical si le contenu dépasse */
   }
+
+  .unselectedTab {
+    color: white !important;
+  }
+  

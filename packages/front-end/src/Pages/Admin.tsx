@@ -1,53 +1,50 @@
 import React, { useState } from "react";
 import "../Css/Admin.css";
-import { Container, Tab, Tabs } from "@mui/material";
+import { Button, Container, Tab, Tabs } from "@mui/material";
 import CryptoManagement from "../Components/admin/CryptoManagement";
 import RssManagement from "../Components/admin/RssManagement";
 import UserManagement from "../Components/admin/UserManagement";
-import logo from "../assets/logo.jpg";
 
 const Admin: React.FC = () => {
-    const [selectedTab, setSelectedTab] = useState<string>();
-
+    const [selectedTab, setSelectedTab] = useState<string>("CryptoManagement");
+  
     const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
-        setSelectedTab(newValue);
-      };
-
+      setSelectedTab(newValue);
+    };
+  
     const renderTabContent = () => {
-    switch (selectedTab) {
+      switch (selectedTab) {
         case "CryptoManagement":
-            return <CryptoManagement />;
+          return <CryptoManagement />;
         case "RssManagement":
-            return <RssManagement />;
+          return <RssManagement />;
         case "UserManagement":
-            return <UserManagement />;
+          return <UserManagement />;
         default:
-            return <CryptoManagement />;
-    }
-};
-
+          return <CryptoManagement />;
+      }
+    };
+  
     return (
-    <div className="AdminLayout">
+      <div className="AdminLayout">
         <div className="AdminTheme">
-            <Container>
-                <Tabs
-                    value={selectedTab}
-                    onChange={handleTabChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                >
-                    <Tab label="CryptoManagement" value="CryptoManagement"/>
-                    <Tab label="RssManagement" value="RssManagement" />
-                    <Tab label="UserManagement" value="UserManagement"/>
-                </Tabs>
-            </Container>
+          <Container>
+            <Tabs
+              value={selectedTab}
+              onChange={handleTabChange}
+              indicatorColor="primary"
+              sx={{fontSize : "70px" }}
+            >
+              <Tab label="CryptoManagement" value="CryptoManagement" className={selectedTab !== "CryptoManagement" ? "unselectedTab" : ""}/>
+              <Tab label="RssManagement" value="RssManagement" className={selectedTab !== "RssManagement" ? "unselectedTab" : ""} />
+              <Tab label="UserManagement" value="UserManagement" className={selectedTab !== "UserManagement" ? "unselectedTab" : ""}/>
+            </Tabs>
+          </Container>
+          <Button>LOGOUT</Button>
         </div>
-        <div className="AdminComponent">
-         {renderTabContent()}
-        </div>
-    </div>
-
-
-  );
-}
-export default Admin;
+        <div className="AdminComponent">{renderTabContent()}</div>
+      </div>
+    );
+  };
+  
+  export default Admin;
