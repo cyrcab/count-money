@@ -7,6 +7,7 @@ import rssRouter from './routes/rss.route'
 import cryptoRouter from './routes/crypto.route'
 import rssFilterRouter from './routes/rssFilter.route'
 import { redisClient } from './libs/redis'
+import cookieParser from 'cookie-parser'
 
 export const app = express()
 const port = 3000
@@ -24,7 +25,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
   next()
 })
-
+app.use(cookieParser())
 // Routes
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
