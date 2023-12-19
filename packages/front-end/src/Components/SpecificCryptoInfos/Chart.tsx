@@ -1,13 +1,13 @@
 // Importez les modules nécessaires
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import ReactApexChart from "react-apexcharts";
 import "../../Css/chart.css";
-import api from "../../axios.config";
 import { ApexOptions } from "apexcharts";
+import { useGetCryptoExternalQuery } from "../../api";
 
 // Enum pour les intervalles de Binance
 enum BinanceIntervals {
@@ -23,7 +23,7 @@ interface BinanceParams {
   symbol: string;
 }
 
-interface CryptoDataItem {
+export interface CryptoDataItem {
   0: number; // Timestamp
   1: string; // Price
   2: string; // Open
@@ -41,7 +41,7 @@ interface CryptoDataItem {
 // Composant de graphique
 const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
   const [limit, setLimit] = useState(365);
-  const [series, setSeries] = useState([
+  const [series, setSeries] = useState<ApexAxisChartSeries>([
     {
       name: "Series 1",
       data: [],
@@ -51,36 +51,21 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
   const [selectedInterval, setSelectedInterval] = useState<BinanceIntervals>(
     BinanceIntervals["1d"]
   );
-
+  symbol = symbol.toUpperCase() + "EUR";
   const [selectedButton, setSelectedButton] = useState(BinanceIntervals["1d"]);
+  const {data} = useGetCryptoExternalQuery({symbol, interval: selectedInterval, limit})
+
+  const formattedData = data?.map((item:CryptoDataItem) => ({
+            x: new Date(item[0]).getTime(),
+            y: parseFloat(item[1]),
+          })) as { x: number; y: number }[]
 
   useEffect(() => {
-    handleTimeRangeChange(selectedInterval);
-  }, [selectedInterval, symbol]);
-
-  const handleTimeRangeChange = (range: BinanceIntervals) => {
-    api
-      .get("/crypto/external", {
-        params: {
-          symbol: symbol.toUpperCase() + "EUR",
-          interval: range,
-          limit: limit,
-        },
-      })
-      .then((res) => {
-        const formattedData = res.data.map((item: CryptoDataItem) => ({
-          x: new Date(item[0]).getTime(),
-          y: parseFloat(item[1]),
-        }));
-
-        setSeries([{ name: symbol, data: formattedData }]);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  // Options d'ApexCharts
+    if (data) {
+      setSeries([{ name: symbol, data: formattedData }]);
+    }
+  }, [data]);
+        
   const apexOptions: ApexOptions = {
     chart: {
       id: "basic-line",
