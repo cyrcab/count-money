@@ -23,7 +23,6 @@ export async function addNewArticle(data: Partial<ArticleInterface>, userId: num
     }
 
     if (!titre || !url || !description || !image  ) {
-        console.log("titre" + titre + "url" + url + "description" + description + "image" + image)
         return { status: 400, body: { msg: 'Please enter all fields' } }
     }
 
@@ -37,7 +36,7 @@ export async function addNewArticle(data: Partial<ArticleInterface>, userId: num
                 userId: userId,
             },
         })
-        return { status: 200, body: {article, msg: 'Article ajouté' } }
+        return { status: 201, body: {article, msg: 'Article ajouté' } }
     }
     catch (err) {
         return { status: 500, body: { msg: 'Server Error' } }

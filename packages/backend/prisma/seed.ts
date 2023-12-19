@@ -2,10 +2,13 @@ import { PrismaClient } from '@prisma/client'
 import { generatePwd } from '../controllers/utils/Pwd'
 import { seedRoles } from './seedRole'
 import { seedRssFilter } from './seedRssFilter'
+import { seedArticle } from './seedArticle'
 const prisma = new PrismaClient()
 async function main() {
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
   await prisma.$executeRaw`TRUNCATE TABLE User;`
+  await prisma.$executeRaw`TRUNCATE TABLE Article;`
+  await prisma.$executeRaw`TRUNCATE TABLE Crypto;`
   await prisma.$executeRaw`TRUNCATE TABLE Role;`
   await prisma.$executeRaw`TRUNCATE TABLE RSS_filter;`
   await prisma.$executeRaw`TRUNCATE TABLE UserRSS_filter;`
@@ -42,6 +45,7 @@ async function main() {
   })
 
   await seedRssFilter()
+  await seedArticle()
 
 }
 
