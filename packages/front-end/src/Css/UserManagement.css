@@ -1,16 +1,13 @@
-.ContainerUserManagement {
+.containerUserManagement {
     background-color: #43457f;
-    padding: 20px;
-    line-height: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     color: black;
-}
+    align-items: center;
+    padding-top: 20px;
 
-.UserTableContainer {
-    width: 80%;
-  }
+}
 
 .AddButton {
     height: 50px;
