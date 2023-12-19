@@ -41,7 +41,6 @@ interface CryptoDataItem {
 // Composant de graphique
 const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
   const [limit, setLimit] = useState(365);
-
   const [series, setSeries] = useState([
     {
       name: "Series 1",
@@ -52,6 +51,8 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
   const [selectedInterval, setSelectedInterval] = useState<BinanceIntervals>(
     BinanceIntervals["1d"]
   );
+
+  const [selectedButton, setSelectedButton] = useState(BinanceIntervals["1d"]);
 
   useEffect(() => {
     handleTimeRangeChange(selectedInterval);
@@ -67,8 +68,7 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
         },
       })
       .then((res) => {
-        const formattedData = res.data.map((item: CryptoDataItem) => (        console.log(item),
-        {
+        const formattedData = res.data.map((item: CryptoDataItem) => ({
           x: new Date(item[0]).getTime(),
           y: parseFloat(item[1]),
         }));
@@ -81,13 +81,13 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
   };
 
   // Options d'ApexCharts
-  const apexOptions:ApexOptions = {
+  const apexOptions: ApexOptions = {
     chart: {
       id: "basic-line",
     },
     xaxis: {
       labels: {
-        format: "dd/MM", 
+        format: "dd/MM",
       },
       type: "datetime",
     },
@@ -111,36 +111,44 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
       <CardActions>
         <Button
           size="small"
+          className={selectedButton === BinanceIntervals["1d"] ? "selected" : ""}
           onClick={() => {
             setSelectedInterval(BinanceIntervals["1d"]);
             setLimit(365);
+            setSelectedButton(BinanceIntervals["1d"]);
           }}
         >
           Année
         </Button>
         <Button
           size="small"
+          className={selectedButton === BinanceIntervals["1h"] ? "selected" : ""}
           onClick={() => {
             setSelectedInterval(BinanceIntervals["1h"]);
             setLimit(730);
+            setSelectedButton(BinanceIntervals["1h"]);
           }}
         >
           Mois
         </Button>
         <Button
           size="small"
+          className={selectedButton === BinanceIntervals["15m"] ? "selected" : ""}
           onClick={() => {
             setSelectedInterval(BinanceIntervals["15m"]);
             setLimit(672);
+            setSelectedButton(BinanceIntervals["15m"]);
           }}
         >
           Semaine
         </Button>
         <Button
           size="small"
+          className={selectedButton === BinanceIntervals["5m"] ? "selected" : ""}
           onClick={() => {
             setSelectedInterval(BinanceIntervals["5m"]);
             setLimit(288);
+            setSelectedButton(BinanceIntervals["5m"]);
           }}
         >
           Jour
