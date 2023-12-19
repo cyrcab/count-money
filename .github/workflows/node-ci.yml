@@ -31,7 +31,7 @@ jobs:
         image: redis:latest
         ports:
           - '6379:6379'
-        options: HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \   CMD redis-cli ping || exit 1
+        # options: HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \   CMD redis-cli ping || exit 1
     strategy:
       matrix:
         node-version: [20.x]
