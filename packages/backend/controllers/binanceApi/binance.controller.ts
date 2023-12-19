@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import axios from 'axios'
 import { errorHandler } from '../../middleware/errors.middleware'
+import { redisClient } from '../../libs/redis'
 
 enum BinanceIntervals {
   '1d' = '1d',
@@ -15,6 +16,21 @@ interface BinanceQueryParams {
   limit: number
 }
 
+function secondsUntilMidnight(): number {
+  const now: Date = new Date()
+  const midnight: Date = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1, // Le jour suivant
+    0,
+    0,
+    0 // Minuit
+  )
+
+  const diffInSeconds: number = (midnight.getTime() - now.getTime()) / 1000 // Convertir la différence en millisecondes en secondes
+  return Math.round(diffInSeconds)
+}
+
 export const callToBinance = async (req: Request, res: Response) => {
   try {
     if (!req.query.symbol) throw new Error('Symbol is required')
@@ -27,6 +43,14 @@ export const callToBinance = async (req: Request, res: Response) => {
       limit: parseInt(req.query.limit.toString(), 10),
     }
 
+    const specificKey = `${params.symbol}-${params.interval}-${params.limit}`
+
+    const cacheResult = await redisClient.get(specificKey)
+
+    if (cacheResult) {
+      return res.status(200).json(JSON.parse(cacheResult))
+    }
+
     const response = await axios.get('https://api.binance.com/api/v3/uiKlines', {
       params: {
         symbol: params.symbol,
@@ -34,6 +58,13 @@ export const callToBinance = async (req: Request, res: Response) => {
         limit: params.limit,
       },
     })
+
+    if (response.data.limit === 288) {
+      await redisClient.setEx(specificKey, 1800, JSON.stringify(response.data))
+    } else {
+      await redisClient.setEx(specificKey, secondsUntilMidnight(), JSON.stringify(response.data))
+    }
+
     return res.status(response.status).json(response.data)
   } catch (error) {
     if (
