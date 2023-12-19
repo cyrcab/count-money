@@ -25,7 +25,6 @@ interface CryptoDataList {
   iconUrl?: string;
 }
 
-
 interface SpecificCryptoProps {
   selectedCrypto: CryptoData;
   onSelectCrypto: (crypto: { name: string; symbol: string } | null) => void;
@@ -39,13 +38,14 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
 
-
   const handleBack = () => {
     onSelectCrypto(null);
   };
 
   // Ajoutez le "EUR" à la fin de selectedCrypto si ce n'est pas déjà le cas
-  const normalizedSelectedCrypto = selectedCrypto.symbol.toUpperCase().endsWith("EUR")
+  const normalizedSelectedCrypto = selectedCrypto.symbol
+    .toUpperCase()
+    .endsWith("EUR")
     ? selectedCrypto.symbol.toUpperCase()
     : `${selectedCrypto.symbol.toUpperCase()}EUR`;
 
@@ -63,27 +63,29 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
           <div className="TopbarSpecificCrypto">
             <div className="priceIcon">
               {selectedCryptoInfo.iconUrl && (
-                <img src={selectedCryptoInfo.iconUrl} />
+                <img height={50} src={selectedCryptoInfo.iconUrl} />
               )}
               <p>{selectedCrypto.name}</p>
               <p>{selectedCryptoInfo.price}€</p>
             </div>
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{
-                backgroundColor: isHovered ? "gold" : "gray",
-                marginLeft: "10px",
-              }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              endIcon={isHovered ? <StarIcon /> : <StarBorderIcon />}
-            >
-              Add to Watchlist
-            </Button>
-            <IconButton onClick={handleBack}  color="primary">
-              <ArrowBackIcon />
-            </IconButton>
+            <div className="containerButton">
+              <Button
+                variant="contained"
+                color="secondary"
+                style={{
+                  backgroundColor: isHovered ? "gold" : "gray",
+                  marginRight: "80px",
+                }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                endIcon={isHovered ? <StarIcon /> : <StarBorderIcon />}
+              >
+                Add to Watchlist
+              </Button>
+              <IconButton onClick={handleBack} color="primary">
+                <ArrowBackIcon />
+              </IconButton>
+            </div>
           </div>
           <div className="ongletSelection">
             <Tabs
@@ -91,13 +93,27 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
               onChange={handleTabChange}
               aria-label="crypto details tabs"
             >
-              <Tab label="Chart" />
-              <Tab label="Informations" />
+              <Tab
+                label="Chart"
+                style={{
+                  color: selectedTab === 0 ? "#FEDA84" : "white",
+                }}
+              />
+              <Tab
+                label="Informations"
+                style={{
+                  color: selectedTab === 1 ? "#FEDA84" : "white",
+                }}
+              />
             </Tabs>
           </div>
           <div className="selectedOnglet">
-            {selectedTab === 0 && <ChartComponent symbol={selectedCrypto.symbol}/>}
-            {selectedTab === 1 && <InformationComponent selectedCrypto={selectedCrypto}/>}
+            {selectedTab === 0 && (
+              <ChartComponent symbol={selectedCrypto.symbol} />
+            )}
+            {selectedTab === 1 && (
+              <InformationComponent selectedCrypto={selectedCrypto} />
+            )}
           </div>
         </>
       )}
