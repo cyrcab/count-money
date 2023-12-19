@@ -6,6 +6,7 @@ import userRouter from './routes/user.route'
 import rssRouter from './routes/rss.route'
 import cryptoRouter from './routes/crypto.route'
 import rssFilterRouter from './routes/rssFilter.route'
+import articleRouter from './routes/article.route'
 
 
 export const app = express()
@@ -29,6 +30,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/rss_filter', rssFilterRouter)
+app.use('/api/article', articleRouter)
 
 
 // Faire une requête pour obtenir le flux RSS
