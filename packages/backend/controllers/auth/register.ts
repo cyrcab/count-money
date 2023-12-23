@@ -1,9 +1,9 @@
 // eslint-disable-next-line
 import { User as UserInterface } from '@prisma/client'
-import { generateToken } from '../utils/Token'
 import { generatePwd } from '../utils/Pwd'
 
 import { prisma } from '../../libs/prisma'
+import { RoleName } from '../../entities/Roles'
 
 const prismaUser = prisma.user
 
@@ -44,22 +44,20 @@ export async function registerUser(data: Partial<UserInterface>) {
         password: hashPwd,
         role: {
           connect: {
-            name: 'user',
+            name: RoleName.USER,
           },
         },
       },
     })
-    const token = generateToken(newUser)
     return {
       status: 201,
       body: {
-        token,
         user: {
           id: newUser.id,
           email: newUser.email,
           firstname: newUser.firstname,
           lastname: newUser.lastname,
-          role: 'user',
+          roleId: newUser.roleId,
         },
       },
     }

@@ -1,5 +1,4 @@
 import { User as UserInterface } from '@prisma/client'
-import { generateToken } from '../utils/Token'
 import { comparePwd } from '../utils/Pwd'
 import { prisma } from '../../libs/prisma'
 
@@ -37,17 +36,15 @@ export async function loginUser(data: Partial<UserInterface>) {
       return { status: 400, body: { msg: 'Invalid credentials' } }
     }
 
-    const token = generateToken(user)
     return {
       status: 200,
       body: {
-        token,
         user: {
           id: user.id,
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
-          role: user.roleId,
+          roleId: user.roleId,
         },
       },
     }

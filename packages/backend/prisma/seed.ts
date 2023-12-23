@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { generatePwd } from '../controllers/utils/Pwd'
 import { seedRoles } from './seedRole'
 import { seedRssFilter } from './seedRssFilter'
+import { RoleName } from '../entities/Roles'
 const prisma = new PrismaClient()
 async function main() {
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
@@ -21,7 +22,7 @@ async function main() {
       password: await generatePwd('MDP'),
       role: {
         connect: {
-          name: 'user',
+          name: RoleName.USER,
         },
       },
     },
@@ -35,7 +36,7 @@ async function main() {
       password: await generatePwd('MDP'),
       role: {
         connect: {
-          name: 'admin',
+          name: RoleName.ADMIN,
         },
       },
     },
