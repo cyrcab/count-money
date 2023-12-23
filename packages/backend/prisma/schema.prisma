@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -32,6 +32,7 @@ model User {
   UserRSS_filter UserRSS_filter[]
   Article        Article[]
   FavoriteCrypto UserHasFavoriteCrypto[]
+  RefreshToken   RefreshToken[]
 }
 
 model Article {
@@ -84,4 +85,13 @@ model Crypto {
   createdAt  DateTime                @default(now())
   updatedAt  DateTime                @updatedAt
   UserCrypto UserHasFavoriteCrypto[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
 }

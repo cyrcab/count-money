@@ -7,15 +7,21 @@ import {
   updateCrypto,
 } from '../controllers/crypto/crypto.controller'
 import { callToBinance } from '../controllers/binanceApi/binance.controller'
-import { jwtMiddleware } from '../middleware/cookie.middleware'
+import { cookieMiddleware } from '../middleware/cookie.middleware'
+import { roleGuardMiddleware } from '../middleware/roleGuard.middleware'
+import { RoleName } from '../entities/Roles'
 
 const router = Router()
 
-router.post('/', createCrypto)
-router.get('/', [jwtMiddleware], getAllCrypto)
+router.post('/', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], createCrypto)
+router.get(
+  '/',
+  [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])],
+  getAllCrypto
+)
 router.get('/external', callToBinance)
 router.get('/:id', getOneCrypto)
-router.put('/:id', updateCrypto)
-router.delete('/:id', deleteCrypto)
+router.put('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], updateCrypto)
+router.delete('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], deleteCrypto)
 
 export default router
