@@ -9,20 +9,20 @@ const HeadBandCryptoPrice: React.FC = () => {
     <Container className="containerHeadBand" maxWidth="xl">
       <div className="slider">
         <div className="slide-track">
-          {Object.entries(cryptoData).map(([symbol, data]) => (
-            <div className="slide" key={symbol}>
+          {Object.entries(cryptoData).map(([label, data]) => (
+            <div className="slide" key={label}>
               <img src={data?.iconUrl} className="iconCrypto"/>
               <h1>
-                 {symbol.slice(0, -3).toUpperCase()}: {data.price}€
+                 {label.slice(0, -3).toUpperCase()}: {data.price}€
               </h1>
             </div>
           ))}
 
-          {Object.entries(cryptoData).map(([symbol, data]) => (
-            <div className="slide" key={symbol}>
+          {Object.entries(cryptoData).map(([label, data]) => (
+            <div className="slide" key={label}>
               <img src={data?.iconUrl}  className="iconCrypto" />
               <h1>
-                 {symbol.slice(0, -3).toUpperCase()}: {data.price}€
+                 {label.slice(0, -3).toUpperCase()}: {data.price}€
               </h1>
             </div>
           ))}

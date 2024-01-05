@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Container, Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Context/RootReducer";
 import "../../Css/SpecificCrypto.css";
 import { IconButton } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -11,46 +9,50 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ChartComponent from "./Chart.tsx";
 import InformationComponent from "./Informations.tsx";
+import { useGetCryptoExternalQuery } from "../../api";
 
 interface CryptoData {
   name: string;
-  symbol: string;
+  label: string;
   price?: string;
   iconUrl?: string;
 }
 
 interface CryptoDataList {
-  symbol: string;
+  label: string;
   price?: string;
   iconUrl?: string;
 }
 
 interface SpecificCryptoProps {
   selectedCrypto: CryptoData;
-  onSelectCrypto: (crypto: { name: string; symbol: string } | null) => void;
+  onSelectCrypto: (crypto: { name: string; label: string } | null) => void;
 }
 
 const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   selectedCrypto,
   onSelectCrypto,
 }) => {
-  const cryptoData = useSelector((state: RootState) => state.crypto);
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+  const { data: cryptoData } = useGetCryptoExternalQuery({
+    label: selectedCrypto.label,
+    interval: "1h", // You may need to adjust the default interval as per your requirements
+    limit: 10, // You may need to adjust the default limit as per your requirements
+  });
 
   const handleBack = () => {
     onSelectCrypto(null);
   };
 
-  // Ajoutez le "EUR" à la fin de selectedCrypto si ce n'est pas déjà le cas
-  const normalizedSelectedCrypto = selectedCrypto.symbol
+  const normalizedSelectedCrypto = selectedCrypto.label
     .toUpperCase()
     .endsWith("EUR")
-    ? selectedCrypto.symbol.toUpperCase()
-    : `${selectedCrypto.symbol.toUpperCase()}EUR`;
+    ? selectedCrypto.label.toUpperCase()
+    : `${selectedCrypto.label.toUpperCase()}EUR`;
 
   const selectedCryptoInfo: CryptoDataList | null =
-    cryptoData[normalizedSelectedCrypto as keyof typeof cryptoData] || null;
+    cryptoData && cryptoData.length > 0 ? cryptoData[0] : null;
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -63,7 +65,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
           <div className="TopbarSpecificCrypto">
             <div className="priceIcon">
               {selectedCryptoInfo.iconUrl && (
-                <img height={50} src={selectedCryptoInfo.iconUrl} />
+                <img height={50} src={selectedCryptoInfo.iconUrl} alt="Crypto Icon" />
               )}
               <p>{selectedCrypto.name}</p>
               <p>{selectedCryptoInfo.price}€</p>
@@ -109,7 +111,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
           </div>
           <div className="selectedOnglet">
             {selectedTab === 0 && (
-              <ChartComponent symbol={selectedCrypto.symbol} />
+              <ChartComponent label={selectedCrypto.label} />
             )}
             {selectedTab === 1 && (
               <InformationComponent selectedCrypto={selectedCrypto} />

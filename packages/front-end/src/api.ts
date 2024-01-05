@@ -4,11 +4,11 @@ import { CryptoDataItem } from './Components/SpecificCryptoInfos/Chart';
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api' }),
   endpoints: (builder) => ({
-    getCryptoExternal: builder.query<CryptoDataItem[], { symbol: string; interval: string; limit: number }>({
-      query: ({ symbol, interval, limit }) => ({
+    getCryptoExternal: builder.query<CryptoDataItem[], { label: string; interval: string; limit: number }>({
+      query: ({ label, interval, limit }) => ({
         url: `/crypto/external`,
         method: 'GET',
-        params: { symbol, interval, limit },
+        params: { symbol:label, interval, limit },
       }),
       keepUnusedDataFor: 900,
     }),

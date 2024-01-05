@@ -16,9 +16,9 @@ import SpecificCrypto from "../Components/SpecificCryptoInfos/SpecificCrypto";
 
 const Home: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string | null>("Crypto");
-  const [selectedCrypto, setSelectedCrypto] = useState<{ name: string; symbol: string } | null>(null);
+  const [selectedCrypto, setSelectedCrypto] = useState<{ name: string; label: string } | null>(null);
 
-  const handleCryptoSelection = (crypto: { name: string; symbol: string } | null) => {
+  const handleCryptoSelection = (crypto: { name: string; label: string } | null) => {
     setSelectedCrypto(crypto);
   };
 
