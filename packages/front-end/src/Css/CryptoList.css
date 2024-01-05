@@ -2,6 +2,16 @@
     height: 100%;
     width: 14% !important;
     background-color: #3a3c6d;
+    overflow-y: auto;
+}
+
+.containerCryptoList::-webkit-scrollbar {
+    width: 8px; /* Largeur de la barre de défilement */
+}
+
+.containerCryptoList::-webkit-scrollbar-thumb {
+    background-color:#FEDA84; /* Couleur de la barre de défilement */
+    border-radius: 4px; /* Coins arrondis de la barre de défilement */
 }
 
 .buttonGroup.selected {
