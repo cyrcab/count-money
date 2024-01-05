@@ -18,10 +18,19 @@ interface CryptoData {
   iconUrl?: string;
 }
 
-interface CryptoDataList {
-  label: string;
-  price?: string;
-  iconUrl?: string;
+export interface CryptoDataItem {
+  0: number; // Timestamp
+  1: string; // Price
+  2: string; // Open
+  3: string; // Low
+  4: string; // High
+  5: string; // Volume
+  6: number; // Close timestamp
+  7: string; // Close price
+  8: number; // Trades count
+  9: string; // Taker buy base asset volume
+  10: string; // Taker buy quote asset volume
+  11: string; // Ignore
 }
 
 interface SpecificCryptoProps {
@@ -35,15 +44,6 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
-  const { data: cryptoData } = useGetCryptoExternalQuery({
-    label: selectedCrypto.label,
-    interval: "1h", // You may need to adjust the default interval as per your requirements
-    limit: 10, // You may need to adjust the default limit as per your requirements
-  });
-
-  const handleBack = () => {
-    onSelectCrypto(null);
-  };
 
   const normalizedSelectedCrypto = selectedCrypto.label
     .toUpperCase()
@@ -51,8 +51,18 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
     ? selectedCrypto.label.toUpperCase()
     : `${selectedCrypto.label.toUpperCase()}EUR`;
 
-  const selectedCryptoInfo: CryptoDataList | null =
-    cryptoData && cryptoData.length > 0 ? cryptoData[0] : null;
+  const { data } = useGetCryptoExternalQuery({
+    label: normalizedSelectedCrypto,
+    interval: "1m",
+    limit: 1,
+  });
+
+  const handleBack = () => {
+    onSelectCrypto(null);
+  };
+
+  const selectedCryptoInfo: CryptoDataItem | null =
+    data && data.length > 0 ? data[0] : null;
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -64,11 +74,8 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
         <>
           <div className="TopbarSpecificCrypto">
             <div className="priceIcon">
-              {selectedCryptoInfo.iconUrl && (
-                <img height={50} src={selectedCryptoInfo.iconUrl} alt="Crypto Icon" />
-              )}
               <p>{selectedCrypto.name}</p>
-              <p>{selectedCryptoInfo.price}€</p>
+              <p>{parseFloat(selectedCryptoInfo[1]).toFixed(2)}€</p>
             </div>
             <div className="containerButton">
               <Button

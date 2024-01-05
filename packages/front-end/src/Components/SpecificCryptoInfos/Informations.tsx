@@ -30,7 +30,6 @@ const InformationComponent: React.FC<InformationComponentProps> = ({selectedCryp
     return { __html: html };
   };
 
-  console.log(selectedCrypto)
   return (
     <div>
       {/* Utilisation de dangerouslySetInnerHTML pour afficher les liens */}
