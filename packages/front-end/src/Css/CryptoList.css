@@ -1,38 +1,50 @@
-.containerCryptoList{
+/* CryptoList.css */
+
+/* Styles for the container */
+.containerCryptoList {
     height: 100%;
     width: 14% !important;
     background-color: #3a3c6d;
     overflow-y: auto;
-}
-
-.containerCryptoList::-webkit-scrollbar {
-    width: 8px; /* Largeur de la barre de défilement */
-}
-
-.containerCryptoList::-webkit-scrollbar-thumb {
-    background-color:#FEDA84; /* Couleur de la barre de défilement */
-    border-radius: 4px; /* Coins arrondis de la barre de défilement */
-}
-
-.buttonGroup.selected {
-    background-color: gold;
+  }
+  
+  .containerCryptoList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .containerCryptoList::-webkit-scrollbar-thumb {
+    background-color: #feda84;
+    border-radius: 4px;
+  }
+  
+  /* Styles for the active state of MUI buttons */
+  .buttonGroup button.MuiButton-containedPrimary:active,
+  .buttonGroup button.MuiButton-containedPrimary.Mui-focusVisible {
+    background-color: black !important; /* Remplacez par la couleur souhaitée */
+    color: #fff !important; /* Changez la couleur du texte si nécessaire */
+  }
+  
+  /* Additional styles for selected items */
+  .buttonGroup.selected {
+    background-color:#3498db !important;
   }
   
   .cryptoListItem.selected {
-    background-color: gold;
+    background-color: gold !important;
   }
-
   
-.css-1oqqzyl-MuiContainer-root {
+  /* Additional styles for MUI components */
+  .css-1oqqzyl-MuiContainer-root {
     padding: 0 !important;
-}
-
-.css-heg063-MuiTabs-flexContainer {
+  }
+  
+  .css-heg063-MuiTabs-flexContainer {
     justify-content: space-evenly !important;
-}
-
-.buttonGroup{
+  }
+  
+  .buttonGroup {
     width: 100%;
     height: 100%;
     margin-top: 10px;
-}
+  }
+  

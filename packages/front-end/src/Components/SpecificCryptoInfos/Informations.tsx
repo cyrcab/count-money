@@ -31,7 +31,7 @@ const InformationComponent: React.FC<InformationComponentProps> = ({selectedCryp
   };
 
   return (
-    <div>
+    <div style={{overflow:'auto', padding:10}}>
       {/* Utilisation de dangerouslySetInnerHTML pour afficher les liens */}
       <div dangerouslySetInnerHTML={renderLinks(information)} />
     </div>
