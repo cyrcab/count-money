@@ -1,3 +1,5 @@
+// CryptoList.tsx
+
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -13,7 +15,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import api from "../axios.config";
 
 interface CryptoListProps {
-  onSelectCrypto: (crypto: { name: string; label: string }) => void;
+  onSelectCrypto: (crypto: { id: number; name: string; label: string }) => void;
 }
 
 const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
@@ -21,9 +23,11 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
   const [favoriteCryptos, setFavoriteCryptos] = useState<
     { id: number; name: string; label: string }[]
   >([]);
+  const [selectedCrypto, setSelectedCrypto] = useState<{ id: number; name: string; label: string } | null>(null);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
+    setSelectedCrypto(null); // Réinitialiser selectedCrypto lors du changement d'onglet
   };
 
   useEffect(() => {
@@ -31,13 +35,20 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
       .then((response) => {
         setFavoriteCryptos(response.data);
         if (response.data.length > 0) {
-          onSelectCrypto(response.data[0]);
+          const initialSelectedCrypto = response.data[0];
+          setSelectedCrypto(initialSelectedCrypto);
+          onSelectCrypto(initialSelectedCrypto);
         }
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const handleCryptoClick = (crypto: { id: number; name: string; label: string }) => {
+    setSelectedCrypto(crypto);
+    onSelectCrypto(crypto);
+  };
 
   return (
     <Container className="containerCryptoList">
@@ -54,13 +65,13 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
         <Container>
           {favoriteCryptos.map((crypto) => (
             <ButtonGroup
-              className="buttonGroup"
+              className={`buttonGroup ${selectedCrypto?.id === crypto.id ? 'selected' : ''}`}
               orientation="vertical"
               aria-label="vertical contained button group"
               variant="text"
               key={crypto.id}
             >
-              <Button onClick={() => onSelectCrypto(crypto)}>
+              <Button onClick={() => handleCryptoClick(crypto)}>
                 {crypto.name} {crypto.label}
               </Button>
             </ButtonGroup>
@@ -71,7 +82,11 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
         <Container>
           <List>
             {favoriteCryptos.map((crypto) => (
-              <ListItem key={crypto.id}>
+              <ListItem
+                key={crypto.id}
+                className={`cryptoListItem ${selectedCrypto?.id === crypto.id ? 'selected' : ''}`}
+                onClick={() => handleCryptoClick(crypto)}
+              >
                 <ListItemText primary={`${crypto.name} (${crypto.label})`} />
               </ListItem>
             ))}

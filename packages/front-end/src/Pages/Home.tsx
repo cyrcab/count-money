@@ -44,7 +44,7 @@ const Home: React.FC = () => {
           {selectedTab === "Crypto" && (
             <>
             <CryptoList onSelectCrypto={handleCryptoSelection} />
-            {selectedCrypto ? <SpecificCrypto selectedCrypto={selectedCrypto} onSelectCrypto={handleCryptoSelection}/> : <TopCryptoInfos />}
+            {selectedCrypto && <SpecificCrypto selectedCrypto={selectedCrypto} onSelectCrypto={handleCryptoSelection}/>}
           </>
           )}
 

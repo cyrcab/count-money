@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Container, Button } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "../../Css/SpecificCrypto.css";
-import { IconButton } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import Tabs from "@mui/material/Tabs";
@@ -40,7 +38,6 @@ interface SpecificCryptoProps {
 
 const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   selectedCrypto,
-  onSelectCrypto,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -56,10 +53,6 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
     interval: "1m",
     limit: 1,
   });
-
-  const handleBack = () => {
-    onSelectCrypto(null);
-  };
 
   const selectedCryptoInfo: CryptoDataItem | null =
     data && data.length > 0 ? data[0] : null;
@@ -91,9 +84,6 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
               >
                 Add to Watchlist
               </Button>
-              <IconButton onClick={handleBack} color="primary">
-                <ArrowBackIcon />
-              </IconButton>
             </div>
           </div>
           <div className="ongletSelection">
