@@ -5,7 +5,6 @@ import TopBar from "../Components/TopBar";
 import CarousselFlux from "../Components/Rss/CarousselFlux";
 import CryptoList from "../Components/CryptoList";
 import { Box, Container } from "@mui/material";
-import TopCryptoInfos from "../Components/TopCryptoInfos";
 import WebSocketService from "../Websockets/WebSocketService";
 import { Provider } from "react-redux";
 import store from "../Context/store";
