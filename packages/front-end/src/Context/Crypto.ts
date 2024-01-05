@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Draft } from "immer";
 
 interface CryptoData {
-  symbol: string;
+  label: string;
   price: string;
   iconUrl?: string;
 }
@@ -42,16 +42,17 @@ const iconUrls: { [key: string]: string } = {
 };
 
 const initialState: CryptoState = {
-  BTCEUR: { symbol: "BTCEUR", price: "34115.24", iconUrl: iconUrls.BTCEUR },
-  ETHEUR: { symbol: "ETHEUR", price: "1854.51", iconUrl: iconUrls.ETHEUR },
-  BNBEUR: { symbol: "BNBEUR", price: "209.82", iconUrl: iconUrls.BNBEUR },
-  XRPEUR: { symbol: "XRPEUR", price: "0.556", iconUrl: iconUrls.XRPEUR },
-  DOGEEUR: { symbol: "DOGEEUR", price: "0.07", iconUrl: iconUrls.DOGEEUR },
-  LTCEUR: { symbol: "LTCEUR", price: "63.01", iconUrl: iconUrls.LTCEUR },
-  SOLEUR: { symbol: "SOLEUR", price: "51.23", iconUrl: iconUrls.SOLEUR },
-  ADAEUR: { symbol: "ADAEUR", price: "0.34", iconUrl: iconUrls.ADAEUR },
-  TRXEUR: { symbol: "TRXEUR", price: "0.09", iconUrl: iconUrls.TRXEUR },
+  BTCEUR: { label: "BTCEUR", price: "34115.24", iconUrl: iconUrls.BTCEUR },
+  ETHEUR: { label: "ETHEUR", price: "1854.51", iconUrl: iconUrls.ETHEUR },
+  BNBEUR: { label: "BNBEUR", price: "209.82", iconUrl: iconUrls.BNBEUR },
+  XRPEUR: { label: "XRPEUR", price: "0.556", iconUrl: iconUrls.XRPEUR },
+  DOGEEUR: { label: "DOGEEUR", price: "0.07", iconUrl: iconUrls.DOGEEUR },
+  LTCEUR: { label: "LTCEUR", price: "63.01", iconUrl: iconUrls.LTCEUR },
+  SOLEUR: { label: "SOLEUR", price: "51.23", iconUrl: iconUrls.SOLEUR },
+  ADAEUR: { label: "ADAEUR", price: "0.34", iconUrl: iconUrls.ADAEUR },
+  TRXEUR: { label: "TRXEUR", price: "0.09", iconUrl: iconUrls.TRXEUR },
 };
+
 
 const cryptoSlice = createSlice({
   name: "crypto",
@@ -59,12 +60,12 @@ const cryptoSlice = createSlice({
   reducers: {
     updateCryptoData: (
       state: Draft<CryptoState>,
-      action: PayloadAction<{ symbol: string; data: CryptoData }>
+      action: PayloadAction<{ label: string; data: CryptoData }>
     ) => {
-      const { symbol, data } = action.payload;
-      state[symbol as keyof CryptoState] = {
+      const { label, data } = action.payload;
+      state[label as keyof CryptoState] = {
         ...data,
-        iconUrl: iconUrls[symbol],
+        iconUrl: iconUrls[label],
       };
     },
   },

@@ -20,7 +20,7 @@ enum BinanceIntervals {
 
 // Interface pour les paramètres de Binance
 interface BinanceParams {
-  symbol: string;
+  label: string;
 }
 
 export interface CryptoDataItem {
@@ -39,7 +39,7 @@ export interface CryptoDataItem {
 }
 
 // Composant de graphique
-const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
+const ChartComponent: React.FC<BinanceParams> = ({ label }) => {
   const [limit, setLimit] = useState(365);
   const [series, setSeries] = useState<ApexAxisChartSeries>([
     {
@@ -51,9 +51,9 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
   const [selectedInterval, setSelectedInterval] = useState<BinanceIntervals>(
     BinanceIntervals["1d"]
   );
-  symbol = symbol.toUpperCase() + "EUR";
+  label = label.toUpperCase() + "EUR";
   const [selectedButton, setSelectedButton] = useState(BinanceIntervals["1d"]);
-  const {data} = useGetCryptoExternalQuery({symbol, interval: selectedInterval, limit})
+  const {data} = useGetCryptoExternalQuery({label, interval: selectedInterval, limit})
 
   const formattedData = data?.map((item:CryptoDataItem) => ({
             x: new Date(item[0]).getTime(),
@@ -62,7 +62,7 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
 
   useEffect(() => {
     if (data) {
-      setSeries([{ name: symbol, data: formattedData }]);
+      setSeries([{ name: label, data: formattedData }]);
     }
   }, [data]);
         
@@ -80,6 +80,9 @@ const ChartComponent: React.FC<BinanceParams> = ({ symbol }) => {
       x: {
         format: "dd/MM HH:mm", // Format de l'info-bulle (tooltip)
       },
+    },
+    stroke: {
+      width: [2, 2],
     },
   };
 

@@ -5,7 +5,7 @@ import axios from "axios";
 interface InformationComponentProps {
   selectedCrypto: {
     name: string;
-    symbol: string;
+    label: string;
     price?: string;
     iconUrl?: string;
   };
@@ -30,6 +30,7 @@ const InformationComponent: React.FC<InformationComponentProps> = ({selectedCryp
     return { __html: html };
   };
 
+  console.log(selectedCrypto)
   return (
     <div>
       {/* Utilisation de dangerouslySetInnerHTML pour afficher les liens */}

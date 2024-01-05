@@ -6,16 +6,16 @@ const WebSocketService = () => {
   const dispatch = store.dispatch;
 
   const cryptoSymbols = ["btceur", "etheur", "bnbeur", "xrpeur", "dogeeur", "ltceur", "soleur", "adaeur", "trxeur"];
-  const symbolSubscription = cryptoSymbols.map(symbol => `${symbol}@trade`).join('/');
+  const symbolSubscription = cryptoSymbols.map(label => `${label}@trade`).join('/');
 
   const socket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbolSubscription}`);
 
   socket.onmessage = (event) => {
     const eventData = JSON.parse(event.data);
-    const symbol = eventData.s;
+    const label = eventData.s;
     const price = parseFloat(eventData.p).toFixed(2);
 
-    dispatch(updateCryptoData({ symbol, data: { symbol, price } }));
+    dispatch(updateCryptoData({ label, data: { label, price } }));
   };
 
   socket.onopen = () => {
