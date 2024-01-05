@@ -30,19 +30,14 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
     api.get("/crypto")
       .then((response) => {
         setFavoriteCryptos(response.data);
+        if (response.data.length > 0) {
+          onSelectCrypto(response.data[0]);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
-  // const favoriteCryptos = [
-  //   { id: 1, name: "Bitcoin", symbol: "BTC" },
-  //   { id: 2, name: "Ethereum", symbol: "ETH" },
-  //   { id: 3, name: "Ripple", symbol: "XRP" },
-  //   { id: 4, name: "Litecoin", symbol: "LTC" },
-  //   { id: 5, name: "Cardano", symbol: "ADA" },
-  // ];
 
   return (
     <Container className="containerCryptoList">
