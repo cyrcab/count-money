@@ -37,7 +37,7 @@ export const cookieMiddleware = async (req: Request, res: Response, next: NextFu
 
     res.cookie('auth', cookieToken, {
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: 'lax',
     })
     req.body = {
       user: decoded,

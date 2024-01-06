@@ -1,80 +1,75 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Avatar,
-  Button,
-  Popover,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import LoginModal from "./Authentification/LoginModal";
-import "../Css/TopBar.css";
-import logo from "../assets/logo.jpg";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Avatar, Button, Popover, List, ListItem, ListItemText, Typography } from '@mui/material'
+import LoginModal from './Authentification/LoginModal'
+import '../Css/TopBar.css'
+import logo from '../assets/logo.jpg'
+import { useSelector } from 'react-redux'
+import { RootState } from '../Context/RootReducer'
+import api from '../axios.config'
 
 interface TopBarProps {
-  onTabChange: (tab: string) => void;
+  onTabChange: (tab: string) => void
 }
 
 const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
-  const [selectedItem, setSelectedItem] = useState<string | null>("Crypto");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<string | null>('Crypto')
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(false)
+
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const handleItemClick = (item: string) => {
-    setSelectedItem(item);
-    onTabChange(item);
-    setAnchorEl(null); // Close the popover after clicking on an item
-  };
+    setSelectedItem(item)
+    onTabChange(item)
+    setAnchorEl(null) // Close the popover after clicking on an item
+  }
 
   const handleLogin = () => {
-
     // Your authentication logic here
     // If authentication is successful, update the isLoggedIn state
-    setIsLoggedIn(true);
     // Optionally, switch to the "Profile" tab after login
-    handleItemClick("Profile");
+    handleItemClick('Profile')
 
-    setIsSignUp(false);
-    setLoginModalOpen(true);
-  };
+    setIsSignUp(false)
+    setLoginModalOpen(true)
+  }
 
   const handleSignUp = () => {
-    setIsSignUp(true);
-    setLoginModalOpen(true);
+    setIsSignUp(true)
+    setLoginModalOpen(true)
+  }
 
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    // Switch to the default tab (e.g., "Crypto") after logout
-    handleItemClick("Crypto");
-  };
-
+  const handleLogout = async () => {
+    try {
+      const res = await api.delete('/auth/logout')
+      if (res.status === 200) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleClickAvatar = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClosePopover = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
-  const open = Boolean(anchorEl);
-  const id = open ? "avatar-popover" : undefined;
+  const open = Boolean(anchorEl)
+  const id = open ? 'avatar-popover' : undefined
 
-
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
+  // const handleLoginSuccess = () => {
+  //   setIsLoggedIn(true)
+  // }
 
   const handleSwitchAction = () => {
-    setIsSignUp(!isSignUp); // Inverser la valeur de isSignUp
-  };
-
+    setIsSignUp(!isSignUp) // Inverser la valeur de isSignUp
+  }
 
   return (
     <div className="containerTopBar">
@@ -84,21 +79,16 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
         </div>
         <Link to="/">
           <div
-
-            className={`onglet ${
-              selectedItem === "Crypto" ? "selected" : ""
-            }`}
-            onClick={() => handleItemClick("Crypto")}
+            className={`onglet ${selectedItem === 'Crypto' ? 'selected' : ''}`}
+            onClick={() => handleItemClick('Crypto')}
           >
             Crypto
           </div>
         </Link>
         <Link to="/">
           <div
-            className={`onglet ${
-              selectedItem === "Actualité" ? "selected" : ""
-            }`}
-            onClick={() => handleItemClick("Actualité")}
+            className={`onglet ${selectedItem === 'Actualité' ? 'selected' : ''}`}
+            onClick={() => handleItemClick('Actualité')}
           >
             Actualités
           </div>
@@ -111,7 +101,7 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
               alt="Alex"
               src="/static/images/avatar/1.jpg"
               onClick={handleClickAvatar}
-              className={`onglet ${selectedItem === "Profile" ? "" : ""}`}
+              className={`onglet ${selectedItem === 'Profile' ? '' : ''}`}
             />
             <Popover
               id={id}
@@ -119,16 +109,16 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
               anchorEl={anchorEl}
               onClose={handleClosePopover}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
+                vertical: 'bottom',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
             >
               <List>
-                <ListItem button onClick={() => handleItemClick("Profile")}>
+                <ListItem button onClick={() => handleItemClick('Profile')}>
                   <ListItemText>
                     <Typography variant="h6">Profile</Typography>
                   </ListItemText>
@@ -156,13 +146,12 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
       {isLoginModalOpen && (
         <LoginModal
           onClose={() => setLoginModalOpen(false)}
-          actionType={isSignUp ? "Sign Up" : "Login"}
-          onLoginSuccess={handleLoginSuccess}
+          actionType={isSignUp ? 'Sign Up' : 'Login'}
           onSwitchAction={handleSwitchAction}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TopBar;
+export default TopBar

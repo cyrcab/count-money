@@ -3,11 +3,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import cryptoReducer from "./Crypto";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { api } from "../api";
+import { authSlice } from "./user.reducer";
 
 const store = configureStore({
   reducer: {
     crypto: cryptoReducer,
     [api.reducerPath]: api.reducer,
+    auth: authSlice.reducer,
 
   },
 

@@ -14,11 +14,7 @@ import { RoleName } from '../entities/Roles'
 const router = Router()
 
 router.post('/', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], createCrypto)
-router.get(
-  '/',
-  [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])],
-  getAllCrypto
-)
+router.get('/', getAllCrypto)
 router.get('/external', callToBinance)
 router.get('/:id', getOneCrypto)
 router.put('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], updateCrypto)
