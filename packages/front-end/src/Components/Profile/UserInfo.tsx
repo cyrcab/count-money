@@ -1,85 +1,86 @@
-import React, { useEffect, useState } from "react";
-import { Container, Typography, Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
-import "../../Css/UserInfo.css";
-import api from "../../axios.config";
+import React, { useEffect, useState } from 'react'
+import {
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material'
+import '../../Css/UserInfo.css'
+import api from '../../axios.config'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../Context/RootReducer'
 
 const UserInfo: React.FC = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false)
   const [userData, setUserData] = useState({
     id: 0,
-    username: "",
-    email: "",
-    lastName: "",
-    firstName: "",
-  });
+    email: '',
+    lastName: '',
+    firstName: '',
+  })
+  const user = useSelector((state: RootState) => state.auth.user)
+
+  useEffect(() => {
+    if (user !== null) {
+      setUserData({
+        id: user.id,
+        email: user.email,
+        lastName: user.lastname,
+        firstName: user.firstname,
+      })
+    }
+  }, [user])
 
   const handleEditClick = () => {
-    setOpenDialog(true);
-  };
+    setOpenDialog(true)
+  }
 
   const handleSaveClick = () => {
     const updatedUserData = {
       id: userData.id,
-      username: "Nouveau Pseudo", 
-      email: "Nouveau Email", 
-      lastName: "Nouveau nom", 
-      firstName: "Nouveau Prenom", 
-    };
+      username: 'Nouveau Pseudo',
+      email: 'Nouveau Email',
+      lastName: 'Nouveau nom',
+      firstName: 'Nouveau Prenom',
+    }
 
-    api.put(`/user/${userData.id}`, updatedUserData)
+    api
+      .put(`/user/${userData.id}`, updatedUserData)
       .then((response) => {
-        console.log(response);
-        setUserData(updatedUserData);
-        setOpenDialog(false);
+        console.log(response)
+        setUserData(updatedUserData)
+        setOpenDialog(false)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
-
+        console.log(error)
+      })
+  }
 
   const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  useEffect(() => {
-    api.get("/user/me")
-    .then((response) => {
-      const responseData = response.data.body.user;
-      setUserData({
-        id: responseData.id,
-        username: responseData.username,
-        email: responseData.email,
-        lastName: responseData.lastName,
-        firstName: responseData.firstName,
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    setOpenDialog(false)
   }
-  , []);
 
   return (
     <Container className="containerUserInfo">
       <Typography variant="h3">Informations Profil</Typography>
-      <br/>
+      <br />
       <div className="infoBox">
-        <Typography variant="h4">Pseudo : {userData.username}</Typography>
-        <br/>
         <Typography variant="h4">Email : {userData.email}</Typography>
-        <br/>
+        <br />
         <Typography variant="h4">Nom : {userData.lastName}</Typography>
-        <br/>
+        <br />
         <Typography variant="h4">Prénom : {userData.firstName}</Typography>
-        <br/>
+        <br />
         <Button variant="contained" onClick={handleEditClick}>
           Modifier
         </Button>
         <Dialog open={openDialog} className="dialogProfil" onClose={handleCloseDialog}>
           <DialogTitle>Modifier les informations</DialogTitle>
           <DialogContent className="dialogProfilEdit">
-            <TextField label={userData.username} variant="outlined" fullWidth />
             <TextField label={userData.email} variant="outlined" fullWidth />
             <TextField label={userData.lastName} variant="outlined" fullWidth />
             <TextField label={userData.firstName} variant="outlined" fullWidth />
@@ -93,9 +94,7 @@ const UserInfo: React.FC = () => {
         </Dialog>
       </div>
     </Container>
-  );
-};
+  )
+}
 
-
-
-export default UserInfo;
+export default UserInfo
