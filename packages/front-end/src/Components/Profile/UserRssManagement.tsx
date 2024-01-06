@@ -20,8 +20,19 @@ interface RssFilter {
   name: string;
   url: string;
 }
+import api from "../../axios.config";
+
+interface RssFilter {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RSS_filter: any;
+  id: number;
+  name: string;
+  url: string;
+}
 
 const UserRssManagement: React.FC = () => {
+  const [availableRssFilters, setAvailableRssFilters] = useState<RssFilter[]>([]);
+  const [userRssFilter, setUserRssFilter] = useState<RssFilter[]>([]);
   const [availableRssFilters, setAvailableRssFilters] = useState<RssFilter[]>([]);
   const [userRssFilter, setUserRssFilter] = useState<RssFilter[]>([]);
 
@@ -89,6 +100,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
   return (
     <Container className="containerUserRssManagement">
       <Typography variant="h3">Gestion des Flux Rss</Typography>
+      <Typography variant="h3">Gestion des Flux Rss</Typography>
       <br />
       <Typography variant="h6">Mots clés disponibles :</Typography>
       <br />
@@ -101,10 +113,16 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
           label="Mots clés"
           onChange={handleSelectChange}
           onOpen={showAvailableRssFilters}
+          onOpen={showAvailableRssFilters}
         >
+          <MenuItem value="" >
           <MenuItem value="" >
             Sélectionnez un mot clé
           </MenuItem>
+
+          {availableRssFilters.length > 0 && availableRssFilters.map((rssFilter, index) => (
+            <MenuItem key={index} value={rssFilter?.name}>
+              {rssFilter?.name}
 
           {availableRssFilters.length > 0 && availableRssFilters.map((rssFilter, index) => (
             <MenuItem key={index} value={rssFilter?.name}>
@@ -114,8 +132,29 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
           <MenuItem value={availableRssFilters[0]?.name}>
             {availableRssFilters[0]?.name}
           </MenuItem>
+          <MenuItem value={availableRssFilters[0]?.name}>
+            {availableRssFilters[0]?.name}
+          </MenuItem>
         </Select>
       </FormControl>
+      {userRssFilter.length > 0 ? (
+        <>
+          <Typography variant="h6">Mots clés sélectionnés :</Typography>
+          {userRssFilter.map((rssFilter, index) => (
+            <Button
+              key={index}
+              value={rssFilter.name}
+              variant="contained"
+              onClick={() => handleRemoveUserRssFilter(rssFilter as RssFilter)}
+              sx={{ margin: 1 }}
+            >
+              {rssFilter?.name} &#10006;
+            </Button>
+          ))}
+        </>
+      ) : (
+        <Typography variant="h6">Aucune crypto n'est sélectionnée</Typography>
+      )}
       {userRssFilter.length > 0 ? (
         <>
           <Typography variant="h6">Mots clés sélectionnés :</Typography>
