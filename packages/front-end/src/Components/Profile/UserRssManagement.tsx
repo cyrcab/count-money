@@ -14,6 +14,8 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import api from "../../axios.config";
 
 interface RssFilter {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RSS_filter: any;
   id: number;
   name: string;
   url: string;
@@ -29,7 +31,6 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
 
   if (selectedRssFilter && !userRssFilter.find((rssFilter) => rssFilter?.name === selectedRssFilterName)) {
     setUserRssFilter([...userRssFilter, selectedRssFilter as RssFilter]);
-
     addUserRssFilter(selectedRssFilter as RssFilter);
   }
 }
@@ -47,7 +48,11 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
   useEffect(() => {
     api.get("/rss_filter/user/2")
     .then((response) => {
-      setUserRssFilter(response.data.rssFilters);
+      const responseData = response.data;
+      const fetchedCryptos = responseData.rssFilters ? responseData.rssFilters : [];  
+      const userRssFilterData = fetchedCryptos.map((item: { RSS_filter: { id: number, name: string, url: string, createdAt: string, updatedAt: string } }) => item.RSS_filter);
+      console.log(fetchedCryptos);  
+      setUserRssFilter(userRssFilterData);
     })
     .catch((error) => {
       console.log(error);
@@ -84,7 +89,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
 
   return (
     <Container className="containerUserRssManagement">
-      <Typography variant="h2">Gestion des Flux Rss</Typography>
+      <Typography variant="h3">Gestion des Flux Rss</Typography>
       <br />
       <Typography variant="h6">Mots clés disponibles :</Typography>
       <br />
@@ -107,23 +112,29 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
               {rssFilter?.name}
             </MenuItem>
           ))}
-          <MenuItem value= {availableRssFilters[0]?.name}>
-          {availableRssFilters[0]?.name}
+          <MenuItem value={availableRssFilters[0]?.name}>
+            {availableRssFilters[0]?.name}
           </MenuItem>
         </Select>
       </FormControl>
-      <Typography variant="h6">Mots clés sélectionnés :</Typography>
-      {userRssFilter.length > 0 && userRssFilter.map((rssFilter, index) => (
-        <Button
-          key={index}
-          value={rssFilter.name}
-          variant="contained"
-          onClick={() => handleRemoveUserRssFilter(rssFilter as RssFilter)}
-          sx={{ margin: 1 }}
-        >
-          {rssFilter?.name} &#10006;
-        </Button>
-      ))}
+      {userRssFilter.length > 0 ? (
+        <>
+          <Typography variant="h6">Mots clés sélectionnés :</Typography>
+          {userRssFilter.map((rssFilter, index) => (
+            <Button
+              key={index}
+              value={rssFilter.name}
+              variant="contained"
+              onClick={() => handleRemoveUserRssFilter(rssFilter as RssFilter)}
+              sx={{ margin: 1 }}
+            >
+              {rssFilter?.name} &#10006;
+            </Button>
+          ))}
+        </>
+      ) : (
+        <Typography variant="h6">Aucune crypto n'est sélectionnée</Typography>
+      )}
     </Container>
   );
 };

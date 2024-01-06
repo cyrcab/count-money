@@ -20,16 +20,16 @@ const UserInfo: React.FC = () => {
 
   return (
     <Container className="containerUserInfo">
-      <Typography variant="h2">Informations Profile</Typography>
+      <Typography variant="h3">Informations Profil</Typography>
       <br/>
       <div className="infoBox">
-        <Typography variant="h4">Username : JohnDoe</Typography>
+        <Typography variant="h4">Pseudo : JohnDoe</Typography>
         <br/>
         <Typography variant="h4">Email : john.doe@example.com</Typography>
         <br/>
-        <Typography variant="h4">Last Name : Doe</Typography>
+        <Typography variant="h4">Nom : Doe</Typography>
         <br/>
-        <Typography variant="h4">First Name : John</Typography>
+        <Typography variant="h4">Prénom : John</Typography>
         <br/>
         <Button variant="contained" onClick={handleEditClick}>
           Modifier
@@ -37,11 +37,10 @@ const UserInfo: React.FC = () => {
         <Dialog open={openDialog} className="dialogProfil" onClose={handleCloseDialog}>
           <DialogTitle>Modifier les informations</DialogTitle>
           <DialogContent className="dialogProfilEdit">
-            {/* Form for editing information */}
-            <TextField label="New Username" variant="outlined" fullWidth />
-            <TextField label="New Email" variant="outlined" fullWidth />
-            <TextField label="New Last Name" variant="outlined" fullWidth />
-            <TextField label="New First Name" variant="outlined" fullWidth />
+            <TextField label="Nouveau Pseudo" variant="outlined" fullWidth />
+            <TextField label="Nouveau Email" variant="outlined" fullWidth />
+            <TextField label="Nouveau nom" variant="outlined" fullWidth />
+            <TextField label="Nouveau Prenom" variant="outlined" fullWidth />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog}>Annuler</Button>
