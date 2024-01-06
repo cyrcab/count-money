@@ -5,8 +5,9 @@ import { errorHandler } from '../../middleware/errors.middleware'
 
 export async function createCrypto(req: Request, res: Response) {
   try {
+    const cryptoToCreate = req.body.data
     const result: Crypto = await prisma.crypto.create({
-      data: req.body,
+      data: cryptoToCreate,
     })
     return res.status(201).json(result)
   } catch (error) {
@@ -39,9 +40,10 @@ export async function getOneCrypto(req: Request, res: Response) {
 
 export async function updateCrypto(req: Request, res: Response) {
   try {
+    const dataToUpdate = req.body.data
     const result: Crypto | undefined = await prisma.crypto.update({
       where: { id: Number(req.params.id) },
-      data: req.body,
+      data: dataToUpdate,
     })
     return res.status(200).json(result)
   } catch (error) {
