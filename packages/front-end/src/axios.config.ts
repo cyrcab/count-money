@@ -5,7 +5,7 @@ const api = axios.create({
   timeout: 5000, // Définissez un délai d'attente (en millisecondes) si nécessaire
   headers: {
     'Content-Type': 'application/json', // Exemple d'en-tête personnalisé
-    'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyaWJjb2NvMkBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MDI5MTE5NTAsImV4cCI6MTcwMjk5ODM1MH0.ViCYcAd-lTzGf7nLawdRECuu2r3IsLqw38IyCkoe6yY", // En-tête d'autorisation (si nécessaire)
+    'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyaWJjb2NvMkBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MDQ1NDg0NzEsImV4cCI6MTcwNDYzNDg3MX0.uBR9qm83kWnNeuuYxsSIIOpS1Em-skDrX9kdGGxwKEM", // En-tête d'autorisation (si nécessaire)
   },
 });
 

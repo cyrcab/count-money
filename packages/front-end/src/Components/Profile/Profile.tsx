@@ -4,7 +4,10 @@ import { Container, Tabs, Tab } from "@mui/material";
 import "../../Css/Profile.css";
 import UserInfo from "./UserInfo";
 import UserRssManagement from "./UserRssManagement";
-import UserPreference from "./UserPreference";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
+
+
 
 const Profile: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("Profile");
@@ -13,22 +16,26 @@ const Profile: React.FC = () => {
     setSelectedTab(newValue);
   };
 
+  const handleBackButtonClick = () => {
+  };
+
   return (
     <Container className="containerProfile">
+      <Link to="/" className="backButton" onClick={handleBackButtonClick}>
+        <ArrowBackIcon />
+      </Link>
       <Tabs
         value={selectedTab}
         onChange={handleTabChange}
         indicatorColor="primary"
         textColor="primary"
       >
-        <Tab label="Profile" value="Profile" />
-        <Tab label="RSS Watchlist" value="RSSWatchlist" />
-        <Tab label="Preferences" value="Preferences" />
+        <Tab label="Profil" value="Profile" />
+        <Tab label="Flux RSS" value="RSSWatchlist" />
       </Tabs>
       <Container>
         {selectedTab === "Profile" && <UserInfo />}
         {selectedTab === "RSSWatchlist" && <UserRssManagement />}
-        {selectedTab === "Preferences" && <UserPreference />}
       </Container>
     </Container>
   );
