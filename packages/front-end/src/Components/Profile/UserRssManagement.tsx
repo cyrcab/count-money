@@ -51,7 +51,6 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
       const responseData = response.data;
       const fetchedCryptos = responseData.rssFilters ? responseData.rssFilters : [];  
       const userRssFilterData = fetchedCryptos.map((item: { RSS_filter: { id: number, name: string, url: string, createdAt: string, updatedAt: string } }) => item.RSS_filter);
-      console.log(fetchedCryptos);  
       setUserRssFilter(userRssFilterData);
     })
     .catch((error) => {
