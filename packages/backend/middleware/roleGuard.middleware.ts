@@ -5,7 +5,7 @@ import { RoleName } from '../entities/Roles'
 
 export const roleGuardMiddleware = (roles: RoleName[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const { roleId } = req.body
+    const { roleId } = req.body.user
     const role = await prisma.role.findUnique({ where: { id: roleId } })
 
     if (!roles.some((r) => r === role?.name)) {

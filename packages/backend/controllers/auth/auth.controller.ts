@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { registerUser } from './register'
 import { loginUser } from './login'
-import { generateToken } from '../utils/Token'
+import { decodeToken, generateToken } from '../utils/Token'
 import { prisma } from '../../libs/prisma'
 import {
   createOrUpdateRefreshToken,
@@ -81,4 +81,27 @@ export async function login(req: Request, res: Response) {
       sameSite: 'none',
     })
     .json({ user: result.body.user })
+}
+
+// function to logout user
+
+export async function logout(req: Request, res: Response) {
+  const token = req.cookies['auth']
+
+  const user = decodeToken(token)
+  if (!user) {
+    return res.status(403).json({ msg: 'You are not allowed to access this resource' })
+  }
+
+  try {
+    await prisma.refreshToken.delete({
+      where: {
+        userId: user.id,
+      },
+    })
+    return res.status(200).clearCookie('auth').json({ msg: 'Vous êtes déconnecté' })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ msg: 'Internal server error' })
+  }
 }

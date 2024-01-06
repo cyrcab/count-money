@@ -3,7 +3,7 @@ import { verifyToken, decodeToken, generateToken } from '../controllers/utils/To
 import { checkRefreshToken, getRefreshTokenForUser } from '../controllers/utils/refreshToken'
 
 export const cookieMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authToken = req.cookies['auth'] // Remplacez 'nomDuCookieJWT' par le nom de votre cookie
+  const authToken = req.cookies['auth'] 
 
   if (!authToken) {
     return res.sendStatus(403)
@@ -13,7 +13,10 @@ export const cookieMiddleware = async (req: Request, res: Response, next: NextFu
   try {
     const isValid = verifyToken(authToken)
     if (isValid) {
-      req.body = isValid
+      req.body = {
+        user: isValid,
+        data: req.body,
+      }
       next()
       return
     }
@@ -36,7 +39,10 @@ export const cookieMiddleware = async (req: Request, res: Response, next: NextFu
       httpOnly: true,
       sameSite: 'none',
     })
-    req.body = decoded
+    req.body = {
+      user: decoded,
+      data: req.body,
+    }
     next()
   } catch (err) {
     return res.status(401).json({ msg: 'Veuillez vous reconnecter' })
