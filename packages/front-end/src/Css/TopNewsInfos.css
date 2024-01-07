@@ -1,13 +1,26 @@
-.containerTopNewsInfos{
-    width: 86% !important;
-    height: 100%;
-    background-color: burlywood;
+.containerTopNewsInfos {
+  width: 86% !important;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  color: #feda84;
 }
 
 .newsContainer {
-    padding-left: 20px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonReadMore{
+    width: 20%;
 }
 
 .cryptoCard {
-    margin-right: 2vw;
+  margin-right: 2vw;
+}
+
+.imgArticle{
+    padding-top: 10px;
+    width: 50%;
 }

@@ -1,35 +1,49 @@
-import { useState, useEffect } from 'react'
-import '../Css/Home.css'
-import HeadBandCryptoPrice from '../Components/HeadBandCryptoPrice'
-import TopBar from '../Components/TopBar'
-import CarousselFlux from '../Components/Rss/CarousselFlux'
-import CryptoList from '../Components/CryptoList'
-import { Box, Container } from '@mui/material'
-import WebSocketService from '../Websockets/WebSocketService'
-import NewsList from '../Components/NewsList'
-import TopNewsInfos from '../Components/TopNewsInfos'
-import Profile from '../Components/Profile/Profile'
-import SpecificCrypto from '../Components/SpecificCryptoInfos/SpecificCrypto'
+// Home.tsx
+import { useState, useEffect } from "react";
+import "../Css/Home.css";
+import HeadBandCryptoPrice from "../Components/HeadBandCryptoPrice";
+import TopBar from "../Components/TopBar";
+import CarousselFlux from "../Components/Rss/CarousselFlux";
+import CryptoList from "../Components/CryptoList";
+import { Box, Container } from "@mui/material";
+import WebSocketService from "../Websockets/WebSocketService";
+import NewsList, { ArticleData } from "../Components/NewsList";
+import TopNewsInfos from "../Components/TopNewsInfos";
+import Profile from "../Components/Profile/Profile";
+import SpecificCrypto from "../Components/SpecificCryptoInfos/SpecificCrypto";
 
 const Home: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<string | null>('Crypto')
-  const [selectedCrypto, setSelectedCrypto] = useState<{ name: string; label: string } | null>(null)
+  const [selectedTab, setSelectedTab] = useState<string | null>("Crypto");
+  const [selectedCrypto, setSelectedCrypto] = useState<{
+    name: string;
+    label: string;
+  } | null>(null);
 
-  const handleCryptoSelection = (crypto: { name: string; label: string } | null) => {
-    setSelectedCrypto(crypto)
-  }
+  const [selectedArticles, setSelectedArticles] = useState<ArticleData | null>(
+    null
+  );
+
+  const handleCryptoSelection = (
+    crypto: { name: string; label: string } | null
+  ) => {
+    setSelectedCrypto(crypto);
+  };
+
+  const handleArticleSelection = (article: ArticleData | null) => {
+    setSelectedArticles(article);
+  };
 
   const handleTabChange = (tab: string) => {
-    setSelectedTab(tab)
-  }
+    setSelectedTab(tab);
+  };
 
   useEffect(() => {
-    const cleanupWebSocket = WebSocketService()
+    const cleanupWebSocket = WebSocketService();
 
     return () => {
-      cleanupWebSocket()
-    }
-  }, [])
+      cleanupWebSocket();
+    };
+  }, []);
 
   return (
     <Container className="containerHome" maxWidth="xl">
@@ -37,7 +51,7 @@ const Home: React.FC = () => {
       <TopBar onTabChange={handleTabChange} />
       <CarousselFlux />
       <Box className="containerCrypto">
-        {selectedTab === 'Crypto' && (
+        {selectedTab === "Crypto" && (
           <>
             <CryptoList onSelectCrypto={handleCryptoSelection} />
             {selectedCrypto && (
@@ -49,13 +63,13 @@ const Home: React.FC = () => {
           </>
         )}
 
-        {selectedTab === 'Actualité' && (
+        {selectedTab === "Actualité" && (
           <>
-            <NewsList />
-            <TopNewsInfos />
+            <NewsList onSelectArticle={handleArticleSelection} />
+            <TopNewsInfos selectedArticles={selectedArticles} />
           </>
         )}
-        {selectedTab === 'Profile' && (
+        {selectedTab === "Profile" && (
           <>
             <CryptoList onSelectCrypto={handleCryptoSelection} />
             <Profile />
@@ -63,6 +77,7 @@ const Home: React.FC = () => {
         )}
       </Box>
     </Container>
-  )
-}
-export default Home
+  );
+};
+
+export default Home;

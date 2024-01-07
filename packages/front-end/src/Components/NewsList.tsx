@@ -1,23 +1,51 @@
 // NewsList.tsx
-import React, { useState } from "react";
-import { Container, Tabs, Tab, List, ListItem, ListItemText } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Tabs,
+  Tab,
+  List,
+} from "@mui/material";
 import "../Css/NewsList.css";
+import api from "../axios.config";
+import { AxiosResponse } from "axios";
+import { ButtonGroup, Button } from "@mui/material";
 
-const NewsList: React.FC = () => {
+export interface ArticleData {
+  imgSrc: string;
+  title: string;
+  link: string;
+}
+
+interface NewsListProps {
+  onSelectArticle: (article: ArticleData | null) => void;
+}
+
+const NewsList: React.FC<NewsListProps> = ({ onSelectArticle }) => {
+  
   const [selectedTab, setSelectedTab] = useState<string>("topNews");
+  const [articles, setArticles] = useState<ArticleData[]>([]);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
   };
 
-  // Dummy data for favorite articles
-  const favoriteArticles = [
-    { id: 1, title: "Article 1", category: "Tech" },
-    { id: 2, title: "Article 2", category: "Finance" },
-    { id: 3, title: "Article 3", category: "Health" },
-    { id: 4, title: "Article 4", category: "Science" },
-    { id: 5, title: "Article 5", category: "Business" },
-  ];
+  useEffect(() => {
+    api
+      .get("/rss")
+      .then((response: AxiosResponse) => {
+        setArticles(response.data.rssData);
+        console.log(response.data.rssData);
+      })
+      .catch((error: AxiosResponse) => {
+        console.log(error);
+      });
+  }, []);
+
+  const handleArticleClick = (article: ArticleData) => {
+    // Passez les données de l'article au parent (Home)
+    onSelectArticle(article);
+  };
 
   return (
     <Container className="containerNewsList">
@@ -32,27 +60,30 @@ const NewsList: React.FC = () => {
       </Tabs>
       {selectedTab === "topNews" && (
         <Container>
-          <List>
-            {/* Render top news articles */}
-            <ListItem>
-              <ListItemText primary="Top News Article 1" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Top News Article 2" />
-            </ListItem>
-            {/* Add more articles as needed */}
-          </List>
+          <ButtonGroup
+            orientation="vertical"
+            aria-label="vertical contained button group"
+            variant="text"
+            className="buttonGroup"
+          >
+            {articles.map((item) => (
+              <Button
+                key={item.link}
+                className="articles"
+                onClick={() => handleArticleClick(item)}
+              >
+                {item.title}
+              </Button>
+            ))}
+          </ButtonGroup>
         </Container>
       )}
+
       {selectedTab === "favorite" && (
         <Container>
           <List>
             {/* Render favorite articles */}
-            {favoriteArticles.map((article) => (
-              <ListItem key={article.id}>
-                <ListItemText primary={`${article.title} (${article.category})`} />
-              </ListItem>
-            ))}
+            {/* ... */}
           </List>
         </Container>
       )}
