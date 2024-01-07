@@ -4,7 +4,8 @@ import { User as UserInterface } from '@prisma/client'
 
 const prismaUser = prisma.user
 
-export async function updateUser(request: Partial<AuthenticatedRequest>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function updateUser(request: Partial<AuthenticatedRequest>, body: any) {
 
     if (!request.userId) {
         return { status: 400, body: { msg: 'Invalid credentials' } }
@@ -25,7 +26,7 @@ export async function updateUser(request: Partial<AuthenticatedRequest>) {
         return { status: 400, body: { msg: 'Invalid credentials' } }
     }
 
-    const data = request as Partial<UserInterface>
+    const data = body.data as Partial<UserInterface>
 
 
     if (data && data.firstname) {

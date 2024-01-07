@@ -21,11 +21,29 @@ export async function deleteUser(request: Partial<AuthenticatedRequest>) {
     if(!user) {
         return {status: 400, body: {msg: 'Invalid credentials'}}
     }
+    await prisma.article.deleteMany({
+        where: {
+            userId: request.userId,
+        },
+    });
+
+    await prisma.userRSS_filter.deleteMany({
+        where: {
+            userId: request.userId,
+        },
+    });
+
+    await prisma.refreshToken.deleteMany({
+        where: {
+            userId: request.userId,
+        },
+    });
+
 
     await prismaUser.delete({
         where: {
             id: user.id
-        }
+        },
     })
 
     return {status: 200, body: {msg: 'User deleted'}}

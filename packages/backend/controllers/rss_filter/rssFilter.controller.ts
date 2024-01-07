@@ -5,7 +5,7 @@ import { updateRss } from "./updateRssFilter";
 import { deleteRss, deleteRssToUser } from "./deleteRssFilter";
 
 export async function addRssFilter(req: Request, res: Response) {
-    const result = await addNewRssFilter(req.body)
+    const result = await addNewRssFilter(req.body.data)
     return res.status(result.status).json(result.body);
 }
 
@@ -22,7 +22,7 @@ export async function getRssFiltersController(req: Request, res: Response) {
 export async function updateRssFilterController(req: Request, res: Response) {
     const id = req.params.id
 
-    const result = await updateRss(req.body, parseInt(id,10))
+    const result = await updateRss(req.body.data, parseInt(id,10))
     return res.status(result.status).json(result.body);
 }
 
