@@ -9,7 +9,7 @@ import { RoleName } from "../entities/Roles";
 router.post('/', [cookieMiddleware], addArticle)
 router.get('/', [cookieMiddleware], getArticleController)
 router.get('/user', [cookieMiddleware], getArticleUserController)
-router.delete('/:idArticle', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])], deleteArticleUserController)
+router.delete('/:idArticle', [cookieMiddleware], deleteArticleUserController)
 
 
 export default router

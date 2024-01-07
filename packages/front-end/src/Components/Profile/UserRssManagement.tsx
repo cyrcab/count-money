@@ -12,6 +12,8 @@ import {
 import "../../Css/UserRssManagement.css";
 import { SelectChangeEvent } from '@mui/material/Select';
 import api from "../../axios.config";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Context/RootReducer";
 
 interface RssFilter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,6 +26,7 @@ interface RssFilter {
 const UserRssManagement: React.FC = () => {
   const [availableRssFilters, setAvailableRssFilters] = useState<RssFilter[]>([]);
   const [userRssFilter, setUserRssFilter] = useState<RssFilter[]>([]);
+  const { user } = useSelector((state: RootState) => state.auth);
 
 const handleSelectChange = (event: SelectChangeEvent<string>) => {
   const selectedRssFilterName = event.target.value as string;
@@ -36,7 +39,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
 }
 
   const addUserRssFilter = (rssFilter: RssFilter) => {
-    api.post(`/rss_filter/2/${rssFilter.id}`, {rssFilter: rssFilter})
+    api.post(`/rss_filter/${user?.id}/${rssFilter.id}`, {rssFilter: rssFilter})
     .then((response) => {
       console.log(response);
     })
@@ -46,7 +49,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
   }
 
   useEffect(() => {
-    api.get("/rss_filter/user/2")
+    api.get("/rss_filter/user/"+user?.id)
     .then((response) => {
       const responseData = response.data;
       const fetchedCryptos = responseData.rssFilters ? responseData.rssFilters : [];  
@@ -76,7 +79,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
   };
 
   const removeUserRssFilter = (rssFilter: RssFilter) => {
-    api.delete(`/rss_filter/2/${rssFilter.id}`)
+    api.delete(`/rss_filter/${user?.id}/${rssFilter.id}`)
     .then((response) => {
       console.log(response);
     })

@@ -6,7 +6,7 @@ const prismaUser = prisma.user
 
 export async function addNewArticle(data: Partial<ArticleInterface>, userId: number) {
 
-    const { titre, url, description, image } = data
+    const { title, link, imgSrc } = data
 
     if(!userId) {
         return { status: 400, body: { msg: 'You should be logged in' } }
@@ -22,23 +22,22 @@ export async function addNewArticle(data: Partial<ArticleInterface>, userId: num
         return { status: 404, body: { msg: 'No user '} }
     }
 
-    if (!titre || !url || !description || !image  ) {
+    if (!title || !link || !imgSrc  ) {
         return { status: 400, body: { msg: 'Please enter all fields' } }
     }
 
-    try {
+    // try {
         const article = await prismaArticle.create({
             data: {
-                titre: titre,
-                url: url,
-                description: description,
-                image: image,
+                title: title,
+                link: link,
+                imgSrc: imgSrc,
                 userId: userId,
             },
         })
         return { status: 201, body: {article, msg: 'Article ajouté' } }
-    }
-    catch (err) {
-        return { status: 500, body: { msg: 'Server Error' } }
-    }
+    // }
+    // catch (err) {
+    //     return { status: 500, body: { msg: 'Server Error' } }
+    // }
 }

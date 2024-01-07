@@ -49,7 +49,7 @@ const UserInfo: React.FC = () => {
     }
 
     api
-      .put(`/user/${userData.id}`, updatedUserData)
+      .patch(`/user/${userData.id}`, updatedUserData)
       .then((response) => {
         console.log(response)
         setUserData(updatedUserData)
