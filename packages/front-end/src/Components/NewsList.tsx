@@ -10,6 +10,8 @@ import "../Css/NewsList.css";
 import api from "../axios.config";
 import { AxiosResponse } from "axios";
 import { ButtonGroup, Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from '../Context/RootReducer'
 
 export interface ArticleData {
   imgSrc: string;
@@ -35,7 +37,6 @@ const NewsList: React.FC<NewsListProps> = ({ onSelectArticle }) => {
       .get("/rss")
       .then((response: AxiosResponse) => {
         setArticles(response.data.rssData);
-        console.log(response.data.rssData);
       })
       .catch((error: AxiosResponse) => {
         console.log(error);
@@ -47,6 +48,8 @@ const NewsList: React.FC<NewsListProps> = ({ onSelectArticle }) => {
     onSelectArticle(article);
   };
 
+  const {isLoggedIn} = useSelector((state: RootState) => state.auth);
+
   return (
     <Container className="containerNewsList">
       <Tabs
@@ -56,7 +59,7 @@ const NewsList: React.FC<NewsListProps> = ({ onSelectArticle }) => {
         textColor="primary"
       >
         <Tab label="TopNews" value="topNews" />
-        <Tab label="Favorite" value="favorite" />
+        <Tab label="Favorite" value="favorite" disabled={!isLoggedIn}/>
       </Tabs>
       {selectedTab === "topNews" && (
         <Container>

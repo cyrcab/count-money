@@ -45,6 +45,8 @@ const Home: React.FC = () => {
     };
   }, []);
 
+  
+
   return (
     <Container className="containerHome" maxWidth="xl">
       <HeadBandCryptoPrice />

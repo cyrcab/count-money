@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Button } from "@mui/material";
 import "../../Css/SpecificCrypto.css";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -8,12 +8,16 @@ import Tab from "@mui/material/Tab";
 import ChartComponent from "./Chart.tsx";
 import InformationComponent from "./Informations.tsx";
 import { useGetCryptoExternalQuery } from "../../api";
+import api from "../../axios.config.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Context/RootReducer";
 
 interface CryptoData {
   name: string;
   label: string;
   price?: string;
   iconUrl?: string;
+  id?: number;
 }
 
 export interface CryptoDataItem {
@@ -36,11 +40,13 @@ interface SpecificCryptoProps {
   onSelectCrypto: (crypto: { name: string; label: string } | null) => void;
 }
 
-const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
-  selectedCrypto,
-}) => {
+const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [favoriteCryptos, setFavoriteCryptos] = useState<
+    { id: number; name: string; label: string }[]
+  >([]);
+  const [isInFavorites, setIsInFavorites] = useState(false);
 
   const normalizedSelectedCrypto = selectedCrypto.label
     .toUpperCase()
@@ -60,6 +66,51 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
+
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  function setFavorite() {
+    api
+      .get("/crypto/" + user?.id + "/" + selectedCrypto.id)
+      .then((response) => {
+        console.log(response);
+        getFavorite();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function getFavorite() {
+    api
+      .get("/crypto/me/fav/crypto")
+      .then((response) => {
+        setFavoriteCryptos(response.data.userCrypto);
+        const isInFavorites = response.data.userCrypto.some(
+          (crypto: { id: number }) => crypto.id === selectedCrypto.id
+        );
+        setIsInFavorites(isInFavorites);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function deleteFavorite() {
+    api
+      .delete("/crypto/" + user?.id + "/" + selectedCrypto.id)
+      .then((response) => {
+        console.log(response);
+        getFavorite();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    getFavorite();
+  }, [selectedTab, selectedCrypto]);
 
   return (
     <Container className="containerSpecificCrypto">
@@ -81,8 +132,9 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 endIcon={isHovered ? <StarIcon /> : <StarBorderIcon />}
+                onClick={isInFavorites ? deleteFavorite : setFavorite}
               >
-                Add to Watchlist
+                {isInFavorites ? "Remove from Watchlist" : "Add to Watchlist"}
               </Button>
             </div>
           </div>
@@ -119,5 +171,4 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({
     </Container>
   );
 };
-
 export default SpecificCrypto;

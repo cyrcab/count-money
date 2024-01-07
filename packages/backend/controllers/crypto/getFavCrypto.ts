@@ -24,7 +24,9 @@ export async function getFavCrypto(idUser: number) {
             }
         })
 
-        if(!userCrypto.length) { return { status: 400, body: { msg: 'No crypto found' } } }
+        if(!userCrypto.length) { return { status: 200, body: {
+            userCrypto: [],
+            msg: 'No crypto found' } } }
         const formattedUserCrypto = userCrypto.map((crypto) => {
             return crypto.crypto
         })
