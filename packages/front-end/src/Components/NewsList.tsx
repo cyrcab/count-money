@@ -12,6 +12,7 @@ export interface ArticleData {
   imgSrc: string;
   title: string;
   link: string;
+  id: number;
 }
 
 interface NewsListProps {

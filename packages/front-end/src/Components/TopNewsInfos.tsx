@@ -10,7 +10,6 @@ interface TopNewsInfosProps {
     imgSrc: string;
     title: string;
     link: string;
-    description: string;
     id:number;
   } | null;
 }
