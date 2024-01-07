@@ -3,7 +3,6 @@ import { prisma } from '../../libs/prisma'
 import { Crypto } from '@prisma/client'
 import { errorHandler } from '../../middleware/errors.middleware'
 import { addFavoriteCrypto } from './AddFavCrypto'
-import exp from 'constants'
 
 export async function createCrypto(req: Request, res: Response) {
   try {

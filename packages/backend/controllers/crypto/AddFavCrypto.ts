@@ -2,7 +2,6 @@ import { prisma } from '../../libs/prisma';
 
 const prismaCrypto = prisma.crypto;
 const prismaUser = prisma.user;
-const prismaUserCrypto = prisma.userHasFavoriteCrypto;
 
 export async function addFavoriteCrypto(idUser: number, idCrypto: number) {
 

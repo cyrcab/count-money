@@ -8,6 +8,7 @@ export interface ParamRequest extends Request {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getArticles(req: Partial<Request>) {
     try {
         const articles = await prisma.article.findMany({
