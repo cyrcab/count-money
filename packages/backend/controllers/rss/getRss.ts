@@ -46,20 +46,16 @@ export async function getRssReader(req: Partial<Request>) {
             
                     // Using cheerio to parse HTML content
                     const $ = cheerio.load(contentHtml);
-
-                    const descriptionText = $('p').text();
-
-
+            
                     // Find the image element and get its source (src) attribute using the media namespace
                     const imgSrc = $('img').attr('src');
-
+            
                     // Log the image source
             
                     // Pushing title and image URL to rssData array
                     rssData.push({
                     title: item.title,
                     link: item.link,
-                    description: descriptionText,
                     imgSrc: imgSrc || 'No image',
                     });
                 });
@@ -74,20 +70,18 @@ export async function getRssReader(req: Partial<Request>) {
         // Accessing the HTML content
         const contentHtml = item['content:encoded'];
 
-
         // Using cheerio to parse HTML content
         const $ = cheerio.load(contentHtml);
-        const descriptionText = $('p').text();
-
 
         // Find the image element and get its source (src) attribute using the media namespace
         const imgSrc = $('img').attr('src');
+
+
         // Pushing title and image URL to rssData array
         rssData.push({
           title: item.title,
           link: item.link,
           imgSrc: imgSrc || 'No image',
-          description: descriptionText,
         });
       });
 

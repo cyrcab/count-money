@@ -17,13 +17,7 @@ export async function getArticles(req: Partial<Request>) {
                 url: true,
                 description: true,
                 image: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                    }
-                }
+                userId: true,
             }
         })
 

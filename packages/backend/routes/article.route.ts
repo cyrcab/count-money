@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const router = require('express').Router()
 
-import {addArticle} from "../controllers/articles/article.controller";
-import {verifyUser} from "../middleware/token.middleware";
+import {addArticle, getArticleController} from "../controllers/articles/article.controller";
+import {cookieMiddleware} from "../middleware/cookie.middleware";
 
-router.post('/', verifyUser, addArticle)
+router.post('/', [cookieMiddleware], addArticle)
+router.get('/', [cookieMiddleware], getArticleController)
 
 export default router

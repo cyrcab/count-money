@@ -19,7 +19,7 @@ export async function addNewArticle(data: Partial<ArticleInterface>, userId: num
     })
 
     if (!user) {
-        return { status: 404, body: { msg: 'No user' } }
+        return { status: 404, body: { msg: 'No user '} }
     }
 
     if (!titre || !url || !description || !image  ) {
