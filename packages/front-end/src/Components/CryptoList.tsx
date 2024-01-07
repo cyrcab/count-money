@@ -1,18 +1,13 @@
 // CryptoList.tsx
 
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Tabs,
-  Tab,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import { Container, Tabs, Tab } from "@mui/material";
 import "../Css/CryptoList.css";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import api from "../axios.config";
+import { useSelector } from "react-redux";
+import { RootState } from "../Context/RootReducer";
 
 interface CryptoListProps {
   onSelectCrypto: (crypto: { id: number; name: string; label: string }) => void;
@@ -20,10 +15,17 @@ interface CryptoListProps {
 
 const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
   const [selectedTab, setSelectedTab] = useState<string>("topCrypto");
+  const [cryptos, setCryptos] = useState<
+    { id: number; name: string; label: string }[]
+  >([]);
   const [favoriteCryptos, setFavoriteCryptos] = useState<
     { id: number; name: string; label: string }[]
   >([]);
-  const [selectedCrypto, setSelectedCrypto] = useState<{ id: number; name: string; label: string } | null>(null);
+  const [selectedCrypto, setSelectedCrypto] = useState<{
+    id: number;
+    name: string;
+    label: string;
+  } | null>(null);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
@@ -31,9 +33,27 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
   };
 
   useEffect(() => {
-    api.get("/crypto")
+    getCrypto();
+    handleFavoriteCrypto();
+  }, [selectedTab]);
+
+  function handleFavoriteCrypto() {
+    api
+      .get("/crypto/me/fav/crypto")
       .then((response) => {
-        setFavoriteCryptos(response.data);
+        console.log(response);
+        setFavoriteCryptos(response.data.userCrypto);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function getCrypto() {
+    api
+      .get("/crypto")
+      .then((response) => {
+        setCryptos(response.data);
         if (response.data.length > 0) {
           const initialSelectedCrypto = response.data[0];
           setSelectedCrypto(initialSelectedCrypto);
@@ -43,12 +63,18 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }
 
-  const handleCryptoClick = (crypto: { id: number; name: string; label: string }) => {
+  const handleCryptoClick = (crypto: {
+    id: number;
+    name: string;
+    label: string;
+  }) => {
     setSelectedCrypto(crypto);
     onSelectCrypto(crypto);
   };
+
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   return (
     <Container className="containerCryptoList">
@@ -59,13 +85,15 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
         textColor="primary"
       >
         <Tab label="TopCrypto" value="topCrypto" />
-        <Tab label="Favorite" value="favorite" />
+        <Tab label="Favorite" value="favorite" disabled={!isLoggedIn} />
       </Tabs>
       {selectedTab === "topCrypto" && (
         <Container>
-          {favoriteCryptos.map((crypto) => (
+          {cryptos.map((crypto) => (
             <ButtonGroup
-              className={`buttonGroup ${selectedCrypto?.id === crypto.id ? 'selected' : ''}`}
+              className={`buttonGroup ${
+                selectedCrypto?.id === crypto.id ? "selected" : ""
+              }`}
               orientation="vertical"
               aria-label="vertical contained button group"
               variant="text"
@@ -80,17 +108,21 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
       )}
       {selectedTab === "favorite" && (
         <Container>
-          <List>
-            {favoriteCryptos.map((crypto) => (
-              <ListItem
-                key={crypto.id}
-                className={`cryptoListItem ${selectedCrypto?.id === crypto.id ? 'selected' : ''}`}
-                onClick={() => handleCryptoClick(crypto)}
-              >
-                <ListItemText primary={`${crypto.name} (${crypto.label})`} />
-              </ListItem>
-            ))}
-          </List>
+          {favoriteCryptos.map((crypto) => (
+            <ButtonGroup
+              className={`buttonGroup ${
+                selectedCrypto?.id === crypto.id ? "selected" : ""
+              }`}
+              orientation="vertical"
+              aria-label="vertical contained button group"
+              variant="text"
+              key={crypto.id}
+            >
+              <Button onClick={() => handleCryptoClick(crypto)}>
+                {crypto.name} {crypto.label}
+              </Button>
+            </ButtonGroup>
+          ))}
         </Container>
       )}
     </Container>
