@@ -1,0 +1,11 @@
+.containerChart{
+    width: 96%;
+    background-color: rgb(231, 238, 238)!important;
+    height: 100%;
+}
+
+.selected {
+    background-color: #2196f3 !important;
+    color: #fff !important; 
+  }
+  

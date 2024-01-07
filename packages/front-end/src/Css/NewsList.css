@@ -1,0 +1,51 @@
+.containerNewsList {
+  background-color: #3a3c6d;
+  height: 100%;
+  width: 14% !important;
+}
+
+.buttonGroup {
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+}
+
+.articles {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.containerCryptoList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.containerCryptoList::-webkit-scrollbar-thumb {
+  background-color: #feda84;
+  border-radius: 4px;
+}
+
+/* Styles for the active state of MUI buttons */
+.buttonGroup button.MuiButton-containedPrimary:active,
+.buttonGroup button.MuiButton-containedPrimary.Mui-focusVisible {
+  background-color: black !important; /* Remplacez par la couleur souhaitée */
+  color: #fff !important; /* Changez la couleur du texte si nécessaire */
+}
+
+/* Additional styles for selected items */
+.buttonGroup.selected {
+  background-color: #3498db !important;
+}
+
+.cryptoListItem.selected {
+  background-color: gold !important;
+}
+
+/* Additional styles for MUI components */
+.css-1oqqzyl-MuiContainer-root {
+  padding: 0 !important;
+}
+
+.css-heg063-MuiTabs-flexContainer {
+  justify-content: space-evenly !important;
+}

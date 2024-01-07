@@ -2,4 +2,43 @@
     width: 86% !important;
     height: 100%;
     background-color: burlywood;
+    padding: none;
+}
+
+.cryptoInfos {
+    display: flex;
+    flex-direction: row;
+}
+
+.cryptoCard {
+    padding: 10px;
+}
+
+.cryptoInfos{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.cryptoContainer {
+    display: flex;
+    flex-direction: column;     
+    margin: 10px;
+    gap: 7px;
+}
+
+.css-46bh2p-MuiCardContent-root:last-child {
+    padding: 0 !important;
+}
+
+.cryptoCardLayout{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.favButton {
+    width: 5%;
 }

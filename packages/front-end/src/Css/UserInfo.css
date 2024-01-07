@@ -1,0 +1,15 @@
+.containerUserInfo {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.dialogProfilEdit{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

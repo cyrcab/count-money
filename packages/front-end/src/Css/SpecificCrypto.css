@@ -1,0 +1,51 @@
+.containerSpecificCrypto {
+  width: 86% !important;
+  height: 100%;
+  display: flex;
+}
+
+.TopbarSpecificCrypto {
+  display: flex;
+  height: 16%;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priceIcon {
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+  width: 30%;
+  color: #FEDA84;
+}
+
+.containerButton {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+  padding-right: 10px;
+}
+
+.ongletSelection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+  margin-bottom: 1%;
+}
+
+.selectedOnglet {
+  height: 68%;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MuiTabs-textColorInherit {
+  color: #fff !important; /* Couleur du texte lorsque l'onglet n'est pas sélectionné */
+}

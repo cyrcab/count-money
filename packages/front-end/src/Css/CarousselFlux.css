@@ -1,4 +1,32 @@
-.containerCarousselFlux{
-    height: 26%;
-    background-color: azure;
+.containerCarousselFlux {
+  height: 26%;
+}
+
+.Showcase {
+  height: 100%;
+  background-color: #43457f;
+  display: flex;
+  align-items: center;
+}
+
+.Showcase_div {
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.Showcase_img {
+  height: 15vh;
+  border-radius: 8%;
+  width: 13vw;
+}
+
+.Showcase_description {
+  color: #feda84;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin-top: 1vh;
+  width: 15vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

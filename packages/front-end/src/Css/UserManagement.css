@@ -1,0 +1,26 @@
+.containerUserManagement {
+    background-color: #43457f;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+    align-items: center;
+    padding-top: 20px;
+
+}
+
+.AddButton {
+    height: 50px;
+}
+
+.custom-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+} 
+
+.DialogButton {
+    display: flex;
+    justify-content: row;
+    justify-content: space-between;
+}

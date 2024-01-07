@@ -1,0 +1,3 @@
+/mysql
+.env.test
+*_db
