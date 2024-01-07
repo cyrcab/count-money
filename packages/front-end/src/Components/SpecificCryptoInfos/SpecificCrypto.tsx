@@ -43,10 +43,6 @@ interface SpecificCryptoProps {
 const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
-  //eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [favoriteCryptos, setFavoriteCryptos] = useState<
-    { id: number; name: string; label: string }[]
-  >([]);
   const [isInFavorites, setIsInFavorites] = useState(false);
 
   const normalizedSelectedCrypto = selectedCrypto.label
@@ -86,7 +82,6 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
     api
       .get("/crypto/me/fav/crypto")
       .then((response) => {
-        setFavoriteCryptos(response.data.userCrypto);
         const isInFavorites = response.data.userCrypto.some(
           (crypto: { id: number }) => crypto.id === selectedCrypto.id
         );
