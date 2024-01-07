@@ -14,10 +14,9 @@ export async function getArticles(req: Partial<Request>) {
         const articles = await prisma.article.findMany({
             select: {
                 id: true,
-                titre: true,
-                url: true,
-                description: true,
-                image: true,
+                title: true,
+                link: true,
+                imgSrc: true,
                 userId: true,
             }
         })

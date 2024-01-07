@@ -37,10 +37,9 @@ model User {
 
 model Article {
   id          Int      @id @default(autoincrement())
-  titre       String
-  description String   @db.VarChar(15000)
-  url         String
-  image       String
+  title       String
+  link        String
+  imgSrc      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   User        User?    @relation(fields: [userId], references: [id])
@@ -89,7 +88,7 @@ model Crypto {
 
 model RefreshToken {
   id        Int      @id @default(autoincrement())
-  token     String   @unique @db.VarChar(3000)
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    Int      @unique

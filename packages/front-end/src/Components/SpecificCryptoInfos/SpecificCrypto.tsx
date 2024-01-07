@@ -65,12 +65,12 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
   };
 
   const { user } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   function setFavorite() {
     api
       .get("/crypto/" + user?.id + "/" + selectedCrypto.id)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         getFavorite();
       })
       .catch((error) => {
@@ -95,8 +95,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
   function deleteFavorite() {
     api
       .delete("/crypto/" + user?.id + "/" + selectedCrypto.id)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         getFavorite();
       })
       .catch((error) => {
@@ -106,7 +105,7 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
 
   useEffect(() => {
     getFavorite();
-  }, [selectedTab, selectedCrypto]);
+  }, [selectedCrypto]);
 
   return (
     <Container className="containerSpecificCrypto">
@@ -118,20 +117,22 @@ const SpecificCrypto: React.FC<SpecificCryptoProps> = ({ selectedCrypto }) => {
               <p>{parseFloat(selectedCryptoInfo[1]).toFixed(2)}€</p>
             </div>
             <div className="containerButton">
-              <Button
-                variant="contained"
-                color="secondary"
-                style={{
-                  backgroundColor: isHovered ? "gold" : "gray",
-                  marginRight: "80px",
-                }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                endIcon={isHovered ? <StarIcon /> : <StarBorderIcon />}
-                onClick={isInFavorites ? deleteFavorite : setFavorite}
-              >
-                {isInFavorites ? "Remove from Watchlist" : "Add to Watchlist"}
-              </Button>
+              {isLoggedIn && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={{
+                    backgroundColor: isHovered ? "gold" : "gray",
+                    marginRight: "80px",
+                  }}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  endIcon={isHovered ? <StarIcon /> : <StarBorderIcon />}
+                  onClick={isInFavorites ? deleteFavorite : setFavorite}
+                >
+                  {isInFavorites ? "Remove from Watchlist" : "Add to Watchlist"}
+                </Button>
+              )}
             </div>
           </div>
           <div className="ongletSelection">
