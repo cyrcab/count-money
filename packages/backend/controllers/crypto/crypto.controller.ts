@@ -2,6 +2,9 @@ import { Request, Response } from 'express'
 import { prisma } from '../../libs/prisma'
 import { Crypto } from '@prisma/client'
 import { errorHandler } from '../../middleware/errors.middleware'
+import { addFavoriteCrypto } from './AddFavCrypto'
+import { getFavCrypto } from './GetFavCrypto'
+import {deleteCrypUser} from './DeleteCryptoToUser'
 
 export async function createCrypto(req: Request, res: Response) {
   try {
@@ -60,4 +63,27 @@ export async function deleteCrypto(req: Request, res: Response) {
   } catch (error) {
     errorHandler(error, req, res)
   }
+}
+
+export async function addFavoriteCryptoController(req: Request, res: Response) {
+  const idUser = req.params.id
+  const idCrypto = req.params.idCrypto
+
+  const result = await addFavoriteCrypto(parseInt(idUser,10), parseInt(idCrypto,10))
+  return res.status(result.status).json(result.body);
+}
+
+export async function getFavCryptoController(req: Request, res: Response) {
+  const idUser = req.body.user.id
+
+  const result = await getFavCrypto(parseInt(idUser,10))
+  return res.status(result.status).json(result.body);
+}
+
+export async function deleteCryptoToUserController(req: Request, res: Response) {
+  const idUser = req.params.id
+  const idCrypto = req.params.idCrypto
+
+  const result = await deleteCrypUser(parseInt(idUser,10), parseInt(idCrypto,10))
+  return res.status(result.status).json(result.body);
 }
