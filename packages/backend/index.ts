@@ -8,6 +8,8 @@ import cryptoRouter from './routes/crypto.route'
 import rssFilterRouter from './routes/rssFilter.route'
 import { redisClient } from './libs/redis'
 import cookieParser from 'cookie-parser'
+import articleRouter from './routes/article.route'
+
 
 export const app = express()
 const port = 3000
@@ -31,6 +33,7 @@ app.use(cookieParser())
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/rss_filter', rssFilterRouter)
+app.use('/api/article', articleRouter)
 
 // Faire une requête pour obtenir le flux RSS
 app.use('/api/rss', rssRouter)
