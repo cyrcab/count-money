@@ -18,6 +18,7 @@ CREATE TABLE `User` (
     `password` VARCHAR(191) NOT NULL,
     `roleId` INTEGER NOT NULL DEFAULT 2,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `isOauth` BOOLEAN NOT NULL DEFAULT false,
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
@@ -27,10 +28,9 @@ CREATE TABLE `User` (
 -- CreateTable
 CREATE TABLE `Article` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `titre` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
-    `url` VARCHAR(191) NOT NULL,
-    `image` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `link` VARCHAR(1000) NOT NULL,
+    `imgSrc` VARCHAR(1000) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `userId` INTEGER NULL,
@@ -84,7 +84,7 @@ CREATE TABLE `Crypto` (
 -- CreateTable
 CREATE TABLE `RefreshToken` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `token` VARCHAR(191) NOT NULL,
+    `token` VARCHAR(500) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `userId` INTEGER NOT NULL,
@@ -113,4 +113,4 @@ ALTER TABLE `UserHasFavoriteCrypto` ADD CONSTRAINT `UserHasFavoriteCrypto_userId
 ALTER TABLE `UserHasFavoriteCrypto` ADD CONSTRAINT `UserHasFavoriteCrypto_cryptoId_fkey` FOREIGN KEY (`cryptoId`) REFERENCES `Crypto`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `RefreshToken` ADD CONSTRAINT `RefreshToken_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `RefreshToken` ADD CONSTRAINT `RefreshToken_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

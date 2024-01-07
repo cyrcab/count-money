@@ -30,6 +30,10 @@ export async function loginUser(data: Partial<UserInterface>) {
       return { status: 400, body: { msg: 'Invalid credentials' } }
     }
 
+    if (user.isOauth) {
+      return { status: 400, body: { msg: 'Invalid credentials' } }
+    }
+
     // check if password is correct
     const isMatch = await comparePwd(password, user.password)
     if (!isMatch) {

@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import React from 'react'
+import { useGoogleLogin } from '@react-oauth/google'
 import Divider from '@mui/material/Divider'
 import api from '../../axios.config.js'
 import { AxiosResponse } from 'axios'
@@ -78,6 +79,35 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, actionType, onSwitchAc
     onClose()
   }
 
+  const googleSignIn = useGoogleLogin({
+    onSuccess: (codeResponse) =>
+      actionType === 'Login'
+        ? api
+            .post('/auth/google/login', codeResponse)
+            .then((response: AxiosResponse) => {
+              dispatch(login(response.data.user))
+              onClose()
+            })
+            .catch((error: AxiosResponse) => {
+              console.log(error)
+            })
+        : api
+            .post('/auth/google/register', codeResponse)
+            .then((response: AxiosResponse) => {
+              console.log(response.data.user)
+              dispatch(login(response.data.user))
+              onClose()
+            })
+            .catch((error: AxiosResponse) => {
+              console.log(error)
+            }),
+    flow: 'auth-code',
+    redirect_uri: 'http://localhost:5173',
+  })
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+  }
+
   return (
     <Modal
       open={true}
@@ -138,7 +168,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, actionType, onSwitchAc
           style={{ width: '80%', margin: 10 }}
           variant="contained"
           color="primary"
-          onClick={actionType === 'Login' ? handleLogin : handleSignUp}
+          onClick={handleGoogleSignIn}
         >
           <img src="" alt="" />
           Google

@@ -9,21 +9,26 @@ export const getRefreshTokenForUser = async (userId: number) => {
   return tokenRecord ? tokenRecord.token : false
 }
 
-export const createOrUpdateRefreshToken = async (user: Partial<User>) => {
-  const dataForToken = {
-    id: user.id,
-    email: user.email,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    roleId: user.roleId,
+export const createOrUpdateRefreshToken = async (user: Partial<User>, googleToken?: string) => {
+  try {
+    const dataForToken = {
+      id: user.id,
+      email: user.email,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      roleId: user.roleId,
+    }
+    const refreshToken = !user.isOauth ? await generateToken(dataForToken, '1y') : googleToken
+
+    await prisma.refreshToken.upsert({
+      where: { userId: user.id },
+      update: { token: refreshToken },
+      create: { userId: user.id, token: refreshToken },
+    })
+
+    return refreshToken
+  } catch (error) {
+    console.log(error)
+    return false
   }
-  const refreshToken = await generateToken(dataForToken, '1y')
-
-  await prisma.refreshToken.upsert({
-    where: { userId: user.id },
-    update: { token: refreshToken },
-    create: { userId: user.id, token: refreshToken },
-  })
-
-  return refreshToken
 }

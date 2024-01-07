@@ -12,6 +12,10 @@ const App: React.FC = () => {
     api
       .get('/user/me')
       .then((response) => {
+        if (response.data.status === 400) {
+          dispatch(logout())
+          return
+        }
         dispatch(login(response.data.body.user))
       })
       .catch((error) => {

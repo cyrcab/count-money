@@ -4,9 +4,13 @@ import jwt from 'jsonwebtoken'
 // function to generate token
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function generateToken(user: Partial<User>, expireDate: number | string) {
-  return jwt.sign({ id: user.id, email: user.email, roleId: user.roleId }, process.env.JWT_SECRET, {
-    expiresIn: expireDate,
-  })
+  return jwt.sign(
+    { id: user.id, email: user.email, roleId: user.roleId, isOauth: user.isOauth },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: expireDate,
+    }
+  )
 }
 
 export function decodeToken(token: string) {
