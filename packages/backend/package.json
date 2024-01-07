@@ -6,7 +6,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only ./index.ts",
+    "dev": "nodemon src -e js,ts,json --exec \"ts-node ./index.ts\"",
     "start": "ts-node ./index.ts",
     "lint": "eslint . --ext .ts",
     "test": "npx prisma db push && jest --config ./jest.config.json --detectOpenHandles --forceExit"

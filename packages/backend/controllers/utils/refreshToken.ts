@@ -28,6 +28,7 @@ export const createOrUpdateRefreshToken = async (user: Partial<User>, googleToke
 
     return refreshToken
   } catch (error) {
+    console.log(error)
     return false
   }
 }

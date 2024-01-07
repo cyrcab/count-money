@@ -138,6 +138,7 @@ export async function googleSignIn(req: Request, res: Response) {
       })
       .json({ user: user })
   } catch (error) {
+    console.log(error)
     errorHandler(error, req, res)
   }
 }

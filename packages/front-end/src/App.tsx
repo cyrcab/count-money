@@ -6,13 +6,16 @@ import api from './axios.config'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './Context/user.reducer'
 
-
 const App: React.FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     api
       .get('/user/me')
       .then((response) => {
+        if (response.data.status === 400) {
+          dispatch(logout())
+          return
+        }
         dispatch(login(response.data.body.user))
       })
       .catch((error) => {
