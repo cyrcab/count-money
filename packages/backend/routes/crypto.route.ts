@@ -5,7 +5,9 @@ import {
   getAllCrypto,
   getOneCrypto,
   updateCrypto,
-  addFavoriteCryptoController
+  addFavoriteCryptoController,
+  getFavCryptoController,
+  deleteCryptoToUserController
 } from '../controllers/crypto/crypto.controller'
 import { callToBinance } from '../controllers/binanceApi/binance.controller'
 import { cookieMiddleware } from '../middleware/cookie.middleware'
@@ -19,7 +21,8 @@ router.get('/', getAllCrypto)
 router.get('/external', callToBinance)
 router.get('/:id', getOneCrypto)
 router.get('/:id/:idCrypto', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])], addFavoriteCryptoController)
+router.get('/me/fav/crypto', [cookieMiddleware], getFavCryptoController)
 router.put('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], updateCrypto)
 router.delete('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], deleteCrypto)
-
+router.delete('/:id/:idCrypto', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])], deleteCryptoToUserController)
 export default router
