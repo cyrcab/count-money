@@ -9,6 +9,7 @@ export async function addNewRssFilter(data: Partial<RssFilterInterface>) {
 
     const { name, url } = data
 
+
     if (!name || !url ) {
         return { status: 400, body: { msg: 'Please enter all fields' } }
     }

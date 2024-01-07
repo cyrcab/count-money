@@ -11,6 +11,11 @@ export const roleGuardMiddleware = (roles: RoleName[]) => {
     if (!roles.some((r) => r === role?.name)) {
       return res.status(403).json({ msg: 'You are not allowed to access this resource' })
     }
+    if(role?.name === RoleName.USER){
+      if(req.params.id != req.body.user.id){
+        return res.status(403).json({ msg: 'You are not allowed to access this resource' })
+      }
+    }
     return next()
   }
 }

@@ -8,11 +8,12 @@ import {
   updateUserController,
   deleteUserController,
 } from '../controllers/user/user.controller'
-import { verifyAdmin, verifyAdminOrMe } from '../middleware/token.middleware'
+import { roleGuardMiddleware } from '../middleware/roleGuard.middleware'
+import { RoleName } from '../entities/Roles'
 
 router.get('/me', [cookieMiddleware], getMe)
-router.get('/', verifyAdmin, getAllUser)
-router.patch('/:id', verifyAdminOrMe, updateUserController)
-router.delete('/:id', verifyAdminOrMe, deleteUserController)
+router.get('/', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN])], getAllUser)
+router.patch('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])], updateUserController)
+router.delete('/:id', [cookieMiddleware, roleGuardMiddleware([RoleName.ADMIN, RoleName.USER])], deleteUserController)
 
 export default router
