@@ -18,7 +18,7 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isSignUp, setIsSignUp] = useState(false)
 
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth)
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item)

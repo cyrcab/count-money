@@ -4,4 +4,5 @@ export interface User {
   firstname: string;
   lastname: string;
   roleId: number;
+  isOauth: boolean;
 }

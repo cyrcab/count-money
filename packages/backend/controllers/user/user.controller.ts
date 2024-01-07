@@ -17,13 +17,14 @@ export async function getAllUser(req: AuthenticatedRequest, res: Response) {
 }
 
 export async function updateUserController(req: Request, res: Response) {
-  const user = await updateUser({userId: req.body.user.id}, req.body)
+  const user = await updateUser({ userId: req.body.user.id }, req.body)
   if (!user) return res.status(404).json({ msg: 'User not found' })
   return res.status(200).json(user)
 }
 
 export async function deleteUserController(req: Request, res: Response) {
-  const result = await deleteUser({userId: req.body.user.id})
+  const result = await deleteUser({ userId: req.body.user.id })
   if (!result) return res.status(404).json({ msg: 'Error' })
   return res.status(200).json(result)
 }
+

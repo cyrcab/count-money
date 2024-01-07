@@ -16,21 +16,6 @@ interface BinanceQueryParams {
   limit: number
 }
 
-function secondsUntilMidnight(): number {
-  const now: Date = new Date()
-  const midnight: Date = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() + 1, // Le jour suivant
-    0,
-    0,
-    0 // Minuit
-  )
-
-  const diffInSeconds: number = (midnight.getTime() - now.getTime()) / 1000 // Convertir la différence en millisecondes en secondes
-  return Math.round(diffInSeconds)
-}
-
 export const callToBinance = async (req: Request, res: Response) => {
   try {
     if (!req.query.symbol) throw new Error('Symbol is required')
@@ -59,11 +44,7 @@ export const callToBinance = async (req: Request, res: Response) => {
       },
     })
 
-    if (response.data.limit === 288) {
-      await redisClient.setEx(specificKey, 1800, JSON.stringify(response.data))
-    } else {
-      await redisClient.setEx(specificKey, secondsUntilMidnight(), JSON.stringify(response.data))
-    }
+    await redisClient.setEx(specificKey, 600, JSON.stringify(response.data))
 
     return res.status(response.status).json(response.data)
   } catch (error) {
