@@ -65,7 +65,6 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
     api.get("/rss_filter/")
     .then((response) => {
       setAvailableRssFilters(response.data.rssFilters);
-      console.log(response.data.rssFilters);
     })
     .catch((error) => {
       console.log(error);
@@ -113,12 +112,6 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
               {rssFilter?.name}
             </MenuItem>
           ))}
-          <MenuItem value={availableRssFilters[0]?.name}>
-            {availableRssFilters[0]?.name}
-          </MenuItem>
-          <MenuItem value={availableRssFilters[0]?.name}>
-            {availableRssFilters[0]?.name}
-          </MenuItem>
         </Select>
       </FormControl>
       {userRssFilter.length > 0 ? (
@@ -137,7 +130,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
           ))}
         </>
       ) : (
-        <Typography variant="h6">Aucune crypto n'est sélectionnée</Typography>
+        <Typography variant="h6">Aucun flux n'est sélectionné</Typography>
       )}
     </Container>
   );

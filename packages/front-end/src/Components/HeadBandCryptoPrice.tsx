@@ -6,7 +6,7 @@ import "../Css/HeadBandCryptoPrice.css";
 const HeadBandCryptoPrice: React.FC = () => {
   const cryptoData = useSelector((state: RootState) => state.crypto);
   return (
-    <Container className="containerHeadBand" maxWidth="xl">
+    <Container className="containerHeadBand">
       <div className="slider">
         <div className="slide-track">
           {Object.entries(cryptoData).map(([label, data]) => (

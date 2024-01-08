@@ -8,14 +8,14 @@ const parser = new Parser();
 
 export async function getRssReader(req: Partial<Request>) {
   try {
-    const userId = req.body.userId;
+    const userId = req.params.id;
     let feed;
     const rssData = [];
 
     if (userId) {
       const user = await prisma.user.findUnique({
         where: {
-          id: userId,
+          id: parseInt(userId,10),
         },
       });
 
@@ -25,7 +25,7 @@ export async function getRssReader(req: Partial<Request>) {
 
       const userRSSFilters = await prisma.userRSS_filter.findMany({
         where: {
-          userId: userId,
+          userId: parseInt(userId,10),
         },
         include: {
           RSS_filter: true,
