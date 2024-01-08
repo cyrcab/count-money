@@ -1,5 +1,4 @@
 import {prisma} from '../../libs/prisma'
-import AuthenticatedRequest from '../../interfaces/request.interface'
 
 const prismaUser = prisma.user
 
