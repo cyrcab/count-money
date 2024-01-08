@@ -51,7 +51,7 @@ const UserInfo: React.FC = () => {
 
     api
       .patch(`/user/${userData.id}`, updatedUserData)
-      .then((response) => {
+      .then(() => {
         setUserData(updatedUserData)
         setOpenDialog(false)
       })
