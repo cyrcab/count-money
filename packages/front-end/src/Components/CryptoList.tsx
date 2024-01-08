@@ -41,7 +41,6 @@ const CryptoList: React.FC<CryptoListProps> = ({ onSelectCrypto }) => {
     api
       .get("/crypto/me/fav/crypto")
       .then((response) => {
-        console.log(response);
         setFavoriteCryptos(response.data.userCrypto);
       })
       .catch((error) => {

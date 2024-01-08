@@ -42,14 +42,14 @@ const iconUrls: { [key: string]: string } = {
 };
 
 const initialState: CryptoState = {
-  BTCEUR: { label: "BTCEUR", price: "34115.24", iconUrl: iconUrls.BTCEUR },
-  ETHEUR: { label: "ETHEUR", price: "1854.51", iconUrl: iconUrls.ETHEUR },
-  BNBEUR: { label: "BNBEUR", price: "209.82", iconUrl: iconUrls.BNBEUR },
-  XRPEUR: { label: "XRPEUR", price: "0.556", iconUrl: iconUrls.XRPEUR },
-  DOGEEUR: { label: "DOGEEUR", price: "0.07", iconUrl: iconUrls.DOGEEUR },
-  LTCEUR: { label: "LTCEUR", price: "63.01", iconUrl: iconUrls.LTCEUR },
-  SOLEUR: { label: "SOLEUR", price: "51.23", iconUrl: iconUrls.SOLEUR },
-  ADAEUR: { label: "ADAEUR", price: "0.34", iconUrl: iconUrls.ADAEUR },
+  BTCEUR: { label: "BTCEUR", price: "41077,04", iconUrl: iconUrls.BTCEUR },
+  ETHEUR: { label: "ETHEUR", price: "2062,20", iconUrl: iconUrls.ETHEUR },
+  BNBEUR: { label: "BNBEUR", price: "274,92", iconUrl: iconUrls.BNBEUR },
+  XRPEUR: { label: "XRPEUR", price: "0,52", iconUrl: iconUrls.XRPEUR },
+  DOGEEUR: { label: "DOGEEUR", price: "0,072", iconUrl: iconUrls.DOGEEUR },
+  LTCEUR: { label: "LTCEUR", price: "59,58", iconUrl: iconUrls.LTCEUR },
+  SOLEUR: { label: "SOLEUR", price: "85.49", iconUrl: iconUrls.SOLEUR },
+  ADAEUR: { label: "ADAEUR", price: "0,47", iconUrl: iconUrls.ADAEUR },
   TRXEUR: { label: "TRXEUR", price: "0.09", iconUrl: iconUrls.TRXEUR },
 };
 

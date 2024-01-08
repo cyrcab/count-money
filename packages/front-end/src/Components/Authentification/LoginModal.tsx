@@ -94,7 +94,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, actionType, onSwitchAc
         : api
             .post('/auth/google/register', codeResponse)
             .then((response: AxiosResponse) => {
-              console.log(response.data.user)
               dispatch(login(response.data.user))
               onClose()
             })
