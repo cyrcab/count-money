@@ -48,7 +48,7 @@ const Home: React.FC = () => {
   
 
   return (
-    <Container className="containerHome" maxWidth="xl">
+    <Container className="containerHome">
       <HeadBandCryptoPrice />
       <TopBar onTabChange={handleTabChange} />
       <CarousselFlux />

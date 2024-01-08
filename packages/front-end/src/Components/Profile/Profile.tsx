@@ -4,10 +4,6 @@ import { Container, Tabs, Tab } from "@mui/material";
 import "../../Css/Profile.css";
 import UserInfo from "./UserInfo";
 import UserRssManagement from "./UserRssManagement";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
-
-
 
 const Profile: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("Profile");
@@ -16,14 +12,8 @@ const Profile: React.FC = () => {
     setSelectedTab(newValue);
   };
 
-  const handleBackButtonClick = () => {
-  };
-
   return (
     <Container className="containerProfile">
-      <Link to="/" className="backButton" onClick={handleBackButtonClick}>
-        <ArrowBackIcon />
-      </Link>
       <Tabs
         value={selectedTab}
         onChange={handleTabChange}

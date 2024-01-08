@@ -30,8 +30,6 @@ const TopBar: React.FC<TopBarProps> = ({ onTabChange }) => {
     // Your authentication logic here
     // If authentication is successful, update the isLoggedIn state
     // Optionally, switch to the "Profile" tab after login
-    handleItemClick('Profile')
-
     setIsSignUp(false)
     setLoginModalOpen(true)
   }

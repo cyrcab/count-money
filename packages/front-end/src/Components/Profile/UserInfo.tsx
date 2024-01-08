@@ -23,6 +23,7 @@ const UserInfo: React.FC = () => {
     firstName: '',
   })
   const user = useSelector((state: RootState) => state.auth.user)
+  const isOauth = useSelector((state: RootState) => state.auth.user?.isOauth)
 
   useEffect(() => {
     if (user !== null) {
@@ -75,6 +76,8 @@ const UserInfo: React.FC = () => {
         <br />
         <Typography variant="h4">Prénom : {userData.firstName}</Typography>
         <br />
+        {!isOauth &&
+        <>
         <Button variant="contained" onClick={handleEditClick}>
           Modifier
         </Button>
@@ -92,6 +95,8 @@ const UserInfo: React.FC = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        </>
+        }
       </div>
     </Container>
   )
