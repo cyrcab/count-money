@@ -38,19 +38,23 @@ const UserManagement: React.FC = () => {
   } = useForm<User>(); // Utilisation de useForm<User> pour indiquer le type de formulaire
 
   useEffect(() => {
-    api.get("/user/")
-      .then((response) => {
-        setUsers(response.data.body.users || []);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération des utilisateurs :", error);
-      });
+    getUser();
   }, []);
 
     const openEditPopup = (user: User) => {
       setSelectedUser(user);
       setEditPopupOpen(true);
     };
+
+    function getUser(){
+      api.get("/user/")
+      .then((response) => {
+        setUsers(response.data.body.users || []);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des utilisateurs :", error);
+      });
+    }
 
   const closeEditPopup = () => {
     setEditPopupOpen(false);
@@ -84,11 +88,17 @@ const UserManagement: React.FC = () => {
       });
   };
 
-  const deleteUser = () => {
-    const updatedUsers = users.filter(
-      (user) => user.username !== selectedUser.username
-    );
-    setUsers(updatedUsers);
+  const deleteUser = (user:User) => {
+    // const updatedUsers = users.filter(
+    //   (user) => user.username !== selectedUser.username
+    // );
+    api.delete(`/user/${user.id}`).then(() => {
+      getUser();
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    }); 
+    // setUsers(user);
     closeDeletePopup();
   };
 
@@ -167,7 +177,7 @@ const UserManagement: React.FC = () => {
             <strong>{selectedUser.username}</strong> ?
           </DialogContent>
           <DialogActions>
-            <Button onClick={deleteUser}>Supprimer</Button>
+            <Button onClick={()=>deleteUser(selectedUser)}>Supprimer</Button>
             <Button onClick={closeDeletePopup}>Annuler</Button>
           </DialogActions>
         </Dialog>

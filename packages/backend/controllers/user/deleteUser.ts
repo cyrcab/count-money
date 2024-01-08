@@ -3,18 +3,18 @@ import AuthenticatedRequest from '../../interfaces/request.interface'
 
 const prismaUser = prisma.user
 
-export async function deleteUser(request: Partial<AuthenticatedRequest>) {
-    if(!request.userId) {
+export async function deleteUser(id: number) {
+    if(!id) {
         return {status: 400, body: {msg: 'Invalid credentials'}}
     }
 
-    if(typeof request.userId !== 'number') {
+    if(typeof id !== 'number') {
         return {status: 400, body: {msg: 'Invalid credentials'}}
     }
 
     const user = await prismaUser.findUnique({
         where: {
-            id: request.userId
+            id: id,
         }
     })
 
@@ -23,26 +23,31 @@ export async function deleteUser(request: Partial<AuthenticatedRequest>) {
     }
     await prisma.article.deleteMany({
         where: {
-            userId: request.userId,
+            userId: id,
         },
     });
 
     await prisma.userRSS_filter.deleteMany({
         where: {
-            userId: request.userId,
+            userId: id,
         },
     });
 
     await prisma.refreshToken.deleteMany({
         where: {
-            userId: request.userId,
+            userId: id,
         },
     });
 
+    await prisma.userHasFavoriteCrypto.deleteMany({
+        where: {
+            userId: id,
+        },
+    });
 
     await prismaUser.delete({
         where: {
-            id: user.id
+            id: user.id,
         },
     })
 

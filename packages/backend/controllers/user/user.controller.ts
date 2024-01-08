@@ -23,7 +23,7 @@ export async function updateUserController(req: Request, res: Response) {
 }
 
 export async function deleteUserController(req: Request, res: Response) {
-  const result = await deleteUser({ userId: req.body.user.id })
+  const result = await deleteUser(parseInt(req.params.id))
   if (!result) return res.status(404).json({ msg: 'Error' })
   return res.status(200).json(result)
 }
