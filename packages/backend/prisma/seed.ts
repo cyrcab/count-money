@@ -4,6 +4,7 @@ import { seedRoles } from './seedRole'
 import { seedRssFilter } from './seedRssFilter'
 import { RoleName } from '../entities/Roles'
 import { seedArticle } from './seedArticle'
+import { seedCrypto } from './seedCrypto'
 const prisma = new PrismaClient()
 async function main() {
   await prisma.$executeRaw`SET foreign_key_checks = 0;`
@@ -45,9 +46,37 @@ async function main() {
     },
   })
 
+  await prisma.user.create({
+    data: {
+      email: 'clem@clem.com',
+      firstname: 'clement',
+      lastname: 'mendes',
+      password: await generatePwd('clem'),
+      role: {
+        connect: {
+          name: RoleName.USER,
+        },
+      },
+    },
+  })
+
+  await prisma.user.create({
+    data: {
+      email: 'alex@alex.com',
+      firstname: 'alexandre',
+      lastname: 'merigot',
+      password: await generatePwd('alex'),
+      role: {
+        connect: {
+          name: RoleName.USER,
+        },
+      },
+    },
+  })
+
   await seedRssFilter()
   await seedArticle()
-
+  await seedCrypto()
 }
 
 
