@@ -63,7 +63,6 @@ const CarousselFlux: React.FC = () => {
       getArcticleLog();
     }
   }, [isLoggedIn]);
-  console.log(isLoggedIn);
 
   return (
     <Container className="containerCarousselFlux">

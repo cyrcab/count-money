@@ -77,14 +77,10 @@ const UserManagement: React.FC = () => {
       email: data.email,
     };
     api.patch(`/user/${selectedUser.id.toString()}` , dataToSend )
-      .then((response) => {
-        
-        console.log(response.data);
-      })
+      .then(() => {
+              })
       .catch((error) => {
         console.error("Erreur lors de la modification de l'utilisateur :", error);
-        console.log(data);
-        console.log(typeof selectedUser.id.toString());
       });
   };
 

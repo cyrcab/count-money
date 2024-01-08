@@ -26,7 +26,6 @@ const TopNewsInfos: React.FC<TopNewsInfosProps> = ({ selectedArticles }) => {
     api
       .get("/article/user")
       .then((response) => {
-        console.log(response);
         const isInFavorites = response.data.article.some(
           (article: { title: string }) =>
             article.title === selectedArticles?.title

@@ -40,8 +40,7 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
 
   const addUserRssFilter = (rssFilter: RssFilter) => {
     api.post(`/rss_filter/${user?.id}/${rssFilter.id}`, {rssFilter: rssFilter})
-    .then((response) => {
-      console.log(response);
+    .then(() => {
     })
     .catch((error) => {
       console.log("Erreur lors de l'ajout du mot clé :" + error);
@@ -79,12 +78,10 @@ const handleSelectChange = (event: SelectChangeEvent<string>) => {
 
   const removeUserRssFilter = (rssFilter: RssFilter) => {
     api.delete(`/rss_filter/${user?.id}/${rssFilter.id}`)
-    .then((response) => {
-      console.log(response);
+    .then(() => {
     })
     .catch((error) => {
       console.log(error);
-      console.log(rssFilter.id);
     });
   }
 
